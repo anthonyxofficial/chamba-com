@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "empleo_id": 1,
+    "nombre": "Mar�a L�pez",
+    "email": "maria@test.hn",
+    "carta": "Soy la candidata ideal",
+    "telefono": "9999-1234",
+    "createdAt": "2026-06-16T03:33:47.890Z"
+  }
+]

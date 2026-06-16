@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Empleos Guardados - Chamba.com</title>
+  <meta name="description" content="Tus empleos guardados en Chamba.com"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "background": "#fbf9f8",
+            "primary": "#000000",
+            "secondary": "#4a4a4a",
+            "on-background": "#1b1c1c",
+          },
+          "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+          "fontFamily": {
+            "label-bold": ["Space Grotesk"],
+            "body-md": ["Space Grotesk"],
+            "headline-md": ["Bricolage Grotesque"],
+            "headline-lg": ["Bricolage Grotesque"]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .brutalist-card { border: 3px solid #000; box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); transition: all 0.2s ease; }
+    .brutalist-card:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px 0px rgba(0,0,0,1); }
+    .brutalist-btn { border: 2px solid #000; box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); transition: all 0.1s ease; }
+    .brutalist-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 rgba(0,0,0,1); }
+    .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
+    .fav-btn.favorited { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
+    .fav-btn.favorited .material-symbols-outlined { color: #ef4444; }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+  <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
+    <div class="flex items-center gap-10">
+      <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
+      <nav class="hidden lg:flex gap-8">
+        <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="/">INICIO</a>
+        <a class="font-label-bold text-primary hover:underline decoration-[3px] underline-offset-8" href="/favoritos.html">GUARDADOS</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="/login.html" class="px-6 py-2 text-primary font-label-bold hover:underline decoration-[2px] underline-offset-4">LOGIN</a>
+    </div>
+  </header>
+
+  <main class="flex-1 py-12 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-10">
+        <h1 class="font-headline-lg text-headline-lg uppercase leading-none">Empleos<br/><span class="italic font-normal">guardados</span></h1>
+        <p class="text-secondary mt-4" id="fav-count"></p>
+      </div>
+
+      <div id="favoritos-list" class="space-y-6"></div>
+    </div>
+  </main>
+
+  <div id="modal-empleo"></div>
+
+  <footer class="bg-black text-white w-full px-6 py-10 border-t-[5px] border-primary">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="font-label-sm text-white/40">© 2026 CHAMBA.COM. TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="font-label-sm text-white/40 uppercase tracking-widest">BUILT FOR THE BOLD</p>
+    </div>
+  </footer>
+
+  <script>
+    const API_URL = '/api/empleos';
+    const ICONS = {
+      'Informática y Programación': 'terminal',
+      'Ventas y Comercial': 'shopping_bag',
+      'Finanzas y Contabilidad': 'calculate',
+      'Ingeniería y Técnico': 'engineering',
+      'Servicio al Cliente': 'support_agent',
+      'Administración de Empresas': 'corporate_fare',
+      'Recursos Humanos': 'people',
+      'Marketing y Comunicación': 'campaign',
+      'Logística, Almacén y Compras': 'local_shipping'
+    };
+    const TAGS = {
+      'Informática y Programación': 'TECNOLOGÍA',
+      'Ventas y Comercial': 'VENTAS',
+      'Finanzas y Contabilidad': 'FINANZAS',
+      'Ingeniería y Técnico': 'INGENIERÍA',
+      'Servicio al Cliente': 'SERVICIO',
+      'Administración de Empresas': 'ADMIN',
+      'Recursos Humanos': 'RRHH',
+      'Marketing y Comunicación': 'MARKETING',
+      'Logística, Almacén y Compras': 'LOGÍSTICA'
+    };
+
+    let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+    function toggleFavorite(id) {
+      const index = favorites.indexOf(id);
+      if (index === -1) {
+        favorites.push(id);
+      } else {
+        favorites.splice(index, 1);
+      }
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      cargarFavoritos();
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
+    }
+
+    async function shareJob(empleo) {
+      const text = `¡Mira este empleo en Chamba.com! ${empleo.titulo} - ${empleo.empresa}`;
+      if (navigator.share) {
+        navigator.share({ title: empleo.titulo, text, url: window.location.href });
+      } else {
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+      }
+    }
+
+    async function cargarFavoritos() {
+      const list = document.getElementById('favoritos-list');
+
+      if (favorites.length === 0) {
+        document.getElementById('fav-count').textContent = '0 empleos guardados';
+        list.innerHTML = `
+          <div class="text-center py-20 border-[3px] border-dashed border-black">
+            <span class="material-symbols-outlined text-[64px] text-neutral-300">favorite_border</span>
+            <h3 class="font-headline-md text-xl mt-4">No tienes empleos guardados</h3>
+            <p class="text-secondary mt-2 mb-6">Haz click en el corazón de cualquier empleo para guardarlo</p>
+            <a href="/" class="brutalist-btn bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm inline-block">VER EMPLEOS</a>
+          </div>`;
+        return;
+      }
+
+      const res = await fetch(`${API_URL}?limit=100`);
+      const data = await res.json();
+      const allEmpleos = data.empleos || data;
+      const empleos = allEmpleos.filter(e => favorites.includes(e.id));
+
+      document.getElementById('fav-count').textContent = `${empleos.length} empleos guardados`;
+
+      list.innerHTML = empleos.map(e => {
+        const icon = ICONS[e.categoria] || 'work';
+        const tag = TAGS[e.categoria] || 'EMPLEO';
+        const fecha = formatDate(e.fecha_limite);
+        return `
+          <div class="bg-white p-8 border-[3px] border-black brutalist-card flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-8 w-full md:w-auto flex-1">
+              <div class="w-20 h-20 bg-neutral-100 border-2 border-black flex items-center justify-center">
+                <span class="material-symbols-outlined text-[40px]">${icon}</span>
+              </div>
+              <div>
+                <div class="flex gap-2 mb-2">
+                  <span class="bg-neutral-900 text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${tag}</span>
+                  <span class="bg-neutral-200 text-black px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${e.departamento}</span>
+                </div>
+                <h4 class="font-headline-md text-2xl uppercase">${e.titulo}</h4>
+                <p class="text-secondary font-label-sm mt-1 uppercase tracking-wider">${e.empresa} • ${fecha}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button onclick="toggleFavorite(${e.id})" class="fav-btn favorited w-12 h-12 border-2 border-red-500 flex items-center justify-center hover:bg-red-50 transition-colors">
+                <span class="material-symbols-outlined">favorite</span>
+              </button>
+              <a href="/" class="brutalist-btn bg-primary text-on-primary px-8 py-4 font-label-bold uppercase text-sm">VER EMPLEO</a>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarFavoritos);
+  </script>
+</body>
+</html>

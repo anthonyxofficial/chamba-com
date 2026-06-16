@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "email": "admin@techcorp.hn",
+    "password": "123456",
+    "nombre": "TechCorp",
+    "tipo": "empresa",
+    "createdAt": "2026-06-16T02:03:47.979Z"
+  },
+  {
+    "id": 2,
+    "email": "carlos@test.hn",
+    "password": "123456",
+    "nombre": "Carlos Test",
+    "tipo": "empresa",
+    "createdAt": "2026-06-16T03:33:47.821Z"
+  }
+]

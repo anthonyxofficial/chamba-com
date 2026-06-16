@@ -1,0 +1,84 @@
+[
+  {
+    "id": 1,
+    "titulo": "Desarrollador Web Full Stack",
+    "empresa": "BAC Credomatic",
+    "categoria": "Informática y Programación",
+    "departamento": "Cortés",
+    "descripcion": "Buscamos desarrollador con experiencia en Node.js y React. Trabajo híbrido en San Pedro Sula.",
+    "fecha_limite": "2026-07-15"
+  },
+  {
+    "id": 2,
+    "titulo": "Ejecutivo de Ventas",
+    "empresa": "Tigo Honduras",
+    "categoria": "Ventas y Comercial",
+    "departamento": "Francisco Morazán",
+    "descripcion": "Se requiere ejecutivo con experiencia en ventas corporativas. Zona: Tegucigalpa.",
+    "fecha_limite": "2026-06-30"
+  },
+  {
+    "id": 3,
+    "titulo": "Contador Senior",
+    "empresa": "Ficohsa",
+    "categoria": "Finanzas y Contabilidad",
+    "departamento": "Cortés",
+    "descripcion": "Profesional en contabilidad con mínimo 3 años de experiencia en banca.",
+    "fecha_limite": "2026-07-20"
+  },
+  {
+    "id": 4,
+    "titulo": "Ingeniero de Redes",
+    "empresa": "Entel Honduras",
+    "categoria": "Ingeniería y Técnico",
+    "departamento": "Cortés",
+    "descripcion": "Ingeniero para mantenimiento de infraestructura de redes y servidores.",
+    "fecha_limite": "2026-07-10"
+  },
+  {
+    "id": 5,
+    "titulo": "Agente de Atención al Cliente",
+    "empresa": "Call Center SPS",
+    "categoria": "Servicio al Cliente",
+    "departamento": "Cortés",
+    "descripcion": "Se necesitan agentes bilingües (español/inglés). Turnos flexibles.",
+    "fecha_limite": "2026-06-25"
+  },
+  {
+    "id": 6,
+    "titulo": "Gerente de Recursos Humanos",
+    "empresa": "Cervecería Hondureña",
+    "categoria": "Recursos Humanos",
+    "departamento": "Francisco Morazán",
+    "descripcion": "Profesional de RRHH con experiencia en gestión de talento y nómina.",
+    "fecha_limite": "2026-07-25"
+  },
+  {
+    "id": 7,
+    "titulo": "Community Manager",
+    "empresa": "Claro Honduras",
+    "categoria": "Marketing y Comunicación",
+    "departamento": "Francisco Morazán",
+    "descripcion": "Gestión de redes sociales y contenido digital para marca corporativa.",
+    "fecha_limite": "2026-07-05"
+  },
+  {
+    "id": 8,
+    "titulo": "Asistente Logístico",
+    "empresa": "Maersk Honduras",
+    "categoria": "Logística, Almacén y Compras",
+    "departamento": "Cortés",
+    "descripcion": "Coordinación de envíos y control de inventario en zona franca.",
+    "fecha_limite": "2026-06-28"
+  },
+  {
+    "id": 9,
+    "departamento": "Cort�s",
+    "categoria": "Inform�tica y Programaci�n",
+    "descripcion": "Buscamos dev React con experiencia",
+    "empresa": "StartupHN",
+    "fecha_limite": "2026-08-01",
+    "titulo": "Desarrollador React",
+    "createdAt": "2026-06-16T03:33:37.784Z"
+  }
+]

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Contacto - Chamba.com</title>
+  <meta name="description" content="Contáctanos en Chamba.com. Estamos aquí para ayudarte con cualquier pregunta sobre empleos."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "background": "#fbf9f8",
+            "primary": "#000000",
+            "secondary": "#4a4a4a",
+            "on-background": "#1b1c1c",
+          },
+          "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+          "fontFamily": {
+            "label-bold": ["Space Grotesk"],
+            "body-md": ["Space Grotesk"],
+            "headline-md": ["Bricolage Grotesque"],
+            "headline-lg": ["Bricolage Grotesque"]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .brutalist-card { border: 3px solid #000; box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
+    .brutalist-btn { border: 2px solid #000; box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); transition: all 0.1s ease; }
+    .brutalist-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 rgba(0,0,0,1); }
+    .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
+    .form-input { width: 100%; padding: 12px 14px; border: 3px solid #000; background: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 16px; outline: none; }
+    .form-input:focus { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+  <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
+    <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
+    <nav class="hidden lg:flex gap-8">
+      <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="/">INICIO</a>
+      <a class="font-label-bold text-primary hover:underline decoration-[3px] underline-offset-8" href="/contacto.html">CONTACTO</a>
+    </nav>
+  </header>
+
+  <main class="flex-1 py-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="font-headline-lg text-headline-lg uppercase leading-none mb-4">Contacto</h1>
+      <p class="text-secondary mb-12 text-lg">¿Tienes preguntas? Estamos aquí para ayudarte.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div class="brutalist-card bg-white p-10">
+          <h2 class="font-headline-md text-2xl uppercase mb-8">Envíanos un mensaje</h2>
+          <form id="contactForm" class="space-y-6">
+            <div>
+              <label class="font-label-bold text-xs uppercase block mb-2">Nombre</label>
+              <input type="text" required class="form-input"/>
+            </div>
+            <div>
+              <label class="font-label-bold text-xs uppercase block mb-2">Email</label>
+              <input type="email" required class="form-input"/>
+            </div>
+            <div>
+              <label class="font-label-bold text-xs uppercase block mb-2">Asunto</label>
+              <input type="text" required class="form-input"/>
+            </div>
+            <div>
+              <label class="font-label-bold text-xs uppercase block mb-2">Mensaje</label>
+              <textarea rows="5" required class="form-input resize-none"></textarea>
+            </div>
+            <button type="submit" class="w-full brutalist-btn bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm">ENVIAR</button>
+          </form>
+          <div id="success-msg" class="hidden text-center py-8">
+            <span class="material-symbols-outlined text-[64px] text-green-600">check_circle</span>
+            <h3 class="font-headline-md text-xl mt-4 uppercase">¡Mensaje enviado!</h3>
+            <p class="text-secondary mt-2">Te responderemos pronto</p>
+          </div>
+        </div>
+
+        <div class="space-y-8">
+          <div class="brutalist-card bg-white p-8">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="material-symbols-outlined text-[32px]">email</span>
+              <div>
+                <h3 class="font-label-bold uppercase">Email</h3>
+                <p class="text-secondary">info@chamba.com</p>
+              </div>
+            </div>
+          </div>
+          <div class="brutalist-card bg-white p-8">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="material-symbols-outlined text-[32px]">location_on</span>
+              <div>
+                <h3 class="font-label-bold uppercase">Ubicación</h3>
+                <p class="text-secondary">Tegucigalpa, Honduras</p>
+              </div>
+            </div>
+          </div>
+          <div class="brutalist-card bg-white p-8">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="material-symbols-outlined text-[32px]">schedule</span>
+              <div>
+                <h3 class="font-label-bold uppercase">Horario</h3>
+                <p class="text-secondary">Lun - Vie: 8:00 AM - 5:00 PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-black text-white w-full px-6 py-10 border-t-[5px] border-primary">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="font-label-sm text-white/40">© 2026 CHAMBA.COM. TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="font-label-sm text-white/40 uppercase tracking-widest">BUILT FOR THE BOLD</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('contactForm').classList.add('hidden');
+      document.getElementById('success-msg').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>

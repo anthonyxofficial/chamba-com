@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Política de Privacidad - Chamba.com</title>
+  <meta name="description" content="Conoce cómo Chamba.com protege y maneja tu información personal."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "background": "#fbf9f8",
+            "primary": "#000000",
+            "secondary": "#4a4a4a",
+            "on-background": "#1b1c1c",
+          },
+          "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+          "fontFamily": {
+            "label-bold": ["Space Grotesk"],
+            "body-md": ["Space Grotesk"],
+            "headline-md": ["Bricolage Grotesque"],
+            "headline-lg": ["Bricolage Grotesque"]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .brutalist-card { border: 3px solid #000; box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
+    .brutalist-btn { border: 2px solid #000; box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); transition: all 0.1s ease; }
+    .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+  <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
+    <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
+  </header>
+
+  <main class="flex-1 py-20 px-6">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="font-headline-lg text-headline-lg uppercase leading-none mb-8">Política de<br/><span class="italic font-normal">Privacidad</span></h1>
+
+      <div class="space-y-8 text-secondary leading-relaxed">
+        <div class="brutalist-card bg-white p-8">
+          <h2 class="font-headline-md text-xl uppercase mb-4">1. Información que recopilamos</h2>
+          <p>Recopilamos información que usted nos proporciona directamente al registrarse, postularse a empleos o contactarnos. Esto incluye: nombre, correo electrónico, teléfono, currículum y carta de presentación.</p>
+        </div>
+
+        <div class="brutalist-card bg-white p-8">
+          <h2 class="font-headline-md text-xl uppercase mb-4">2. Uso de la información</h2>
+          <p>Utilizamos su información para: conectarlo con oportunidades laborales, mejorar nuestros servicios, enviar comunicaciones relevantes y cumplir con obligaciones legales.</p>
+        </div>
+
+        <div class="brutalist-card bg-white p-8">
+          <h2 class="font-headline-md text-xl uppercase mb-4">3. Protección de datos</h2>
+          <p>Implementamos medidas de seguridad técnicas y organizativas para proteger su información personal contra acceso no autorizado, alteración, divulgación o destrucción.</p>
+        </div>
+
+        <div class="brutalist-card bg-white p-8">
+          <h2 class="font-headline-md text-xl uppercase mb-4">4. Compartir información</h2>
+          <p>No vendemos ni compartimos su información personal con terceros, excepto cuando sea necesario para conectarlo con empleadores potenciales o cuando lo requiera la ley.</p>
+        </div>
+
+        <div class="brutalist-card bg-white p-8">
+          <h2 class="font-headline-md text-xl uppercase mb-4">5. Sus derechos</h2>
+          <p>Usted tiene derecho a acceder, corregir o eliminar su información personal en cualquier momento. Puede ejercer estos derechos contactándonos a través de info@chamba.com.</p>
+        </div>
+      </div>
+
+      <p class="text-secondary text-sm mt-12">Última actualización: Junio 2026</p>
+    </div>
+  </main>
+
+  <footer class="bg-black text-white w-full px-6 py-10 border-t-[5px] border-primary">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="font-label-sm text-white/40">© 2026 CHAMBA.COM. TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="font-label-sm text-white/40 uppercase tracking-widest">BUILT FOR THE BOLD</p>
+    </div>
+  </footer>
+</body>
+</html>

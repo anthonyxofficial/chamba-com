@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Página no encontrada - Chamba.com</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "background": "#fbf9f8",
+            "primary": "#000000",
+            "secondary": "#4a4a4a",
+            "on-background": "#1b1c1c",
+          },
+          "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+          "fontFamily": {
+            "label-bold": ["Space Grotesk"],
+            "body-md": ["Space Grotesk"],
+            "headline-md": ["Bricolage Grotesque"],
+            "headline-lg": ["Bricolage Grotesque"],
+            "display-xl": ["Bricolage Grotesque"]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .brutalist-card { border: 3px solid #000; box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
+    .brutalist-btn { border: 2px solid #000; box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); transition: all 0.1s ease; }
+    .brutalist-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 rgba(0,0,0,1); }
+    .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
+    .text-outline-black {
+      -webkit-text-stroke: 2px black;
+      color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+  <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
+    <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
+    <a href="/" class="brutalist-btn bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm tracking-widest">INICIO</a>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center py-20 px-6">
+    <div class="text-center">
+      <h1 class="font-display-xl text-[200px] font-black leading-none text-outline-black">404</h1>
+      <h2 class="font-headline-lg text-headline-lg uppercase mt-4">Página no<br/><span class="italic font-normal">encontrada</span></h2>
+      <p class="text-secondary mt-6 mb-10 text-lg max-w-md mx-auto">Lo sentimos, la página que buscas no existe o ha sido movida.</p>
+      <a href="/" class="brutalist-btn bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm inline-flex items-center gap-3">
+        <span class="material-symbols-outlined">home</span> VOLVER AL INICIO
+      </a>
+    </div>
+  </main>
+
+  <footer class="bg-black text-white w-full px-6 py-10 border-t-[5px] border-primary">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="font-label-sm text-white/40">© 2026 CHAMBA.COM. TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="font-label-sm text-white/40 uppercase tracking-widest">BUILT FOR THE BOLD</p>
+    </div>
+  </footer>
+</body>
+</html>

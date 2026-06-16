@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Registro - Chamba.com</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "background": "#fbf9f8",
+            "primary": "#000000",
+            "secondary": "#4a4a4a",
+            "on-background": "#1b1c1c",
+          },
+          "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+          "fontFamily": {
+            "label-bold": ["Space Grotesk"],
+            "body-md": ["Space Grotesk"],
+            "headline-md": ["Bricolage Grotesque"],
+            "headline-lg": ["Bricolage Grotesque"]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .brutalist-card { border: 3px solid #000; box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
+    .brutalist-btn { border: 2px solid #000; box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); transition: all 0.1s ease; }
+    .brutalist-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 rgba(0,0,0,1); }
+    .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
+    .tipo-btn { border: 3px solid #000; padding: 20px; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .tipo-btn.active { background: #000; color: #fff; }
+    .tipo-btn:not(.active):hover { background: #f0f0f0; }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+  <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
+    <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
+    <div class="flex items-center gap-4">
+      <a href="/login.html" class="px-6 py-2 text-primary font-label-bold hover:underline decoration-[2px] underline-offset-4">LOGIN</a>
+    </div>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center py-20 px-6">
+    <div class="brutalist-card bg-white p-12 w-full max-w-md">
+      <div class="text-center mb-10">
+        <h1 class="font-headline-lg text-headline-lg uppercase">Crear<br/><span class="italic font-normal">cuenta</span></h1>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="tipo-btn active" onclick="seleccionarTipo('aspirante')">
+          <span class="material-symbols-outlined text-[32px]">person</span>
+          <p class="font-label-bold uppercase mt-2 text-sm">Aspirante</p>
+        </div>
+        <div class="tipo-btn" onclick="seleccionarTipo('empresa')">
+          <span class="material-symbols-outlined text-[32px]">business</span>
+          <p class="font-label-bold uppercase mt-2 text-sm">Empresa</p>
+        </div>
+      </div>
+
+      <form id="registroForm" class="space-y-6">
+        <input type="hidden" id="tipo" value="aspirante"/>
+        <div>
+          <label class="font-label-bold text-xs uppercase block mb-2">Nombre completo</label>
+          <input type="text" id="nombre" required class="w-full px-4 py-3 border-[3px] border-black font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none"/>
+        </div>
+        <div>
+          <label class="font-label-bold text-xs uppercase block mb-2">Email</label>
+          <input type="email" id="email" required class="w-full px-4 py-3 border-[3px] border-black font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none" placeholder="tu@email.com"/>
+        </div>
+        <div>
+          <label class="font-label-bold text-xs uppercase block mb-2">Contraseña</label>
+          <input type="password" id="password" required class="w-full px-4 py-3 border-[3px] border-black font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none" placeholder="Mínimo 6 caracteres"/>
+        </div>
+        <div id="error-msg" class="hidden bg-red-100 border-[3px] border-red-600 p-4 text-red-600 font-label-bold text-sm uppercase"></div>
+        <button type="submit" class="w-full brutalist-btn bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm">CREAR CUENTA</button>
+      </form>
+
+      <div class="mt-8 text-center">
+        <p class="text-secondary text-sm">¿Ya tienes cuenta? <a href="/login.html" class="font-label-bold text-primary underline decoration-[3px] underline-offset-4">Inicia sesión</a></p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function seleccionarTipo(tipo) {
+      document.getElementById('tipo').value = tipo;
+      document.querySelectorAll('.tipo-btn').forEach(btn => btn.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
+    document.getElementById('registroForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorDiv = document.getElementById('error-msg');
+      errorDiv.classList.add('hidden');
+
+      const data = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        tipo: document.getElementById('tipo').value
+      };
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          errorDiv.textContent = result.error;
+          errorDiv.classList.remove('hidden');
+          return;
+        }
+
+        localStorage.setItem('user', JSON.stringify(result));
+        window.location.href = data.tipo === 'empresa' ? '/dashboard.html' : '/';
+      } catch (err) {
+        errorDiv.textContent = 'Error de conexión';
+        errorDiv.classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
