@@ -44,7 +44,7 @@ async function cargarMisEmpleos() {
 
   const list = document.getElementById('mis-empleos-list');
   if (empleos.length === 0) {
-    list.innerHTML = `<div class="text-center py-20 border-[3px] border-dashed border-black">
+    list.innerHTML = `<div class="text-center py-20 border-[3px] border-dashed border-black dark:border-white">
       <span class="material-symbols-outlined text-[48px] text-neutral-300">work_off</span>
       <h3 class="font-headline-md text-xl mt-4">No tienes empleos publicados</h3>
       <p class="text-secondary mt-2 mb-6">Publica tu primer empleo para comenzar a recibir postulaciones</p>
@@ -54,13 +54,13 @@ async function cargarMisEmpleos() {
   }
 
   list.innerHTML = empleos.map(e => `
-    <div class="brutalist-card bg-white p-6 flex items-center justify-between">
+    <div class="brutalist-card bg-white dark:bg-surface-dark p-6 flex items-center justify-between">
       <div class="flex-1">
         <h4 class="font-headline-md text-xl uppercase">${e.titulo}</h4>
         <p class="text-secondary font-label-sm mt-1">${e.departamento} • ${formatDate(e.fecha_limite)}</p>
       </div>
       <div class="flex gap-3">
-        <button onclick="eliminarEmpleo(${e.id})" class="brutalist-btn bg-white text-red-600 px-4 py-2 font-label-bold uppercase text-xs border-2 border-red-600 hover:bg-red-600 hover:text-white">ELIMINAR</button>
+        <button onclick="eliminarEmpleo(${e.id})" class="brutalist-btn bg-white dark:bg-surface-dark text-red-600 px-4 py-2 font-label-bold uppercase text-xs border-2 border-red-600 hover:bg-red-600 hover:text-white">ELIMINAR</button>
       </div>
     </div>
   `).join('');
@@ -83,7 +83,7 @@ async function cargarPostulaciones() {
 
   const list = document.getElementById('postulaciones-list');
   if (postulaciones.length === 0) {
-    list.innerHTML = `<div class="text-center py-20 border-[3px] border-dashed border-black">
+    list.innerHTML = `<div class="text-center py-20 border-[3px] border-dashed border-black dark:border-white">
       <span class="material-symbols-outlined text-[48px] text-neutral-300">inbox</span>
       <h3 class="font-headline-md text-xl mt-4">Sin postulaciones aún</h3>
       <p class="text-secondary mt-2">Las postulaciones aparecerán aquí cuando alguien aplique a tus empleos</p>
@@ -92,14 +92,14 @@ async function cargarPostulaciones() {
   }
 
   list.innerHTML = postulaciones.map(p => `
-    <div class="brutalist-card bg-white p-6">
+    <div class="brutalist-card bg-white dark:bg-surface-dark p-6">
       <div class="flex items-start justify-between">
         <div>
           <h4 class="font-label-bold uppercase">${p.nombre}</h4>
           <p class="text-secondary text-sm">${p.email} • ${p.telefono || 'Sin teléfono'}</p>
           ${p.carta ? `<p class="mt-3 text-secondary text-sm italic">"${p.carta}"</p>` : ''}
         </div>
-        <span class="bg-neutral-200 px-3 py-1 text-[10px] font-bold uppercase">Empleo #${p.empleo_id}</span>
+        <span class="bg-neutral-200 dark:bg-neutral-600 px-3 py-1 text-[10px] font-bold uppercase">Empleo #${p.empleo_id}</span>
       </div>
     </div>
   `).join('');

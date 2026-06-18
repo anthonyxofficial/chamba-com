@@ -148,7 +148,7 @@
       if (favorites.length === 0) {
         document.getElementById('fav-count').textContent = '0 empleos guardados';
         list.innerHTML = `
-          <div class="text-center py-20 border-[3px] border-dashed border-black">
+          <div class="text-center py-20 border-[3px] border-dashed border-black dark:border-white">
             <span class="material-symbols-outlined text-[64px] text-neutral-300">favorite_border</span>
             <h3 class="font-headline-md text-xl mt-4">No tienes empleos guardados</h3>
             <p class="text-secondary mt-2 mb-6">Haz click en el corazón de cualquier empleo para guardarlo</p>
@@ -169,15 +169,15 @@
         const tag = TAGS[e.categoria] || 'EMPLEO';
         const fecha = formatDate(e.fecha_limite);
         return `
-          <div class="bg-white dark:bg-surface-dark p-8 border-[3px] border-black brutalist-card flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="bg-white dark:bg-surface-dark p-8 border-[3px] border-black dark:border-white brutalist-card flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="flex items-center gap-8 w-full md:w-auto flex-1">
-              <div class="w-20 h-20 bg-neutral-100 border-2 border-black flex items-center justify-center">
+              <div class="w-20 h-20 bg-neutral-100 dark:bg-neutral-700 border-2 border-black dark:border-white flex items-center justify-center">
                 <span class="material-symbols-outlined text-[40px]">${icon}</span>
               </div>
               <div>
                 <div class="flex gap-2 mb-2">
                   <span class="bg-neutral-900 text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${tag}</span>
-                  <span class="bg-neutral-200 text-black px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${e.departamento}</span>
+                  <span class="bg-neutral-200 dark:bg-neutral-600 text-black dark:text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${e.departamento}</span>
                 </div>
                 <h4 class="font-headline-md text-2xl uppercase">${e.titulo}</h4>
                 <p class="text-secondary font-label-sm mt-1 uppercase tracking-wider">${e.empresa} • ${fecha}</p>

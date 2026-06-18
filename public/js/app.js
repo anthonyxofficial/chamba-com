@@ -63,19 +63,19 @@ function shareJob(empleo) {
     modal.className = 'fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4';
     modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
     modal.innerHTML = `
-      <div class="bg-white border-[3px] border-black brutalist-card p-8 max-w-sm w-full" onclick="event.stopPropagation()">
+      <div class="bg-white dark:bg-surface-dark border-[3px] border-black dark:border-white brutalist-card p-8 max-w-sm w-full" onclick="event.stopPropagation()">
         <h3 class="font-headline-md text-xl uppercase mb-6">Compartir empleo</h3>
         <div class="space-y-3">
-          <a href="https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}" target="_blank" class="flex items-center gap-3 p-3 border-2 border-black hover:bg-green-500 hover:text-white transition-colors">
+          <a href="https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}" target="_blank" class="flex items-center gap-3 p-3 border-2 border-black dark:border-white hover:bg-green-500 hover:text-white transition-colors">
             <span class="material-symbols-outlined">chat</span> WhatsApp
           </a>
-          <a href="mailto:?subject=${encodeURIComponent(empleo.titulo)}&body=${encodeURIComponent(text + '\n' + url)}" class="flex items-center gap-3 p-3 border-2 border-black hover:bg-blue-500 hover:text-white transition-colors">
+          <a href="mailto:?subject=${encodeURIComponent(empleo.titulo)}&body=${encodeURIComponent(text + '\n' + url)}" class="flex items-center gap-3 p-3 border-2 border-black dark:border-white hover:bg-blue-500 hover:text-white transition-colors">
             <span class="material-symbols-outlined">email</span> Email
           </a>
-          <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}" target="_blank" class="flex items-center gap-3 p-3 border-2 border-black hover:bg-sky-500 hover:text-white transition-colors">
+          <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}" target="_blank" class="flex items-center gap-3 p-3 border-2 border-black dark:border-white hover:bg-sky-500 hover:text-white transition-colors">
             <span class="material-symbols-outlined">tag</span> Twitter/X
           </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" class="flex items-center gap-3 p-3 border-2 border-black hover:bg-blue-600 hover:text-white transition-colors">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" class="flex items-center gap-3 p-3 border-2 border-black dark:border-white hover:bg-blue-600 hover:text-white transition-colors">
             <span class="material-symbols-outlined">facebook</span> Facebook
           </a>
         </div>
@@ -135,19 +135,19 @@ function renderEmpleos(empleos) {
       ? '<span class="bg-red-600 text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">PLAZO CERRADO</span>'
       : '<span class="bg-green-600 text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">ABIERTO</span>';
     const applyBtn = expirado
-      ? `<button disabled class="flex-1 md:flex-none bg-neutral-300 text-neutral-500 px-8 py-4 font-label-bold uppercase cursor-not-allowed">CERRADO</button>`
+      ? `<button disabled class="flex-1 md:flex-none bg-neutral-300 dark:bg-neutral-600 text-neutral-500 dark:text-neutral-400 px-8 py-4 font-label-bold uppercase cursor-not-allowed">CERRADO</button>`
       : `<button onclick="abrirEmpleo(${e.id})" class="flex-1 md:flex-none brutalist-btn bg-primary text-on-primary px-8 py-4 font-label-bold uppercase">APLICAR</button>`;
     const cardOpacity = expirado ? 'opacity-70' : '';
     return `
-      <div class="bg-white p-8 border-[3px] border-black brutalist-card flex flex-col md:flex-row items-center justify-between gap-6 group ${cardOpacity}">
+      <div class="bg-white dark:bg-surface-dark p-8 border-[3px] border-black dark:border-white brutalist-card flex flex-col md:flex-row items-center justify-between gap-6 group ${cardOpacity}">
         <div class="flex items-center gap-8 w-full md:w-auto cursor-pointer flex-1" onclick="abrirEmpleo(${e.id})">
-          <div class="w-20 h-20 bg-neutral-100 border-2 border-black flex items-center justify-center grayscale group-hover:grayscale-0 transition-all">
+          <div class="w-20 h-20 bg-neutral-100 dark:bg-neutral-700 border-2 border-black dark:border-white flex items-center justify-center grayscale group-hover:grayscale-0 transition-all">
             <span class="material-symbols-outlined text-[40px]">${icon}</span>
           </div>
           <div>
             <div class="flex gap-2 mb-2">
               <span class="bg-neutral-900 text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${tag}</span>
-              <span class="bg-neutral-200 text-black px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${e.departamento}</span>
+              <span class="bg-neutral-200 dark:bg-neutral-600 text-black dark:text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${e.departamento}</span>
               ${estadoBadge}
             </div>
             <h4 class="font-headline-md text-2xl uppercase group-hover:underline decoration-[3px]">${e.titulo}</h4>
@@ -155,10 +155,10 @@ function renderEmpleos(empleos) {
           </div>
         </div>
         <div class="flex items-center gap-3 w-full md:w-auto">
-          <button onclick="toggleFavorite(${e.id})" data-fav-id="${e.id}" class="fav-btn ${favClass} w-12 h-12 border-2 border-black flex items-center justify-center hover:bg-red-50 transition-colors">
+          <button onclick="toggleFavorite(${e.id})" data-fav-id="${e.id}" class="fav-btn ${favClass} w-12 h-12 border-2 border-black dark:border-white flex items-center justify-center hover:bg-red-50 dark:hover:bg-neutral-700 transition-colors">
             <span class="material-symbols-outlined">${favIcon}</span>
           </button>
-          <button onclick="shareJob({id:${e.id},titulo:'${e.titulo.replace(/'/g,"\\'")}',empresa:'${e.empresa.replace(/'/g,"\\'")}',departamento:'${e.departamento.replace(/'/g,"\\'")}'})" class="w-12 h-12 border-2 border-black flex items-center justify-center hover:bg-neutral-100 transition-colors">
+          <button onclick="shareJob({id:${e.id},titulo:'${e.titulo.replace(/'/g,"\\'")}',empresa:'${e.empresa.replace(/'/g,"\\'")}',departamento:'${e.departamento.replace(/'/g,"\\'")}'})" class="w-12 h-12 border-2 border-black dark:border-white flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
             <span class="material-symbols-outlined">share</span>
           </button>
           ${applyBtn}
@@ -176,11 +176,11 @@ function renderPagination(current, total, totalItems) {
 
   let html = `<div class="flex items-center justify-center gap-4 mt-12">`;
   if (current > 1) {
-    html += `<button onclick="goToPage(${current - 1})" class="brutalist-btn bg-white px-6 py-3 font-label-bold uppercase text-sm border-2 border-black">← Anterior</button>`;
+    html += `<button onclick="goToPage(${current - 1})" class="brutalist-btn bg-white dark:bg-surface-dark px-6 py-3 font-label-bold uppercase text-sm border-2 border-black dark:border-white">← Anterior</button>`;
   }
   html += `<span class="font-label-bold text-secondary">Página ${current} de ${total}</span>`;
   if (current < total) {
-    html += `<button onclick="goToPage(${current + 1})" class="brutalist-btn bg-white px-6 py-3 font-label-bold uppercase text-sm border-2 border-black">Siguiente →</button>`;
+    html += `<button onclick="goToPage(${current + 1})" class="brutalist-btn bg-white dark:bg-surface-dark px-6 py-3 font-label-bold uppercase text-sm border-2 border-black dark:border-white">Siguiente →</button>`;
   }
   html += `</div>`;
   container.innerHTML = html;
@@ -215,44 +215,44 @@ async function abrirEmpleo(id) {
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="font-label-bold text-xs uppercase block mb-2">Nombre completo</label>
-            <input type="text" name="nombre" required class="w-full px-4 py-3 border-[3px] border-black font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none"/>
+            <input type="text" name="nombre" required class="w-full px-4 py-3 border-[3px] border-black dark:border-white dark:bg-neutral-800 dark:text-white font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none"/>
           </div>
           <div>
             <label class="font-label-bold text-xs uppercase block mb-2">Email</label>
-            <input type="email" name="email" required class="w-full px-4 py-3 border-[3px] border-black font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none"/>
+            <input type="email" name="email" required class="w-full px-4 py-3 border-[3px] border-black dark:border-white dark:bg-neutral-800 dark:text-white font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none"/>
           </div>
         </div>
         <div>
           <label class="font-label-bold text-xs uppercase block mb-2">Teléfono</label>
-          <input type="tel" name="telefono" class="w-full px-4 py-3 border-[3px] border-black font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none"/>
+          <input type="tel" name="telefono" class="w-full px-4 py-3 border-[3px] border-black dark:border-white dark:bg-neutral-800 dark:text-white font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none"/>
         </div>
         <div>
           <label class="font-label-bold text-xs uppercase block mb-2">Carta de presentación</label>
-          <textarea name="carta" rows="4" class="w-full px-4 py-3 border-[3px] border-black font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none resize-none" placeholder="Cuéntanos por qué eres el candidato ideal..."></textarea>
+          <textarea name="carta" rows="4" class="w-full px-4 py-3 border-[3px] border-black dark:border-white dark:bg-neutral-800 dark:text-white font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none resize-none" placeholder="Cuéntanos por qué eres el candidato ideal..."></textarea>
         </div>
         <button type="submit" class="w-full brutalist-btn bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm">ENVIAR POSTULACIÓN</button>
       </form>`;
 
   document.getElementById('modal-empleo').innerHTML = `
     <div class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4" onclick="cerrarModal(event)">
-      <div class="bg-white border-[3px] border-black brutalist-card max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
-        <div class="p-8 border-b-[3px] border-black">
+      <div class="bg-white dark:bg-surface-dark border-[3px] border-black dark:border-white brutalist-card max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+        <div class="p-8 border-b-[3px] border-black dark:border-white">
           <div class="flex items-start justify-between">
             <div class="flex items-center gap-4">
-              <div class="w-16 h-16 bg-neutral-100 border-2 border-black flex items-center justify-center">
+              <div class="w-16 h-16 bg-neutral-100 dark:bg-neutral-700 border-2 border-black dark:border-white flex items-center justify-center">
                 <span class="material-symbols-outlined text-[32px]">${icon}</span>
               </div>
               <div>
                 <div class="flex gap-2 mb-2">
                   <span class="bg-neutral-900 text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${tag}</span>
-                  <span class="bg-neutral-200 text-black px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${empleo.departamento}</span>
+                  <span class="bg-neutral-200 dark:bg-neutral-600 text-black dark:text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${empleo.departamento}</span>
                   ${estadoBadge}
                 </div>
                 <h2 class="font-headline-md text-3xl uppercase">${empleo.titulo}</h2>
                 <p class="text-secondary font-label-sm uppercase tracking-wider mt-1">${empleo.empresa}</p>
               </div>
             </div>
-            <button onclick="cerrarModal()" class="w-10 h-10 border-2 border-black flex items-center justify-center hover:bg-neutral-100">
+            <button onclick="cerrarModal()" class="w-10 h-10 border-2 border-black dark:border-white flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-700">
               <span class="material-symbols-outlined">close</span>
             </button>
           </div>
@@ -273,10 +273,10 @@ async function abrirEmpleo(id) {
             <p class="text-secondary leading-relaxed">${empleo.descripcion}</p>
           </div>
           <div class="flex gap-3 mb-8">
-            <button onclick="shareJob({id:${empleo.id},titulo:'${empleo.titulo.replace(/'/g,"\\'")}',empresa:'${empleo.empresa.replace(/'/g,"\\'")}',departamento:'${empleo.departamento.replace(/'/g,"\\'")}'})" class="brutalist-btn bg-white px-6 py-3 font-label-bold uppercase text-sm flex items-center gap-2">
+            <button onclick="shareJob({id:${empleo.id},titulo:'${empleo.titulo.replace(/'/g,"\\'")}',empresa:'${empleo.empresa.replace(/'/g,"\\'")}',departamento:'${empleo.departamento.replace(/'/g,"\\'")}'})" class="brutalist-btn bg-white dark:bg-surface-dark px-6 py-3 font-label-bold uppercase text-sm flex items-center gap-2">
               <span class="material-symbols-outlined">share</span> Compartir
             </button>
-            <button onclick="toggleFavorite(${empleo.id})" class="brutalist-btn bg-white px-6 py-3 font-label-bold uppercase text-sm flex items-center gap-2">
+            <button onclick="toggleFavorite(${empleo.id})" class="brutalist-btn bg-white dark:bg-surface-dark px-6 py-3 font-label-bold uppercase text-sm flex items-center gap-2">
               <span class="material-symbols-outlined">${isFavorite(empleo.id) ? 'favorite' : 'favorite_border'}</span> Guardar
             </button>
           </div>
@@ -303,7 +303,7 @@ async function abrirEmpleo(id) {
 
     document.getElementById('modal-empleo').innerHTML = `
       <div class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4" onclick="cerrarModal(event)">
-        <div class="bg-white border-[3px] border-black brutalist-card max-w-md w-full text-center p-12" onclick="event.stopPropagation()">
+        <div class="bg-white dark:bg-surface-dark border-[3px] border-black dark:border-white brutalist-card max-w-md w-full text-center p-12" onclick="event.stopPropagation()">
           <span class="material-symbols-outlined text-[80px] text-green-600">check_circle</span>
           <h2 class="font-headline-md text-3xl mt-6 uppercase">¡Postulación enviada!</h2>
           <p class="text-secondary mt-3 mb-8">Tu aplicación ha sido enviada exitosamente</p>
