@@ -291,7 +291,11 @@ async function abrirEmpleo(id) {
     const data = Object.fromEntries(formData);
     data.empleo_id = parseInt(data.empleo_id);
 
-    await fetch('/api/postulaciones', {
+    const postulacionesUrl = window.location.hostname.includes('netlify.app')
+      ? '/.netlify/functions/postulaciones'
+      : '/api/postulaciones';
+
+    await fetch(postulacionesUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)

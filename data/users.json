@@ -2,7 +2,7 @@
   {
     "id": 1,
     "email": "admin@techcorp.hn",
-    "password": "123456",
+    "password": "$2b$10$NR9NAZBUF4IUpb7R0P5hjOd.tfSaXKnc.FhEJvxenWWUmk/BtTEte",
     "nombre": "TechCorp",
     "tipo": "empresa",
     "createdAt": "2026-06-16T02:03:47.979Z"
@@ -10,7 +10,7 @@
   {
     "id": 2,
     "email": "carlos@test.hn",
-    "password": "123456",
+    "password": "$2b$10$xn5g7lG7cyqTyg7A/0SQ9etLh8ATStiDXXu.Oe/7UcjdOSshs3usi",
     "nombre": "Carlos Test",
     "tipo": "empresa",
     "createdAt": "2026-06-16T03:33:47.821Z"

@@ -40,7 +40,7 @@ async function cargarMisEmpleos() {
   const empleos = (data.empleos || data).filter(e => e.empresa === user.nombre);
 
   document.getElementById('stat-empleos').textContent = empleos.length;
-  document.getElementById('stat-activos').textContent = empleos.length;
+  document.getElementById('stat-activos').textContent = empleos.filter(e => !e.expirado).length;
 
   const list = document.getElementById('mis-empleos-list');
   if (empleos.length === 0) {
@@ -67,8 +67,17 @@ async function cargarMisEmpleos() {
 }
 
 async function cargarPostulaciones() {
-  const res = await fetch('/api/postulaciones');
-  const postulaciones = await res.json();
+  const resEmpleos = await fetch(`${API_URL}?limit=100`);
+  const dataEmpleos = await resEmpleos.json();
+  const misEmpleos = (dataEmpleos.empleos || dataEmpleos).filter(e => e.empresa === user.nombre);
+  const misEmpleoIds = misEmpleos.map(e => e.id);
+
+  const url = window.location.hostname.includes('netlify.app')
+    ? '/.netlify/functions/postulaciones'
+    : '/api/postulaciones';
+  const res = await fetch(url);
+  const allPostulaciones = await res.json();
+  const postulaciones = allPostulaciones.filter(p => misEmpleoIds.includes(p.empleo_id));
 
   document.getElementById('stat-postulaciones').textContent = postulaciones.length;
 

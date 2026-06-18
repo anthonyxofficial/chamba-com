@@ -92,7 +92,7 @@
       </nav>
     </div>
     <div class="flex items-center gap-4">
-      <button class="px-6 py-2 text-primary font-label-bold hover:underline decoration-[2px] underline-offset-4">LOGIN</button>
+      <a href="/login.html" class="px-6 py-2 text-primary font-label-bold hover:underline decoration-[2px] underline-offset-4">LOGIN</a>
     </div>
   </header>
 
@@ -190,17 +190,26 @@
   </footer>
 
   <script>
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user || user.tipo !== 'empresa') {
+      window.location.href = '/login.html';
+    }
+
+    const API_URL = window.location.hostname.includes('netlify.app')
+      ? '/.netlify/functions/empleos'
+      : '/api/empleos';
+
     document.getElementById('publicarForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = {
         titulo: document.getElementById('titulo').value,
-        empresa: document.getElementById('empresa').value,
+        empresa: user.nombre || document.getElementById('empresa').value,
         categoria: document.getElementById('categoria').value,
         departamento: document.getElementById('departamentos').value,
         descripcion: document.getElementById('descripcion').value,
         fecha_limite: document.getElementById('fecha_limite').value
       };
-      const res = await fetch('/api/empleos', {
+      const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)

@@ -77,7 +77,9 @@
   </footer>
 
   <script>
-    const API_URL = '/api/empleos';
+    const API_URL = window.location.hostname.includes('netlify.app')
+      ? '/.netlify/functions/empleos'
+      : '/api/empleos';
     const ICONS = {
       'Informática y Programación': 'terminal',
       'Ventas y Comercial': 'shopping_bag',

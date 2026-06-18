@@ -70,15 +70,5 @@
     "departamento": "Cortés",
     "descripcion": "Coordinación de envíos y control de inventario en zona franca.",
     "fecha_limite": "2026-06-28"
-  },
-  {
-    "id": 9,
-    "departamento": "Cort�s",
-    "categoria": "Inform�tica y Programaci�n",
-    "descripcion": "Buscamos dev React con experiencia",
-    "empresa": "StartupHN",
-    "fecha_limite": "2026-08-01",
-    "titulo": "Desarrollador React",
-    "createdAt": "2026-06-16T03:33:37.784Z"
   }
 ]
