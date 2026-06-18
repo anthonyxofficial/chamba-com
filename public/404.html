@@ -14,10 +14,11 @@
         extend: {
           "colors": {
             "on-primary": "#ffffff",
-            "background": "#fbf9f8",
-            "primary": "#000000",
-            "secondary": "#4a4a4a",
-            "on-background": "#1b1c1c",
+            "background": { DEFAULT: "#fbf9f8", dark: "#0a0a0a" },
+            "primary": { DEFAULT: "#000000", dark: "#ffffff" },
+            "secondary": { DEFAULT: "#4a4a4a", dark: "#a0a0a0" },
+            "on-background": { DEFAULT: "#1b1c1c", dark: "#e0e0e0" },
+            "surface": { DEFAULT: "#ffffff", dark: "#1a1a1a" },
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
@@ -41,12 +42,23 @@
       -webkit-text-stroke: 2px black;
       color: transparent;
     }
+    .dark .brutalist-card { border-color: #fff; box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.3); }
+    .dark .brutalist-card:hover { box-shadow: 10px 10px 0px 0px rgba(255,255,255,0.3); }
+    .dark .brutalist-btn { border-color: #fff; box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.3); }
+    .dark .glass-header { background-color: rgba(10, 10, 10, 0.95); }
+    #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
+    #theme-toggle:hover { transform: rotate(15deg); }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col dark:bg-background-dark dark:text-on-background-dark">
   <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
     <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
-    <a href="/" class="brutalist-btn bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm tracking-widest">INICIO</a>
+    <div class="flex items-center gap-4">
+      <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-full transition-colors" aria-label="Cambiar tema">
+        <span class="material-symbols-outlined text-[24px]">dark_mode</span>
+      </button>
+      <a href="/" class="brutalist-btn bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm tracking-widest">INICIO</a>
+    </div>
   </header>
 
   <main class="flex-1 flex items-center justify-center py-20 px-6">
@@ -60,6 +72,7 @@
     </div>
   </main>
 
+  <script src="js/theme.js"></script>
   <footer class="bg-black text-white w-full px-6 py-10 border-t-[5px] border-primary">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
       <p class="font-label-sm text-white/40">© 2026 CHAMBA.COM. TODOS LOS DERECHOS RESERVADOS.</p>

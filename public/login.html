@@ -14,10 +14,11 @@
         extend: {
           "colors": {
             "on-primary": "#ffffff",
-            "background": "#fbf9f8",
-            "primary": "#000000",
-            "secondary": "#4a4a4a",
-            "on-background": "#1b1c1c",
+            "background": { DEFAULT: "#fbf9f8", dark: "#0a0a0a" },
+            "primary": { DEFAULT: "#000000", dark: "#ffffff" },
+            "secondary": { DEFAULT: "#4a4a4a", dark: "#a0a0a0" },
+            "on-background": { DEFAULT: "#1b1c1c", dark: "#e0e0e0" },
+            "surface": { DEFAULT: "#ffffff", dark: "#1a1a1a" },
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
@@ -33,21 +34,29 @@
   <style>
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
     .brutalist-card { border: 3px solid #000; box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
+    .dark .brutalist-card { border-color: #fff; box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.3); }
     .brutalist-btn { border: 2px solid #000; box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); transition: all 0.1s ease; }
+    .dark .brutalist-btn { border-color: #fff; box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.3); }
     .brutalist-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 rgba(0,0,0,1); }
     .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
+    .dark .glass-header { background-color: rgba(10, 10, 10, 0.95); }
+    #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
+    #theme-toggle:hover { transform: rotate(15deg); }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<body class="bg-background dark:bg-background-dark text-on-background dark:text-on-background-dark font-body-md min-h-screen flex flex-col">
   <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
     <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
     <div class="flex items-center gap-4">
+      <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-full transition-colors" aria-label="Cambiar tema">
+        <span class="material-symbols-outlined text-[24px]">dark_mode</span>
+      </button>
       <a href="/registro.html" class="brutalist-btn bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm tracking-widest">Crear cuenta</a>
     </div>
   </header>
 
   <main class="flex-1 flex items-center justify-center py-20 px-6">
-    <div class="brutalist-card bg-white p-12 w-full max-w-md">
+    <div class="brutalist-card bg-white dark:bg-surface-dark p-12 w-full max-w-md">
       <div class="text-center mb-10">
         <span class="material-symbols-outlined text-[64px]">person</span>
         <h1 class="font-headline-lg text-headline-lg uppercase mt-4">Iniciar<br/><span class="italic font-normal">sesión</span></h1>
@@ -56,11 +65,11 @@
       <form id="loginForm" class="space-y-6">
         <div>
           <label class="font-label-bold text-xs uppercase block mb-2">Email</label>
-          <input type="email" id="email" required class="w-full px-4 py-3 border-[3px] border-black font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none" placeholder="tu@email.com"/>
+          <input type="email" id="email" required class="w-full px-4 py-3 border-[3px] border-black dark:border-white dark:bg-neutral-800 dark:text-white font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none" placeholder="tu@email.com"/>
         </div>
         <div>
           <label class="font-label-bold text-xs uppercase block mb-2">Contraseña</label>
-          <input type="password" id="password" required class="w-full px-4 py-3 border-[3px] border-black font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none" placeholder="••••••••"/>
+          <input type="password" id="password" required class="w-full px-4 py-3 border-[3px] border-black dark:border-white dark:bg-neutral-800 dark:text-white font-body-md focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none" placeholder="••••••••"/>
         </div>
         <div id="error-msg" class="hidden bg-red-100 border-[3px] border-red-600 p-4 text-red-600 font-label-bold text-sm uppercase"></div>
         <button type="submit" class="w-full brutalist-btn bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm">ENTRAR</button>
@@ -111,5 +120,6 @@
       }
     });
   </script>
+  <script src="/js/theme.js"></script>
 </body>
 </html>

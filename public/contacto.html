@@ -15,10 +15,11 @@
         extend: {
           "colors": {
             "on-primary": "#ffffff",
-            "background": "#fbf9f8",
-            "primary": "#000000",
-            "secondary": "#4a4a4a",
-            "on-background": "#1b1c1c",
+            "background": { DEFAULT: "#fbf9f8", dark: "#0a0a0a" },
+            "primary": { DEFAULT: "#000000", dark: "#ffffff" },
+            "secondary": { DEFAULT: "#4a4a4a", dark: "#a0a0a0" },
+            "on-background": { DEFAULT: "#1b1c1c", dark: "#e0e0e0" },
+            "surface": { DEFAULT: "#ffffff", dark: "#1a1a1a" },
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
@@ -39,15 +40,27 @@
     .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
     .form-input { width: 100%; padding: 12px 14px; border: 3px solid #000; background: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 16px; outline: none; }
     .form-input:focus { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+    .dark .brutalist-card { border-color: #fff; box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.3); }
+    .dark .brutalist-card:hover { box-shadow: 10px 10px 0px 0px rgba(255,255,255,0.3); }
+    .dark .brutalist-btn { border-color: #fff; box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.3); }
+    .dark .glass-header { background-color: rgba(10, 10, 10, 0.95); }
+    .dark .form-input { border-color: #fff; background: #1a1a1a; color: #e0e0e0; }
+    #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
+    #theme-toggle:hover { transform: rotate(15deg); }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col dark:bg-background-dark dark:text-on-background-dark">
   <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
     <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
-    <nav class="hidden lg:flex gap-8">
-      <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="/">INICIO</a>
-      <a class="font-label-bold text-primary hover:underline decoration-[3px] underline-offset-8" href="/contacto.html">CONTACTO</a>
-    </nav>
+    <div class="flex items-center gap-4">
+      <nav class="hidden lg:flex gap-8">
+        <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="/">INICIO</a>
+        <a class="font-label-bold text-primary hover:underline decoration-[3px] underline-offset-8" href="/contacto.html">CONTACTO</a>
+      </nav>
+      <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-full transition-colors" aria-label="Cambiar tema">
+        <span class="material-symbols-outlined text-[24px]">dark_mode</span>
+      </button>
+    </div>
   </header>
 
   <main class="flex-1 py-20 px-6">
@@ -56,7 +69,7 @@
       <p class="text-secondary mb-12 text-lg">¿Tienes preguntas? Estamos aquí para ayudarte.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div class="brutalist-card bg-white p-10">
+        <div class="brutalist-card bg-white dark:bg-surface-dark p-10">
           <h2 class="font-headline-md text-2xl uppercase mb-8">Envíanos un mensaje</h2>
           <form id="contactForm" class="space-y-6">
             <div>
@@ -85,7 +98,7 @@
         </div>
 
         <div class="space-y-8">
-          <div class="brutalist-card bg-white p-8">
+          <div class="brutalist-card bg-white dark:bg-surface-dark p-8">
             <div class="flex items-center gap-4 mb-4">
               <span class="material-symbols-outlined text-[32px]">email</span>
               <div>
@@ -94,7 +107,7 @@
               </div>
             </div>
           </div>
-          <div class="brutalist-card bg-white p-8">
+          <div class="brutalist-card bg-white dark:bg-surface-dark p-8">
             <div class="flex items-center gap-4 mb-4">
               <span class="material-symbols-outlined text-[32px]">location_on</span>
               <div>
@@ -103,7 +116,7 @@
               </div>
             </div>
           </div>
-          <div class="brutalist-card bg-white p-8">
+          <div class="brutalist-card bg-white dark:bg-surface-dark p-8">
             <div class="flex items-center gap-4 mb-4">
               <span class="material-symbols-outlined text-[32px]">schedule</span>
               <div>
@@ -124,6 +137,7 @@
     </div>
   </footer>
 
+  <script src="js/theme.js"></script>
   <script>
     document.getElementById('contactForm').addEventListener('submit', (e) => {
       e.preventDefault();

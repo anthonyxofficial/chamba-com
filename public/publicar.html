@@ -13,13 +13,12 @@
       theme: {
         extend: {
           "colors": {
-            "on-surface": "#1b1c1c",
-            "surface-variant": "#e3e2e2",
             "on-primary": "#ffffff",
-            "background": "#fbf9f8",
-            "primary": "#000000",
-            "secondary": "#5d5f5f",
-            "on-background": "#1b1c1c",
+            "background": { DEFAULT: "#fbf9f8", dark: "#0a0a0a" },
+            "primary": { DEFAULT: "#000000", dark: "#ffffff" },
+            "secondary": { DEFAULT: "#4a4a4a", dark: "#a0a0a0" },
+            "on-background": { DEFAULT: "#1b1c1c", dark: "#e0e0e0" },
+            "surface": { DEFAULT: "#ffffff", dark: "#1a1a1a" },
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
@@ -80,9 +79,16 @@
       letter-spacing: 0.1em;
       margin-bottom: 8px;
     }
+    .dark .brutalist-card { border-color: #fff; box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.3); }
+    .dark .brutalist-card:hover { box-shadow: 10px 10px 0px 0px rgba(255,255,255,0.3); }
+    .dark .brutalist-btn { border-color: #fff; box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.3); }
+    .dark .glass-header { background-color: rgba(10, 10, 10, 0.95); }
+    .dark .form-input { border-color: #fff; background: #1a1a1a; color: #e0e0e0; }
+    #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
+    #theme-toggle:hover { transform: rotate(15deg); }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md">
+<body class="bg-background text-on-background font-body-md dark:bg-background-dark dark:text-on-background-dark">
   <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
     <div class="flex items-center gap-10">
       <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
@@ -92,13 +98,16 @@
       </nav>
     </div>
     <div class="flex items-center gap-4">
+      <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-full transition-colors" aria-label="Cambiar tema">
+        <span class="material-symbols-outlined text-[24px]">dark_mode</span>
+      </button>
       <a href="/login.html" class="px-6 py-2 text-primary font-label-bold hover:underline decoration-[2px] underline-offset-4">LOGIN</a>
     </div>
   </header>
 
   <main class="py-20 px-6">
     <div class="max-w-3xl mx-auto">
-      <div id="form-content" class="brutalist-card bg-white p-10 md:p-16">
+      <div id="form-content" class="brutalist-card bg-white dark:bg-surface-dark p-10 md:p-16">
         <div class="mb-10">
           <div class="inline-block bg-primary text-on-primary px-4 py-1 font-label-bold uppercase text-xs tracking-[0.2em] brutalist-btn mb-6">
             NUEVA VACANTE
@@ -173,7 +182,7 @@
         </form>
       </div>
 
-      <div id="success-message" class="hidden brutalist-card bg-white p-16 text-center">
+      <div id="success-message" class="hidden brutalist-card bg-white dark:bg-surface-dark p-16 text-center">
         <span class="material-symbols-outlined text-[80px] text-green-600">check_circle</span>
         <h2 class="font-headline-md text-3xl mt-6 uppercase">¡Empleo publicado!</h2>
         <p class="text-secondary mt-3">Tu vacante ya está visible en la plataforma</p>
@@ -189,6 +198,7 @@
     </div>
   </footer>
 
+  <script src="js/theme.js"></script>
   <script>
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || user.tipo !== 'empresa') {
