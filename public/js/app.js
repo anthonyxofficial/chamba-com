@@ -88,11 +88,22 @@ function shareJob(empleo) {
 
 function showLoading() {
   const grid = document.getElementById('empleos-list');
-  grid.innerHTML = `
-    <div class="text-center py-32 col-span-full">
-      <div class="inline-block w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-      <p class="text-secondary mt-4 font-label-bold uppercase text-sm">Cargando empleos...</p>
+  const skel = `
+    <div class="border-4 border-primary p-lg neo-shadow">
+      <div class="flex justify-between items-start mb-xl">
+        <div class="skeleton w-16 h-16 border-2 border-primary"></div>
+        <div class="skeleton w-20 h-6 border-2 border-primary"></div>
+      </div>
+      <div class="skeleton h-8 w-3/4 mb-sm border-2 border-primary"></div>
+      <div class="skeleton h-5 w-1/2 mb-xl border-2 border-primary"></div>
+      <div class="skeleton h-4 w-full mb-xs border-2 border-primary"></div>
+      <div class="skeleton h-4 w-2/3 mb-xl border-2 border-primary"></div>
+      <div class="flex gap-sm mt-lg">
+        <div class="skeleton h-12 flex-1 border-2 border-primary"></div>
+        <div class="skeleton h-12 flex-[2] border-2 border-primary"></div>
+      </div>
     </div>`;
+  grid.innerHTML = Array(6).fill(skel).join('');
 }
 
 function getSalaryForJob(empleo) {
@@ -178,6 +189,7 @@ function renderEmpleos(empleos) {
       </div>`;
   }).join('');
   if (window.refreshCardStagger) window.refreshCardStagger();
+  if (window.initCardTilt) window.initCardTilt();
 }
 
 function renderPagination(current, total, totalItems) {

@@ -135,7 +135,7 @@
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-container-max mx-auto px-gutter h-20 flex justify-between items-center">
       <div class="flex items-center gap-xl">
-        <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary group" href="/">
+        <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary group glitch" data-text="CHAMBA" href="/">
           CHA<span class="group-hover:text-inverse-primary transition-colors">MBA</span>
         </a>
         <div class="hidden md:flex gap-lg">
@@ -161,7 +161,7 @@
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden fixed inset-0 z-[100] bg-background flex flex-col p-gutter" style="background: var(--ch-background); color: var(--ch-on-background);">
     <div class="flex justify-between items-center mb-xl">
-      <a class="font-display-xl text-4xl uppercase tracking-tighter" style="color: var(--ch-primary);" href="/">CHAMBA</a>
+      <a class="font-display-xl text-4xl uppercase tracking-tighter glitch" data-text="CHAMBA" style="color: var(--ch-primary);" href="/">CHAMBA</a>
       <button onclick="closeMobileMenu()" class="p-2" style="color: var(--ch-primary);" aria-label="Cerrar menu">
         <span class="material-symbols-outlined text-[32px]">close</span>
       </button>
@@ -186,7 +186,7 @@
           </div>
           <h1 class="hero-stagger font-display-xl text-headline-lg-mobile md:text-display-xl uppercase mb-lg text-on-background leading-tight">
             ENCUENTRA TU <br/><span class="text-on-primary bg-primary px-sm inline-block transform rotate-1 px-md">PRÓXIMO</span><br/>
-            <span class="inline-block bg-inverse-surface text-inverse-primary px-4 mt-4 transform -rotate-1">RETO</span>
+            <span class="inline-block bg-inverse-surface text-inverse-primary px-4 mt-4 transform -rotate-1"><span data-scramble>RETO</span></span>
           </h1>
           <p class="hero-stagger font-body-lg text-body-lg text-on-surface-variant mb-xl max-w-lg leading-relaxed">
             La plataforma para profesionales que no se conforman. Las mejores oportunidades en Tech, Diseño y Marketing están aquí.
@@ -339,10 +339,10 @@
             Llega a miles de profesionales calificados en las industrias creativas y tecnológicas. Publica tu vacante hoy y encuentra al candidato ideal con las mejores herramientas de reclutamiento.
           </p>
           <div class="flex flex-col sm:flex-row gap-lg">
-            <a href="/publicar.html" class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-xl py-lg border-4 border-primary neo-shadow-lg hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all text-center">
+            <a href="/publicar.html" class="magnetic bg-primary text-on-primary font-label-bold text-label-bold uppercase px-xl py-lg border-4 border-primary neo-shadow-lg hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all text-center">
               PUBLICAR EMPLEO
             </a>
-            <a href="/registro.html" class="bg-transparent text-primary font-label-bold text-label-bold uppercase px-xl py-lg border-4 border-primary hover:bg-primary hover:text-on-primary transition-colors text-center">
+            <a href="/registro.html" class="magnetic bg-transparent text-primary font-label-bold text-label-bold uppercase px-xl py-lg border-4 border-primary hover:bg-primary hover:text-on-primary transition-colors text-center">
               CREAR CUENTA
             </a>
           </div>
@@ -352,9 +352,11 @@
 
     <!-- Trust Logos -->
     <section class="py-24 bg-background border-b-4 border-primary overflow-hidden">
-      <div class="max-w-container-max mx-auto px-gutter text-center">
-        <p class="font-label-bold text-label-bold uppercase tracking-widest text-primary/40 mb-16">Alianzas Estratégicas</p>
-        <div class="flex flex-wrap justify-center items-center gap-xl md:gap-32" data-reveal="fade">
+      <div class="max-w-container-max mx-auto px-gutter text-center mb-16">
+        <p class="font-label-bold text-label-bold uppercase tracking-widest text-primary/40">Alianzas Estratégicas</p>
+      </div>
+      <div class="marquee-container" data-reveal="fade">
+        <div class="marquee-track">
           <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">BAC</span>
           <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">TIGO</span>
           <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">FICOHSA</span>

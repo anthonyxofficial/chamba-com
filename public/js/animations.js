@@ -38,12 +38,103 @@
 
     .page-transition { transition: opacity 0.15s ease-out; }
     .page-exit { opacity: 0; }
+
+    /* SKELETON LOADING */
+    .skeleton {
+      background: linear-gradient(90deg, var(--ch-surface-variant) 25%, var(--ch-surface) 50%, var(--ch-surface-variant) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s ease-in-out infinite;
+    }
+    @keyframes skeleton-shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* MARQUEE SCROLL */
+    .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
+    .marquee-track {
+      display: inline-flex; gap: 6rem; width: max-content;
+      animation: marquee-scroll 25s linear infinite;
+    }
+    .marquee-container:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* CUSTOM CURSOR */
+    @media (hover: hover) and (pointer: fine) {
+      .neo-cursor-dot, .neo-cursor-ring { display: block; }
+    }
+    .neo-cursor-dot {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--ch-primary); z-index: 99999;
+      pointer-events: none; transform: translate(-50%, -50%);
+    }
+    .neo-cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 3px solid var(--ch-primary); z-index: 99998;
+      pointer-events: none; transform: translate(-50%, -50%);
+      transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    }
+    .neo-cursor-ring.hover {
+      width: 56px; height: 56px;
+      background: var(--ch-primary); opacity: 0.1;
+      border-color: var(--ch-inverse-primary);
+    }
+    @media (hover: none), (pointer: none) {
+      .neo-cursor-dot, .neo-cursor-ring { display: none !important; }
+    }
+
+    /* GLITCH EFFECT */
+    .glitch { position: relative; display: inline-block; }
+    .glitch::before, .glitch::after {
+      content: attr(data-text); position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; opacity: 0; pointer-events: none;
+    }
+    .glitch:hover::before, .glitch:hover::after { opacity: 1; }
+    .glitch::before {
+      color: var(--ch-inverse-primary);
+      animation: glitch-1 0.3s infinite steps(2);
+      animation-play-state: paused;
+    }
+    .glitch::after {
+      color: var(--ch-inverse-primary);
+      animation: glitch-2 0.3s infinite steps(2);
+      animation-play-state: paused;
+    }
+    .glitch:hover::before, .glitch:hover::after {
+      animation-play-state: running;
+    }
+    @keyframes glitch-1 {
+      0%   { clip-path: inset(20% 0 60% 0); transform: translate(3px, -2px); }
+      25%  { clip-path: inset(60% 0 10% 0); transform: translate(-3px, 1px); }
+      50%  { clip-path: inset(40% 0 30% 0); transform: translate(3px, 2px); }
+      75%  { clip-path: inset(10% 0 70% 0); transform: translate(-2px, -1px); }
+      100% { clip-path: inset(70% 0 5% 0);  transform: translate(3px, 1px); }
+    }
+    @keyframes glitch-2 {
+      0%   { clip-path: inset(65% 0 10% 0); transform: translate(-3px, 1px); }
+      25%  { clip-path: inset(15% 0 55% 0); transform: translate(3px, -2px); }
+      50%  { clip-path: inset(50% 0 20% 0); transform: translate(-2px, 2px); }
+      75%  { clip-path: inset(5% 0 60% 0);  transform: translate(3px, -1px); }
+      100% { clip-path: inset(35% 0 40% 0); transform: translate(-3px, 1px); }
+    }
+
+    /* REDUCED MOTION */
+    @media (prefers-reduced-motion: reduce) {
+      .skeleton { animation: none; background-position: 0 0; }
+      .marquee-track { animation: none; }
+      .glitch::before, .glitch::after { animation: none; display: none; }
+      .neo-cursor-dot, .neo-cursor-ring { display: none !important; }
+    }
   `;
   document.head.appendChild(STYLE);
 
   if (REDUCED) {
     document.querySelectorAll('[data-reveal], .hero-stagger, .card-stagger, .cat-stagger')
       .forEach(el => { el.classList.remove('animate-in'); el.style.opacity = '1'; el.style.transform = 'none'; });
+    document.querySelectorAll('[data-scramble]').forEach(el => { el.style.opacity = '1'; });
     return;
   }
 
@@ -172,6 +263,160 @@
     requestAnimationFrame(tick);
   }
 
+  // --- TEXT SCRAMBLE ---
+  function initTextScramble() {
+    const els = document.querySelectorAll('[data-scramble]');
+    if (!els.length) return;
+
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*';
+
+    els.forEach(el => {
+      const finalText = el.textContent.trim();
+      el.setAttribute('data-text', finalText);
+
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            scrambleText(el, finalText, charset);
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+      obs.observe(el);
+    });
+  }
+
+  function scrambleText(el, finalText, charset) {
+    const totalLen = finalText.length;
+    const frames = 30;
+    let frame = 0;
+
+    const interval = setInterval(() => {
+      let output = '';
+      let allSettled = true;
+
+      for (let i = 0; i < totalLen; i++) {
+        const settleFrame = 8 + i * 4;
+        if (frame >= settleFrame) {
+          output += finalText[i];
+        } else if (frame >= i * 2) {
+          allSettled = false;
+          output += charset[Math.floor(Math.random() * charset.length)];
+        } else {
+          allSettled = false;
+          output += ' ';
+        }
+      }
+
+      el.textContent = output;
+      frame++;
+
+      if (allSettled) {
+        el.textContent = finalText;
+        clearInterval(interval);
+      }
+    }, 50);
+  }
+
+  // --- MARQUEE SCROLL ---
+  function initMarquee() {
+    const container = document.querySelector('.marquee-container');
+    if (!container) return;
+
+    const track = container.querySelector('.marquee-track');
+    if (!track) return;
+
+    const clone = track.innerHTML;
+    track.innerHTML = clone + clone;
+  }
+
+  // --- CUSTOM CURSOR ---
+  function initCustomCursor() {
+    const dot = document.querySelector('.neo-cursor-dot');
+    const ring = document.querySelector('.neo-cursor-ring');
+    if (!dot || !ring) return;
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+    });
+
+    function animateRing() {
+      const ease = 0.12;
+      ringX += (mouseX - ringX) * ease;
+      ringY += (mouseY - ringY) * ease;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button, input, select, textarea, [role="button"]').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+
+    document.addEventListener('mousedown', () => { ring.style.transform = 'translate(-50%, -50%) scale(0.85)'; });
+    document.addEventListener('mouseup', () => { ring.style.transform = 'translate(-50%, -50%) scale(1)'; });
+  }
+
+  // --- MAGNETIC BUTTONS ---
+  function initMagneticButtons() {
+    document.querySelectorAll('.magnetic').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) * 0.3;
+        const dy = (e.clientY - cy) * 0.3;
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.transition = 'transform 0.4s ease';
+        el.style.transform = 'translate(0, 0)';
+        setTimeout(() => { el.style.transition = ''; }, 400);
+      });
+    });
+  }
+
+  // --- 3D CARD TILT ---
+  function initCardTilt() {
+    document.querySelectorAll('.brutalist-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const rotateY = ((x - cx) / cx) * 8;
+        const rotateX = -((y - cy) / cy) * 8;
+        card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.5s ease';
+        card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg)';
+        setTimeout(() => { card.style.transition = ''; }, 500);
+      });
+    });
+  }
+  window.initCardTilt = initCardTilt;
+
+  // --- GLITCH SETUP ---
+  function initGlitch() {
+    document.querySelectorAll('.glitch').forEach(el => {
+      if (!el.getAttribute('data-text')) {
+        el.setAttribute('data-text', el.textContent);
+      }
+    });
+  }
+
   // --- PAGE TRANSITIONS ---
   function initPageTransitions() {
     document.querySelectorAll('a[href^="/"]').forEach(link => {
@@ -189,9 +434,19 @@
   // --- INIT ---
   function init() {
     document.body.classList.remove('page-exit');
+
+    const cursorHTML = '<div class="neo-cursor-dot"></div><div class="neo-cursor-ring"></div>';
+    document.body.insertAdjacentHTML('beforeend', cursorHTML);
+
     initHeroStagger();
     initCatStagger();
     initCounters();
+    initTextScramble();
+    initMarquee();
+    initCustomCursor();
+    initMagneticButtons();
+    initCardTilt();
+    initGlitch();
     initPageTransitions();
   }
 
