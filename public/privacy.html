@@ -22,6 +22,47 @@
             "surface": "#131313",
             "surface-variant": "#1A1A1A",
             "outline": "#333333",
+            "inverse-on-surface": "#f2f0ef",
+            "dark-text": "#E0E0E0",
+            "surface-tint": "#FFFFFF",
+            "secondary-fixed-dim": "#FFFFFF",
+            "on-surface": "#FFFFFF",
+            "on-primary-container": "#FFFFFF",
+            "dark-bg": "#0A0A0A",
+            "tertiary-fixed": "#FFFFFF",
+            "on-tertiary-container": "#FFFFFF",
+            "on-error": "#ffffff",
+            "error-container": "#93000a",
+            "on-secondary": "#000000",
+            "tertiary": "#FFFFFF",
+            "on-tertiary-fixed": "#000000",
+            "on-tertiary-fixed-variant": "#FFFFFF",
+            "inverse-primary": "#000000",
+            "tertiary-container": "#131313",
+            "surface-container": "#131313",
+            "on-secondary-fixed-variant": "#FFFFFF",
+            "primary-fixed-dim": "#FFFFFF",
+            "surface-container-low": "#0A0A0A",
+            "surface-container-highest": "#1A1A1A",
+            "surface-bright": "#131313",
+            "surface-dim": "#0A0A0A",
+            "primary-container": "#111111",
+            "secondary-container": "#131313",
+            "on-error-container": "#ffffff",
+            "on-primary-fixed": "#000000",
+            "on-secondary-container": "#FFFFFF",
+            "tertiary-fixed-dim": "#FFFFFF",
+            "on-tertiary": "#000000",
+            "on-surface-variant": "#A0A0A0",
+            "dark-surface": "#131313",
+            "inverse-surface": "#FFFFFF",
+            "surface-container-lowest": "#000000",
+            "primary-fixed": "#FFFFFF",
+            "on-primary-fixed-variant": "#000000",
+            "secondary-fixed": "#131313",
+            "outline-variant": "#333333",
+            "surface-container-high": "#1A1A1A",
+            "on-secondary-fixed": "#000000",
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
@@ -37,25 +78,36 @@
             "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
             "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
             "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-          }
+            "headline-lg-mobile": ["42px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+          },
+          "spacing": {
+            "sm": "8px",
+            "xs": "4px",
+            "base": "4px",
+            "container-max": "1200px",
+            "lg": "24px",
+            "md": "16px",
+            "xl": "40px",
+            "gutter": "24px"
+          },
         },
       },
     }
   </script>
   <style>
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    .neo-shadow { box-shadow: 4px 4px 0px 0px #333; }
-    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #333; }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px #FFFFFF; }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #FFFFFF; }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
-    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #e3e2e2; --text: #1b1c1c; --text-sec: #4a4a4a; --border: #000000; --shadow: rgba(0,0,0,1); }
+    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #f5f3f2; --text: #1b1c1c; --text-sec: #5e5e5e; --border: #000000; --shadow: rgba(0,0,0,1); }
     html.light body { background: var(--bg); color: var(--text); }
     html.light .neo-shadow { box-shadow: 4px 4px 0px 0px var(--shadow); }
     html.light .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--shadow); }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-white selection:text-black">
-  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-outline">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-black">
+  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
       <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary" href="/">CHAMBA</a>
       <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-surface-variant rounded-full transition-colors" aria-label="Cambiar tema">
@@ -69,27 +121,27 @@
       <h1 class="font-display-xl text-headline-md md:text-headline-lg uppercase leading-none mb-8 text-primary">Política de<br/>Privacidad</h1>
 
       <div class="space-y-8 text-secondary leading-relaxed">
-        <div class="bg-surface border-4 border-outline neo-shadow p-8">
+        <div class="bg-surface border-4 border-primary neo-shadow p-8">
           <h2 class="font-headline-md text-xl uppercase mb-4 text-primary">1. Información que recopilamos</h2>
           <p>Recopilamos información que usted nos proporciona directamente al registrarse, postularse a empleos o contactarnos. Esto incluye: nombre, correo electrónico, teléfono, currículum y carta de presentación.</p>
         </div>
 
-        <div class="bg-surface border-4 border-outline neo-shadow p-8">
+        <div class="bg-surface border-4 border-primary neo-shadow p-8">
           <h2 class="font-headline-md text-xl uppercase mb-4 text-primary">2. Uso de la información</h2>
           <p>Utilizamos su información para: conectarlo con oportunidades laborales, mejorar nuestros servicios, enviar comunicaciones relevantes y cumplir con obligaciones legales.</p>
         </div>
 
-        <div class="bg-surface border-4 border-outline neo-shadow p-8">
+        <div class="bg-surface border-4 border-primary neo-shadow p-8">
           <h2 class="font-headline-md text-xl uppercase mb-4 text-primary">3. Protección de datos</h2>
           <p>Implementamos medidas de seguridad técnicas y organizativas para proteger su información personal contra acceso no autorizado, alteración, divulgación o destrucción.</p>
         </div>
 
-        <div class="bg-surface border-4 border-outline neo-shadow p-8">
+        <div class="bg-surface border-4 border-primary neo-shadow p-8">
           <h2 class="font-headline-md text-xl uppercase mb-4 text-primary">4. Compartir información</h2>
           <p>No vendemos ni compartimos su información personal con terceros, excepto cuando sea necesario para conectarlo con empleadores potenciales o cuando lo requiera la ley.</p>
         </div>
 
-        <div class="bg-surface border-4 border-outline neo-shadow p-8">
+        <div class="bg-surface border-4 border-primary neo-shadow p-8">
           <h2 class="font-headline-md text-xl uppercase mb-4 text-primary">5. Sus derechos</h2>
           <p>Usted tiene derecho a acceder, corregir o eliminar su información personal en cualquier momento. Puede ejercer estos derechos contactándonos a través de info@chamba.com.</p>
         </div>
@@ -99,7 +151,7 @@
     </div>
   </main>
 
-  <footer class="bg-black text-white w-full border-t-4 border-outline">
+  <footer class="bg-black text-white w-full border-t-4 border-primary">
     <div class="max-w-[1200px] mx-auto px-6 py-10 flex flex-col sm:flex-row justify-between items-center gap-6">
       <p class="font-label-bold text-label-sm uppercase opacity-50">© 2026 CHAMBA. TODOS LOS DERECHOS RESERVADOS.</p>
       <p class="font-label-bold text-label-sm uppercase tracking-widest opacity-50">CONSTRUIDA PARA LOS VALIENTES</p>

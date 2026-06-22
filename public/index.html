@@ -21,19 +21,70 @@
       theme: {
         extend: {
           "colors": {
-            "on-primary": "#000000",
-            "primary": "#FFFFFF",
-            "secondary": "#A0A0A0",
-            "on-background": "#FFFFFF",
+            "inverse-on-surface": "#f2f0ef",
+            "dark-text": "#E0E0E0",
+            "surface-tint": "#FFFFFF",
+            "secondary-fixed-dim": "#FFFFFF",
+            "on-surface": "#FFFFFF",
+            "on-primary-container": "#FFFFFF",
+            "dark-bg": "#0A0A0A",
             "background": "#000000",
-            "surface": "#131313",
-            "surface-variant": "#1A1A1A",
+            "tertiary-fixed": "#FFFFFF",
+            "on-tertiary-container": "#FFFFFF",
+            "on-error": "#ffffff",
+            "error-container": "#93000a",
+            "on-secondary": "#000000",
+            "tertiary": "#FFFFFF",
+            "on-tertiary-fixed": "#000000",
+            "on-tertiary-fixed-variant": "#FFFFFF",
             "outline": "#333333",
+            "primary": "#FFFFFF",
+            "inverse-primary": "#000000",
+            "tertiary-container": "#131313",
+            "surface-container": "#131313",
+            "on-secondary-fixed-variant": "#FFFFFF",
+            "surface-variant": "#1A1A1A",
+            "primary-fixed-dim": "#FFFFFF",
+            "on-background": "#FFFFFF",
+            "surface-container-low": "#0A0A0A",
+            "surface-container-highest": "#1A1A1A",
+            "on-primary": "#000000",
+            "surface-bright": "#131313",
+            "surface-dim": "#0A0A0A",
+            "primary-container": "#111111",
+            "secondary-container": "#131313",
+            "on-error-container": "#ffffff",
+            "on-primary-fixed": "#000000",
+            "on-secondary-container": "#FFFFFF",
+            "tertiary-fixed-dim": "#FFFFFF",
+            "on-tertiary": "#000000",
             "error": "#FF4444",
+            "secondary": "#A0A0A0",
+            "on-surface-variant": "#A0A0A0",
+            "dark-surface": "#131313",
+            "inverse-surface": "#FFFFFF",
+            "surface-container-lowest": "#000000",
+            "primary-fixed": "#FFFFFF",
             "favorite": "#FF4444",
+            "on-primary-fixed-variant": "#000000",
+            "surface": "#131313",
+            "secondary-fixed": "#131313",
+            "outline-variant": "#333333",
+            "surface-container-high": "#1A1A1A",
+            "on-secondary-fixed": "#000000",
             "job-pink": "#E91E63",
             "job-green": "#00C853",
-            "job-blue": "#2979FF",
+            "job-blue": "#2979FF"
+          },
+          "spacing": {
+            "sm": "8px",
+            "xs": "4px",
+            "base": "4px",
+            "container-max": "1200px",
+            "lg": "24px",
+            "md": "16px",
+            "xl": "40px",
+            "gutter": "24px"
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
@@ -44,15 +95,17 @@
             "label-sm": ["Space Grotesk", "sans-serif"],
             "body-lg": ["Space Grotesk", "sans-serif"],
             "headline-md": ["Bricolage Grotesque", "sans-serif"],
+            "headline-lg-mobile": ["Bricolage Grotesque", "sans-serif"]
           },
           "fontSize": {
             "display-xl": ["96px", {"lineHeight": "0.9", "letterSpacing": "-0.05em", "fontWeight": "800"}],
-            "body-md": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "body-md": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
             "label-bold": ["16px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
             "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
             "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
             "body-lg": ["22px", {"lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400"}],
             "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "headline-lg-mobile": ["42px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}]
           }
         },
       },
@@ -60,54 +113,51 @@
   </script>
   <style>
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    .neo-shadow { box-shadow: 4px 4px 0px 0px #333; }
-    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #333; }
-    .neo-shadow-hover:hover { box-shadow: 12px 12px 0px 0px #333; transform: translate(-4px, -4px); }
-    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px #333; transform: translate(4px, 4px); }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px #FFFFFF; }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #FFFFFF; }
+    .neo-shadow-hover:hover { box-shadow: 12px 12px 0px 0px #FFFFFF; transform: translate(-4px, -4px); }
+    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px #FFFFFF; transform: translate(4px, 4px); }
     .pattern-grid { background-image: radial-gradient(#FFFFFF 1px, transparent 0); background-size: 24px 24px; }
     .brutalist-img { filter: grayscale(100%) contrast(120%) brightness(0.8); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
     .brutalist-card:hover .brutalist-img { filter: grayscale(0%) contrast(100%) brightness(1); }
-    .text-stroke { -webkit-text-stroke: 2px #FFFFFF; color: transparent; }
+    .text-stroke { -webkit-text-stroke: 1px #FFFFFF; color: transparent; }
     .glow-neon { box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
     @keyframes subtle-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
     .float-animation { animation: subtle-float 4s ease-in-out infinite; }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
-    .dark .brutalist-card { border-color: #333; }
-    .dark .brutalist-btn { border-color: #333; }
-    /* Light mode overrides */
-    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #e3e2e2; --text: #1b1c1c; --text-sec: #4a4a4a; --border: #000000; --shadow: rgba(0,0,0,1); }
+    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #f5f3f2; --text: #1b1c1c; --text-sec: #5e5e5e; --border: #000000; --shadow: rgba(0,0,0,1); }
     html.light body { background: var(--bg); color: var(--text); }
     html.light .neo-shadow { box-shadow: 4px 4px 0px 0px var(--shadow); }
     html.light .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--shadow); }
     html.light .neo-shadow-hover:hover { box-shadow: 12px 12px 0px 0px var(--shadow); }
     html.light .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px var(--shadow); }
     html.light .pattern-grid { background-image: radial-gradient(#000 1px, transparent 0); }
-    html.light .text-stroke { -webkit-text-stroke: 2px #000; }
+    html.light .text-stroke { -webkit-text-stroke: 1px #000; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-white selection:text-black">
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-black">
 
   <!-- Header -->
-  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-outline">
-    <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
-      <div class="flex items-center gap-10">
+  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
+    <nav class="max-w-container-max mx-auto px-gutter h-20 flex justify-between items-center">
+      <div class="flex items-center gap-xl">
         <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary group" href="/">
-          CHA<span class="group-hover:text-black dark:group-hover:text-black transition-colors">MBA</span>
+          CHA<span class="group-hover:text-black dark:group-hover:text-white transition-colors">MBA</span>
         </a>
-        <div class="hidden md:flex gap-8">
+        <div class="hidden md:flex gap-lg">
           <a class="font-label-bold text-label-bold uppercase tracking-wider text-primary border-b-4 border-primary pb-1" href="#empleos">Buscar Empleos</a>
           <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all hover:-translate-y-0.5" href="/publicar.html">Empresas</a>
           <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all hover:-translate-y-0.5" href="/buscar.html">Explorar</a>
           <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all hover:-translate-y-0.5" href="/favoritos.html">Guardados</a>
         </div>
       </div>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-md">
         <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-surface-variant rounded-full transition-colors" aria-label="Cambiar tema">
           <span class="material-symbols-outlined text-[24px]">light_mode</span>
         </button>
         <a href="/login.html" class="hidden md:block font-label-bold text-label-bold uppercase text-primary hover:underline decoration-4 underline-offset-4 transition-colors">Iniciar Sesión</a>
-        <a href="/publicar.html" class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-6 py-3 border-2 border-outline neo-shadow neo-shadow-active">Publicar Empleo</a>
+        <a href="/publicar.html" class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-lg py-md border-4 border-primary neo-shadow neo-shadow-active">Publicar Empleo</a>
       </div>
     </nav>
   </header>
@@ -115,28 +165,28 @@
   <main>
     <!-- Hero Section -->
     <section class="relative w-full overflow-hidden pt-24 pb-32 pattern-grid bg-background">
-      <div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-        <div class="lg:col-span-7 z-10 pr-6">
-          <div class="inline-block bg-primary text-on-primary font-label-bold px-2 py-1 border-2 border-primary mb-6 -rotate-1">
+      <div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 lg:grid-cols-12 gap-xl items-center">
+        <div class="lg:col-span-7 z-10 pr-lg">
+          <div class="inline-block bg-primary text-on-primary font-label-bold px-sm py-xs border-2 border-primary mb-lg -rotate-1">
             BETA 1.0 — AHORA EN HONDURAS
           </div>
-          <h1 class="font-display-xl text-headline-md md:text-display-xl uppercase mb-6 text-white leading-tight">
-            ENCUENTRA TU <br><span class="text-on-primary bg-primary px-2 inline-block transform rotate-1 px-4">PRÓXIMO</span><br>
+          <h1 class="font-display-xl text-headline-lg-mobile md:text-display-xl uppercase mb-lg text-white leading-tight">
+            ENCUENTRA TU <br/><span class="text-on-primary bg-primary px-sm inline-block transform rotate-1 px-md">PRÓXIMO</span><br/>
             <span class="inline-block bg-white text-black px-4 mt-4 transform -rotate-1">RETO</span>
           </h1>
-          <p class="font-body-lg text-body-lg text-secondary mb-10 max-w-lg leading-relaxed">
+          <p class="font-body-lg text-body-lg text-secondary mb-xl max-w-lg leading-relaxed">
             La plataforma para profesionales que no se conforman. Las mejores oportunidades en Tech, Diseño y Marketing están aquí.
           </p>
           <!-- Search Bar -->
           <div class="relative max-w-2xl">
-            <div class="absolute -inset-2 bg-white/5 border-2 border-dashed border-white/20 -z-10"></div>
-            <div class="bg-surface border-4 border-outline neo-shadow-lg flex flex-col md:flex-row p-1">
-              <div class="flex-1 flex items-center px-6 py-4 border-b-4 md:border-b-0 md:border-r-4 border-outline bg-surface-variant">
-                <span class="material-symbols-outlined mr-4 text-primary font-bold">search</span>
+            <div class="absolute -inset-2 bg-primary/20 border-2 border-dashed border-primary/40 -z-10"></div>
+            <div class="bg-surface border-4 border-primary neo-shadow-lg flex flex-col md:flex-row p-1">
+              <div class="flex-1 flex items-center px-lg py-lg border-b-4 md:border-b-0 md:border-r-4 border-primary bg-surface-variant">
+                <span class="material-symbols-outlined mr-md text-primary font-bold">search</span>
                 <input id="busqueda-hero" class="w-full border-none focus:ring-0 bg-transparent font-label-bold uppercase text-white placeholder-secondary/60" placeholder="Puesto o palabra clave" type="text"/>
               </div>
-              <div class="flex-1 flex items-center px-6 py-4 bg-surface-variant">
-                <span class="material-symbols-outlined mr-4 text-primary font-bold">location_on</span>
+              <div class="flex-1 flex items-center px-lg py-lg bg-surface-variant">
+                <span class="material-symbols-outlined mr-md text-primary font-bold">location_on</span>
                 <select id="departamentos-hero" class="w-full border-none focus:ring-0 bg-transparent font-label-bold uppercase text-white placeholder-secondary/60 appearance-none cursor-pointer">
                   <option value="">Ciudad o región</option>
                   <option value="Atlántida">Atlántida</option>
@@ -159,74 +209,74 @@
                   <option value="Yoro">Yoro</option>
                 </select>
               </div>
-              <button id="btnBuscarHero" class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-8 py-4 hover:bg-black hover:text-white transition-colors neo-shadow-active">
+              <button id="btnBuscarHero" class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-xl py-lg hover:bg-black hover:text-white transition-colors neo-shadow-active">
                 BUSCAR CHAMBA
               </button>
             </div>
           </div>
-          <div class="mt-6 flex flex-wrap gap-3 items-center">
+          <div class="mt-lg flex flex-wrap gap-md items-center">
             <span class="font-label-sm text-label-sm uppercase font-bold text-white/40">Tendencias:</span>
-            <a class="font-label-sm text-label-sm uppercase bg-surface-variant text-white border-2 border-outline px-2 py-1 hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Frontend">Frontend</a>
-            <a class="font-label-sm text-label-sm uppercase bg-surface-variant text-white border-2 border-outline px-2 py-1 hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Diseño">Product Designer</a>
-            <a class="font-label-sm text-label-sm uppercase bg-surface-variant text-white border-2 border-outline px-2 py-1 hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Marketing">Marketing</a>
+            <a class="font-label-sm text-label-sm uppercase bg-surface-variant text-white border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Frontend">Frontend</a>
+            <a class="font-label-sm text-label-sm uppercase bg-surface-variant text-white border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Diseño">Product Designer</a>
+            <a class="font-label-sm text-label-sm uppercase bg-surface-variant text-white border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Marketing">Marketing</a>
           </div>
         </div>
         <div class="lg:col-span-5 relative mt-16 lg:mt-0">
-          <div class="relative z-10 border-4 border-outline neo-shadow-lg bg-surface rotate-3 transition-transform hover:rotate-0 duration-700 ease-out overflow-hidden">
+          <div class="relative z-10 border-4 border-primary neo-shadow-lg bg-surface rotate-3 transition-transform hover:rotate-0 duration-700 ease-out overflow-hidden">
             <img alt="Profesional en oficina moderna" class="w-full h-[550px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=550&fit=crop&crop=center"/>
             <div class="absolute inset-0 border-[12px] border-primary/10 pointer-events-none"></div>
           </div>
-          <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 border-4 border-outline -z-10 animate-pulse"></div>
-          <div class="absolute -bottom-12 -left-12 w-64 h-64 border-4 border-outline -z-20 pattern-grid opacity-30"></div>
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 border-4 border-primary -z-10 animate-pulse"></div>
+          <div class="absolute -bottom-12 -left-12 w-64 h-64 border-4 border-primary -z-20 pattern-grid opacity-30"></div>
         </div>
       </div>
     </section>
 
     <!-- Categories Section -->
-    <section class="bg-surface py-24 border-y-4 border-outline">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-baseline mb-10 gap-6 pr-6">
+    <section class="bg-primary-container py-32 border-y-4 border-primary">
+      <div class="max-w-container-max mx-auto px-gutter">
+        <div class="flex flex-col md:flex-row justify-between items-baseline mb-xl gap-lg pr-lg">
           <h2 class="font-display-xl text-headline-md text-primary uppercase">Categorías TOP</h2>
-          <div class="h-1 flex-1 bg-primary/20 mx-6 hidden md:block"></div>
+          <div class="h-1 flex-1 bg-primary/20 mx-lg hidden md:block"></div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6" id="categorias-grid">
-          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Informática y Programación')">
-            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-lg" id="categorias-grid">
+          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Informática y Programación')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-black transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">code</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-white">Software</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-tech">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-6" onclick="filtrarCategoria('Marketing y Comunicación')">
-            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Marketing y Comunicación')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-black transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">trending_up</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-white">Marketing</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-marketing">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ventas y Comercial')">
-            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ventas y Comercial')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-black transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">shopping_bag</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-white">Ventas</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-ventas">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-6" onclick="filtrarCategoria('Finanzas y Contabilidad')">
-            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Finanzas y Contabilidad')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-black transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">calculate</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-white">Finanzas</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-finanzas">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ingeniería y Técnico')">
-            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ingeniería y Técnico')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-black transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">engineering</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-white">Ingeniería</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-ingenieria">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-6" onclick="window.location.href='/buscar.html'">
-            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="window.location.href='/buscar.html'">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-black transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">more_horiz</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-white">Ver Más</p>
@@ -236,49 +286,49 @@
     </section>
 
     <!-- Featured Jobs -->
-    <section id="empleos" class="py-24 bg-background relative overflow-hidden">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-10 border-b-4 border-outline pb-4 gap-4 pr-6">
+    <section id="empleos" class="py-32 bg-background relative overflow-hidden">
+      <div class="max-w-container-max mx-auto px-gutter">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-xl border-b-4 border-primary pb-md gap-md pr-lg">
           <div>
             <h2 class="font-display-xl text-headline-md uppercase text-white">Empleos Destacados</h2>
             <p class="text-secondary mt-2 font-label-sm" id="job-count"></p>
           </div>
           <a class="font-label-bold text-label-bold uppercase underline decoration-4 underline-offset-8 text-primary hover:text-white group flex items-center" href="/buscar.html">
             Ver todos los empleos
-            <span class="material-symbols-outlined ml-2 group-hover:translate-x-2 transition-transform">arrow_forward</span>
+            <span class="material-symbols-outlined ml-sm group-hover:translate-x-2 transition-transform">arrow_forward</span>
           </a>
         </div>
-        <div id="empleos-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        <div id="empleos-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl"></div>
         <div id="pagination"></div>
       </div>
     </section>
     <div id="modal-empleo"></div>
 
     <!-- Recruitment Section -->
-    <section class="py-32 bg-background relative border-y-4 border-outline overflow-hidden">
+    <section class="py-40 bg-background relative border-y-4 border-primary overflow-hidden">
       <div class="absolute inset-0 pattern-grid opacity-10 pointer-events-none"></div>
-      <div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
-        <div class="order-2 lg:order-1 pr-6">
+      <div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 lg:grid-cols-2 gap-32 items-center relative z-10">
+        <div class="order-2 lg:order-1 pr-lg">
           <div class="relative inline-block">
-            <div class="border-4 border-outline neo-shadow-lg bg-surface-variant p-4 -rotate-3 transition-transform hover:rotate-0 duration-500">
-              <img alt="Equipo de negocios profesional" class="w-full h-[400px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&h=400&fit=crop"/>
+            <div class="border-4 border-primary neo-shadow-lg bg-surface-variant p-4 rotate-[-4deg] transition-transform hover:rotate-0 duration-500">
+              <img alt="Equipo de negocios profesional" class="w-full h-[450px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&h=400&fit=crop"/>
             </div>
-            <div class="absolute -bottom-12 -right-12 bg-primary border-4 border-outline p-6 neo-shadow float-animation rotate-2">
-              <p class="font-display-xl text-5xl uppercase leading-none text-black">+50</p>
+            <div class="absolute -bottom-12 -right-12 bg-primary border-4 border-primary p-xl neo-shadow float-animation rotate-2">
+              <p class="font-display-xl text-6xl uppercase leading-none text-black">+500</p>
               <p class="font-label-bold text-label-bold uppercase text-black">Empresas TOP</p>
             </div>
           </div>
         </div>
         <div class="order-1 lg:order-2">
-          <h2 class="font-display-xl text-headline-lg uppercase mb-6 leading-none text-white">¿BUSCAS EL <span class="text-stroke">MEJOR</span> TALENTO?</h2>
-          <p class="font-body-lg text-body-lg text-secondary mb-10 leading-relaxed">
+          <h2 class="font-display-xl text-headline-lg uppercase mb-lg leading-none text-white">¿BUSCAS EL <span class="text-stroke">MEJOR</span> TALENTO?</h2>
+          <p class="font-body-lg text-body-lg text-secondary mb-xl leading-relaxed">
             Llega a miles de profesionales calificados en las industrias creativas y tecnológicas. Publica tu vacante hoy y encuentra al candidato ideal con las mejores herramientas de reclutamiento.
           </p>
-          <div class="flex flex-col sm:flex-row gap-6">
-            <a href="/publicar.html" class="bg-primary text-black font-label-bold text-label-bold uppercase px-8 py-4 border-4 border-outline neo-shadow-lg hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all text-center">
+          <div class="flex flex-col sm:flex-row gap-lg">
+            <a href="/publicar.html" class="bg-primary text-black font-label-bold text-label-bold uppercase px-xl py-lg border-4 border-primary neo-shadow-lg hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all text-center">
               PUBLICAR EMPLEO
             </a>
-            <a href="/registro.html" class="bg-transparent text-primary font-label-bold text-label-bold uppercase px-8 py-4 border-4 border-outline hover:bg-primary hover:text-black transition-colors text-center">
+            <a href="/registro.html" class="bg-transparent text-primary font-label-bold text-label-bold uppercase px-xl py-lg border-4 border-primary hover:bg-primary hover:text-black transition-colors text-center">
               CREAR CUENTA
             </a>
           </div>
@@ -287,55 +337,55 @@
     </section>
 
     <!-- Trust Logos -->
-    <section class="py-20 bg-background border-b-4 border-outline overflow-hidden">
-      <div class="max-w-[1200px] mx-auto px-6 text-center">
-        <p class="font-label-bold text-label-bold uppercase tracking-widest text-primary/40 mb-12">Alianzas Estratégicas</p>
-        <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20">
-          <span class="font-display-xl text-4xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">BAC</span>
-          <span class="font-display-xl text-4xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">TIGO</span>
-          <span class="font-display-xl text-4xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">FICOHSA</span>
-          <span class="font-display-xl text-4xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">CLARO</span>
+    <section class="py-24 bg-background border-b-4 border-primary overflow-hidden">
+      <div class="max-w-container-max mx-auto px-gutter text-center">
+        <p class="font-label-bold text-label-bold uppercase tracking-widest text-primary/40 mb-16">Alianzas Estratégicas</p>
+        <div class="flex flex-wrap justify-center items-center gap-xl md:gap-32">
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">BAC</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">TIGO</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">FICOHSA</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">CLARO</span>
         </div>
       </div>
     </section>
   </main>
 
   <!-- Footer -->
-  <footer class="w-full bg-black text-white border-t-4 border-outline">
-    <div class="max-w-[1200px] mx-auto px-6 py-20 flex flex-col md:flex-row justify-between gap-10">
-      <div class="space-y-6 max-w-md">
+  <footer class="w-full bg-black text-white border-t-4 border-primary">
+    <div class="max-w-container-max mx-auto px-gutter py-24 flex flex-col md:flex-row justify-between gap-xl">
+      <div class="space-y-xl max-w-md">
         <h2 class="font-display-xl text-6xl uppercase text-primary">CHAMBA</h2>
         <p class="text-white/70 uppercase font-label-bold text-lg leading-snug">
           La plataforma de empleo número uno para la nueva generación de profesionales. Construida para los valientes.
         </p>
-        <div class="flex gap-4 pt-2">
-          <a class="w-12 h-12 border-4 border-outline flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all" href="#">
+        <div class="flex gap-lg pt-md">
+          <a class="w-14 h-14 border-4 border-primary flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all" href="#">
             <span class="material-symbols-outlined">share</span>
           </a>
-          <a class="w-12 h-12 border-4 border-outline flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all" href="#">
+          <a class="w-14 h-14 border-4 border-primary flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all" href="#">
             <span class="material-symbols-outlined">language</span>
           </a>
         </div>
       </div>
-      <div class="grid grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-20">
-        <div class="space-y-4">
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-xl lg:gap-32">
+        <div class="space-y-lg">
           <p class="font-label-bold text-label-bold uppercase text-primary border-b-2 border-primary pb-1 inline-block">Candidatos</p>
-          <ul class="space-y-3">
+          <ul class="space-y-md">
             <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/buscar.html">Buscar Empleos</a></li>
             <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/registro.html">Crear Cuenta</a></li>
             <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/login.html">Iniciar Sesión</a></li>
           </ul>
         </div>
-        <div class="space-y-4">
+        <div class="space-y-lg">
           <p class="font-label-bold text-label-bold uppercase text-primary border-b-2 border-primary pb-1 inline-block">Empresas</p>
-          <ul class="space-y-3">
+          <ul class="space-y-md">
             <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/publicar.html">Publicar Empleo</a></li>
             <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/dashboard.html">Dashboard</a></li>
           </ul>
         </div>
-        <div class="space-y-4">
+        <div class="space-y-lg">
           <p class="font-label-bold text-label-bold uppercase text-primary border-b-2 border-primary pb-1 inline-block">Legal</p>
-          <ul class="space-y-3">
+          <ul class="space-y-md">
             <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/privacy.html">Privacidad</a></li>
             <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/terms.html">Términos</a></li>
             <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/contacto.html">Contacto</a></li>
@@ -343,10 +393,10 @@
         </div>
       </div>
     </div>
-    <div class="max-w-[1200px] mx-auto px-6 py-6 border-t-2 border-outline">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="max-w-container-max mx-auto px-gutter py-lg border-t-2 border-primary/20">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-md">
         <p class="font-label-bold text-label-sm uppercase opacity-50">© 2026 CHAMBA. MADE WITH GUTS.</p>
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-md">
           <div class="w-3 h-3 bg-primary glow-neon"></div>
           <p class="font-label-bold text-label-sm uppercase tracking-widest text-primary">Construida para los valientes</p>
         </div>
@@ -356,5 +406,20 @@
 
   <script src="js/theme.js"></script>
   <script src="js/app.js"></script>
+  <script>
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('mousedown', () => {
+        if (button.classList.contains('neo-shadow-lg')) {
+          button.style.boxShadow = '2px 2px 0px 0px #FFFFFF';
+          button.style.transform = 'translate(6px, 6px)';
+        } else if (button.classList.contains('neo-shadow')) {
+          button.style.boxShadow = '1px 1px 0px 0px #FFFFFF';
+          button.style.transform = 'translate(3px, 3px)';
+        }
+      });
+      button.addEventListener('mouseup', () => { button.style.boxShadow = ''; button.style.transform = ''; });
+      button.addEventListener('mouseleave', () => { button.style.boxShadow = ''; button.style.transform = ''; });
+    });
+  </script>
 </body>
 </html>

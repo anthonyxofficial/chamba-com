@@ -23,6 +23,47 @@
             "outline": "#333333",
             "error": "#FF4444",
             "job-green": "#00C853",
+            "inverse-on-surface": "#f2f0ef",
+            "dark-text": "#E0E0E0",
+            "surface-tint": "#FFFFFF",
+            "secondary-fixed-dim": "#FFFFFF",
+            "on-surface": "#FFFFFF",
+            "on-primary-container": "#FFFFFF",
+            "dark-bg": "#0A0A0A",
+            "tertiary-fixed": "#FFFFFF",
+            "on-tertiary-container": "#FFFFFF",
+            "on-error": "#ffffff",
+            "error-container": "#93000a",
+            "on-secondary": "#000000",
+            "tertiary": "#FFFFFF",
+            "on-tertiary-fixed": "#000000",
+            "on-tertiary-fixed-variant": "#FFFFFF",
+            "inverse-primary": "#000000",
+            "tertiary-container": "#131313",
+            "surface-container": "#131313",
+            "on-secondary-fixed-variant": "#FFFFFF",
+            "primary-fixed-dim": "#FFFFFF",
+            "surface-container-low": "#0A0A0A",
+            "surface-container-highest": "#1A1A1A",
+            "surface-bright": "#131313",
+            "surface-dim": "#0A0A0A",
+            "primary-container": "#111111",
+            "secondary-container": "#131313",
+            "on-error-container": "#ffffff",
+            "on-primary-fixed": "#000000",
+            "on-secondary-container": "#FFFFFF",
+            "tertiary-fixed-dim": "#FFFFFF",
+            "on-tertiary": "#000000",
+            "on-surface-variant": "#A0A0A0",
+            "dark-surface": "#131313",
+            "inverse-surface": "#FFFFFF",
+            "surface-container-lowest": "#000000",
+            "primary-fixed": "#FFFFFF",
+            "on-primary-fixed-variant": "#000000",
+            "secondary-fixed": "#131313",
+            "outline-variant": "#333333",
+            "surface-container-high": "#1A1A1A",
+            "on-secondary-fixed": "#000000",
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
@@ -38,26 +79,37 @@
             "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
             "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
             "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-          }
+            "headline-lg-mobile": ["42px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+          },
+          "spacing": {
+            "sm": "8px",
+            "xs": "4px",
+            "base": "4px",
+            "container-max": "1200px",
+            "lg": "24px",
+            "md": "16px",
+            "xl": "40px",
+            "gutter": "24px"
+          },
         },
       },
     }
   </script>
   <style>
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    .neo-shadow { box-shadow: 4px 4px 0px 0px #333; }
-    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #333; }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px #FFFFFF; }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #FFFFFF; }
     .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px #333; transform: translate(4px, 4px); }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
-    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #e3e2e2; --text: #1b1c1c; --text-sec: #4a4a4a; --border: #000000; --shadow: rgba(0,0,0,1); }
+    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #f5f3f2; --text: #1b1c1c; --text-sec: #5e5e5e; --border: #000000; --shadow: rgba(0,0,0,1); }
     html.light body { background: var(--bg); color: var(--text); }
     html.light .neo-shadow { box-shadow: 4px 4px 0px 0px var(--shadow); }
     html.light .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--shadow); }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md selection:bg-white selection:text-black">
-  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-outline">
+<body class="bg-background text-on-background font-body-md selection:bg-primary selection:text-black">
+  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
       <div class="flex items-center gap-10">
         <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary" href="/">CHAMBA</a>
@@ -77,9 +129,9 @@
 
   <main class="py-20 px-6">
     <div class="max-w-3xl mx-auto">
-      <div id="form-content" class="bg-surface border-4 border-outline neo-shadow-lg p-10 md:p-16">
+      <div id="form-content" class="bg-surface border-4 border-primary neo-shadow-lg p-10 md:p-16">
         <div class="mb-10">
-          <div class="inline-block bg-primary text-on-primary px-4 py-1 font-label-bold uppercase text-xs tracking-[0.2em] border-2 border-outline neo-shadow mb-6">
+          <div class="inline-block bg-primary text-on-primary px-4 py-1 font-label-bold uppercase text-xs tracking-[0.2em] border-2 border-primary neo-shadow mb-6">
             NUEVA VACANTE
           </div>
           <h1 class="font-display-xl text-headline-md uppercase leading-none text-primary">Publicar<br/>Empleo</h1>
@@ -89,16 +141,16 @@
         <form id="publicarForm" class="space-y-8">
           <div>
             <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Título del puesto</label>
-            <input type="text" id="titulo" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary" placeholder="Ej: Desarrollador Web Junior" required/>
+            <input type="text" id="titulo" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary" placeholder="Ej: Desarrollador Web Junior" required/>
           </div>
           <div>
             <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Nombre de la empresa</label>
-            <input type="text" id="empresa" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary" placeholder="Ej: TechCorp Honduras" required/>
+            <input type="text" id="empresa" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary" placeholder="Ej: TechCorp Honduras" required/>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Categoría</label>
-              <select id="categoria" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none appearance-none cursor-pointer" required>
+              <select id="categoria" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none appearance-none cursor-pointer" required>
                 <option value="">Seleccionar...</option>
                 <option value="Informática y Programación">Informática y Programación</option>
                 <option value="Ventas y Comercial">Ventas y Comercial</option>
@@ -113,7 +165,7 @@
             </div>
             <div>
               <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Departamento</label>
-              <select id="departamentos" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none appearance-none cursor-pointer" required>
+              <select id="departamentos" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none appearance-none cursor-pointer" required>
                 <option value="">Seleccionar...</option>
                 <option value="Atlántida">Atlántida</option>
                 <option value="Colón">Colón</option>
@@ -138,26 +190,26 @@
           </div>
           <div>
             <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Descripción del puesto</label>
-            <textarea id="descripcion" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors resize-none placeholder-secondary" rows="5" placeholder="Describe las responsabilidades, requisitos y beneficios del puesto..." required></textarea>
+            <textarea id="descripcion" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors resize-none placeholder-secondary" rows="5" placeholder="Describe las responsabilidades, requisitos y beneficios del puesto..." required></textarea>
           </div>
           <div>
             <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Fecha límite de postulación</label>
-            <input type="date" id="fecha_limite" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors" required/>
+            <input type="date" id="fecha_limite" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors" required/>
           </div>
-          <button type="submit" class="w-full bg-primary text-on-primary px-10 py-5 font-label-bold uppercase tracking-widest text-sm border-4 border-outline neo-shadow transition-all hover:-translate-y-0.5 hover:shadow-none">PUBLICAR EMPLEO</button>
+          <button type="submit" class="w-full bg-primary text-on-primary px-10 py-5 font-label-bold uppercase tracking-widest text-sm border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5 hover:shadow-none">PUBLICAR EMPLEO</button>
         </form>
       </div>
 
-      <div id="success-message" class="hidden bg-surface border-4 border-outline neo-shadow-lg p-16 text-center">
+      <div id="success-message" class="hidden bg-surface border-4 border-primary neo-shadow-lg p-16 text-center">
         <span class="material-symbols-outlined text-[80px] text-job-green">check_circle</span>
         <h2 class="font-headline-md text-3xl mt-6 uppercase text-primary">¡Empleo publicado!</h2>
         <p class="text-secondary mt-3 font-label-bold uppercase text-sm">Tu vacante ya está visible en la plataforma</p>
-        <a href="/" class="inline-block mt-8 bg-primary text-on-primary px-10 py-4 font-label-bold uppercase text-sm border-2 border-outline neo-shadow transition-all hover:-translate-y-0.5">VER EMPLEOS</a>
+        <a href="/" class="inline-block mt-8 bg-primary text-on-primary px-10 py-4 font-label-bold uppercase text-sm border-2 border-primary neo-shadow transition-all hover:-translate-y-0.5">VER EMPLEOS</a>
       </div>
     </div>
   </main>
 
-  <footer class="bg-black text-white w-full border-t-4 border-outline">
+  <footer class="bg-black text-white w-full border-t-4 border-primary">
     <div class="max-w-[1200px] mx-auto px-6 py-10 flex flex-col sm:flex-row justify-between items-center gap-6">
       <p class="font-label-bold text-label-sm uppercase opacity-50">© 2026 CHAMBA. TODOS LOS DERECHOS RESERVADOS.</p>
       <p class="font-label-bold text-label-sm uppercase tracking-widest opacity-50">CONSTRUIDA PARA LOS VALIENTES</p>
