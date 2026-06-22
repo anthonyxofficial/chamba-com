@@ -24,7 +24,7 @@
       transition: opacity 0.7s ${BEZIER}, transform 0.7s ${BEZIER};
     }
 
-    .card-stagger { opacity: 0; transform: translateY(24px); }
+    .card-stagger.animate-in { opacity: 0; transform: translateY(24px); }
     .card-stagger.revealed {
       opacity: 1; transform: translateY(0);
       transition: opacity 0.5s ${BEZIER}, transform 0.5s ${BEZIER};
@@ -43,7 +43,7 @@
 
   if (REDUCED) {
     document.querySelectorAll('[data-reveal], .hero-stagger, .card-stagger, .cat-stagger')
-      .forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+      .forEach(el => { el.classList.remove('animate-in'); el.style.opacity = '1'; el.style.transform = 'none'; });
     return;
   }
 
@@ -80,18 +80,40 @@
 
   // --- JOB CARD STAGGER (called after each renderEmpleos) ---
   function refreshCardStagger() {
+    const cards = document.querySelectorAll('.card-stagger:not(.revealed):not(.animate-in)');
+    if (!cards.length) return;
+
+    cards.forEach(el => el.classList.add('animate-in'));
+
     requestAnimationFrame(() => {
-      const cards = document.querySelectorAll('.card-stagger:not(.revealed)');
-      if (!cards.length) return;
+      const hidden = document.querySelectorAll('.card-stagger.animate-in:not(.revealed)');
+      if (!hidden.length) return;
+
+      const revealAll = () => {
+        hidden.forEach((el, i) => setTimeout(() => el.classList.add('revealed'), i * 100));
+      };
+
+      if (!('IntersectionObserver' in window)) {
+        revealAll();
+        return;
+      }
+
       const obs = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            cards.forEach((el, i) => setTimeout(() => el.classList.add('revealed'), i * 100));
+            revealAll();
             obs.disconnect();
           }
         });
-      }, { threshold: 0.08 });
-      obs.observe(cards[0]);
+      }, { threshold: 0.05, rootMargin: '100px 0px' });
+      obs.observe(hidden[0]);
+
+      setTimeout(() => {
+        obs.disconnect();
+        document.querySelectorAll('.card-stagger.animate-in:not(.revealed)').forEach((el, i) => {
+          setTimeout(() => el.classList.add('revealed'), i * 100);
+        });
+      }, 1000);
     });
   }
   window.refreshCardStagger = refreshCardStagger;
