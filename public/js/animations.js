@@ -50,19 +50,6 @@
       100% { background-position: -200% 0; }
     }
 
-    /* MARQUEE SCROLL */
-    .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
-    .marquee-track {
-      display: inline-flex; width: max-content;
-      animation: marquee-scroll 20s linear infinite;
-    }
-    .marquee-track span { padding: 0 3rem; }
-    .marquee-container:hover .marquee-track { animation-play-state: paused; }
-    @keyframes marquee-scroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
     /* CUSTOM CURSOR */
     @media (hover: hover) and (pointer: fine) {
       .neo-cursor-dot, .neo-cursor-ring { display: block; }

@@ -127,6 +127,12 @@
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
     .mobile-menu-open { overflow: hidden; }
+    .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
+    .marquee-track { display: flex; width: max-content; animation: marquee-scroll 20s linear infinite; }
+    .marquee-track span { padding: 0 3rem; flex-shrink: 0; }
+    .marquee-container:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
   </style>
 </head>
 <body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
