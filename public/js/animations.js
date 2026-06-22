@@ -318,16 +318,11 @@
     }, 50);
   }
 
-  // --- MARQUEE SCROLL ---
+  // --- MARQUEE SCROLL (content pre-duplicated in HTML) ---
   function initMarquee() {
-    const container = document.querySelector('.marquee-container');
-    if (!container) return;
-
-    const track = container.querySelector('.marquee-track');
+    const track = document.querySelector('.marquee-track');
     if (!track) return;
-
-    const clone = track.innerHTML;
-    track.innerHTML = clone + clone;
+    track.setAttribute('aria-hidden', 'true');
   }
 
   // --- CUSTOM CURSOR ---
