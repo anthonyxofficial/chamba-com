@@ -129,7 +129,7 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary">
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
 
   <!-- Header -->
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
@@ -181,18 +181,18 @@
     <section class="relative w-full overflow-hidden pt-24 pb-32 pattern-grid bg-background">
       <div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 lg:grid-cols-12 gap-xl items-center">
         <div class="lg:col-span-7 z-10 pr-lg">
-          <div class="inline-block bg-primary text-on-primary font-label-bold px-sm py-xs border-2 border-primary mb-lg -rotate-1">
+          <div class="hero-stagger inline-block bg-primary text-on-primary font-label-bold px-sm py-xs border-2 border-primary mb-lg -rotate-1">
             BETA 1.0 — AHORA EN HONDURAS
           </div>
-          <h1 class="font-display-xl text-headline-lg-mobile md:text-display-xl uppercase mb-lg text-on-background leading-tight">
+          <h1 class="hero-stagger font-display-xl text-headline-lg-mobile md:text-display-xl uppercase mb-lg text-on-background leading-tight">
             ENCUENTRA TU <br/><span class="text-on-primary bg-primary px-sm inline-block transform rotate-1 px-md">PRÓXIMO</span><br/>
             <span class="inline-block bg-inverse-surface text-inverse-primary px-4 mt-4 transform -rotate-1">RETO</span>
           </h1>
-          <p class="font-body-lg text-body-lg text-on-surface-variant mb-xl max-w-lg leading-relaxed">
+          <p class="hero-stagger font-body-lg text-body-lg text-on-surface-variant mb-xl max-w-lg leading-relaxed">
             La plataforma para profesionales que no se conforman. Las mejores oportunidades en Tech, Diseño y Marketing están aquí.
           </p>
           <!-- Search Bar -->
-          <div class="relative max-w-2xl">
+          <div class="hero-stagger relative max-w-2xl">
             <div class="absolute -inset-2 bg-primary/20 border-2 border-dashed border-primary/40 -z-10"></div>
             <div class="bg-surface border-4 border-primary neo-shadow-lg flex flex-col md:flex-row p-1">
               <div class="flex-1 flex items-center px-lg py-lg border-b-4 md:border-b-0 md:border-r-4 border-primary bg-surface-variant">
@@ -235,7 +235,7 @@
             <a class="font-label-sm text-label-sm uppercase bg-surface text-on-background border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Marketing">Marketing</a>
           </div>
         </div>
-        <div class="lg:col-span-5 relative mt-16 lg:mt-0">
+        <div class="lg:col-span-5 relative mt-16 lg:mt-0" data-reveal="right">
           <div class="relative z-10 border-4 border-primary neo-shadow-lg bg-surface rotate-3 transition-transform hover:rotate-0 duration-700 ease-out overflow-hidden">
             <img alt="Profesional en oficina moderna" class="w-full h-[550px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=550&fit=crop&crop=center"/>
             <div class="absolute inset-0 border-[12px] border-primary/10 pointer-events-none"></div>
@@ -249,47 +249,47 @@
     <!-- Categories Section -->
     <section class="bg-surface-variant py-32 border-y-4 border-primary">
       <div class="max-w-container-max mx-auto px-gutter">
-        <div class="flex flex-col md:flex-row justify-between items-baseline mb-xl gap-lg pr-lg">
+        <div class="flex flex-col md:flex-row justify-between items-baseline mb-xl gap-lg pr-lg" data-reveal="up">
           <h2 class="font-display-xl text-headline-md text-primary uppercase">Categorías TOP</h2>
           <div class="h-1 flex-1 bg-primary/20 mx-lg hidden md:block"></div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-lg" id="categorias-grid">
-          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Informática y Programación')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Informática y Programación')">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">code</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Software</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-tech">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Marketing y Comunicación')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Marketing y Comunicación')">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">trending_up</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Marketing</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-marketing">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ventas y Comercial')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ventas y Comercial')">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">shopping_bag</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Ventas</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-ventas">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Finanzas y Contabilidad')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Finanzas y Contabilidad')">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">calculate</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Finanzas</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-finanzas">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ingeniería y Técnico')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ingeniería y Técnico')">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">engineering</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Ingeniería</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-ingenieria">0</span> puestos</p>
           </div>
-          <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="window.location.href='/buscar.html'">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="window.location.href='/buscar.html'">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">more_horiz</span>
             </div>
@@ -302,7 +302,7 @@
     <!-- Featured Jobs -->
     <section id="empleos" class="py-32 bg-background relative overflow-hidden">
       <div class="max-w-container-max mx-auto px-gutter">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-xl border-b-4 border-primary pb-md gap-md pr-lg">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-xl border-b-4 border-primary pb-md gap-md pr-lg" data-reveal="up">
           <div>
             <h2 class="font-display-xl text-headline-md uppercase text-on-background">Empleos Destacados</h2>
             <p class="text-secondary mt-2 font-label-sm" id="job-count"></p>
@@ -322,18 +322,18 @@
     <section class="py-40 bg-background relative border-y-4 border-primary overflow-hidden">
       <div class="absolute inset-0 pattern-grid opacity-10 pointer-events-none"></div>
       <div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 lg:grid-cols-2 gap-32 items-center relative z-10">
-        <div class="order-2 lg:order-1 pr-lg">
+        <div class="order-2 lg:order-1 pr-lg" data-reveal="right">
           <div class="relative inline-block">
             <div class="border-4 border-primary neo-shadow-lg bg-surface-variant p-4 rotate-[-4deg] transition-transform hover:rotate-0 duration-500">
               <img alt="Equipo de negocios profesional" class="w-full h-[450px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&h=400&fit=crop"/>
             </div>
             <div class="absolute -bottom-12 -right-12 bg-primary border-4 border-primary p-xl neo-shadow float-animation rotate-2">
-              <p class="font-display-xl text-6xl uppercase leading-none text-on-primary">+500</p>
+              <p class="font-display-xl text-6xl uppercase leading-none text-on-primary" data-count="500" data-suffix="+">+500</p>
               <p class="font-label-bold text-label-bold uppercase text-on-primary">Empresas TOP</p>
             </div>
           </div>
         </div>
-        <div class="order-1 lg:order-2">
+        <div class="order-1 lg:order-2" data-reveal="left">
           <h2 class="font-display-xl text-headline-lg uppercase mb-lg leading-none text-on-background">¿BUSCAS EL <span class="text-stroke">MEJOR</span> TALENTO?</h2>
           <p class="font-body-lg text-body-lg text-secondary mb-xl leading-relaxed">
             Llega a miles de profesionales calificados en las industrias creativas y tecnológicas. Publica tu vacante hoy y encuentra al candidato ideal con las mejores herramientas de reclutamiento.
@@ -354,7 +354,7 @@
     <section class="py-24 bg-background border-b-4 border-primary overflow-hidden">
       <div class="max-w-container-max mx-auto px-gutter text-center">
         <p class="font-label-bold text-label-bold uppercase tracking-widest text-primary/40 mb-16">Alianzas Estratégicas</p>
-        <div class="flex flex-wrap justify-center items-center gap-xl md:gap-32">
+        <div class="flex flex-wrap justify-center items-center gap-xl md:gap-32" data-reveal="fade">
           <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">BAC</span>
           <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">TIGO</span>
           <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">FICOHSA</span>
@@ -420,6 +420,7 @@
 
   <script src="js/theme.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/animations.js"></script>
   <script>
     document.querySelectorAll('button').forEach(button => {
       button.addEventListener('mousedown', () => {

@@ -118,7 +118,7 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary page-transition">
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
       <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary" href="/">CHAMBA</a>
@@ -153,7 +153,7 @@
   </div>
 
   <main class="flex-1 flex items-center justify-center py-20 px-6">
-    <div class="bg-surface border-4 border-primary neo-shadow-lg p-12 w-full max-w-md">
+    <div data-reveal="up" class="bg-surface border-4 border-primary neo-shadow-lg p-12 w-full max-w-md">
       <div class="text-center mb-10">
         <span class="material-symbols-outlined text-[64px] text-primary">person</span>
         <h1 class="font-display-xl text-headline-md uppercase mt-4 text-primary">Iniciar<br/>Sesión</h1>
@@ -218,5 +218,6 @@
     });
   </script>
   <script src="/js/theme.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>

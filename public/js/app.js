@@ -145,7 +145,7 @@ function renderEmpleos(empleos) {
     const expirado = e.expirado;
 
     return `
-      <div class="brutalist-card bg-${colorName} border-4 border-primary p-lg neo-shadow-hover transition-all group flex flex-col h-full">
+      <div class="card-stagger brutalist-card bg-${colorName} border-4 border-primary p-lg neo-shadow-hover transition-all group flex flex-col h-full">
         <div class="flex justify-between items-start mb-xl">
           <div class="w-16 h-16 border-4 border-primary overflow-hidden flex items-center justify-center bg-primary">
             <span class="material-symbols-outlined text-on-primary text-[32px]">${ICONS[e.categoria] || 'work'}</span>

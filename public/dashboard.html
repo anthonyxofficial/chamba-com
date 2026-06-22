@@ -119,7 +119,7 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary page-transition">
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
       <div class="flex items-center gap-10">
@@ -162,7 +162,7 @@
 
   <main class="flex-1 py-12 px-6">
     <div class="max-w-[1200px] mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div data-reveal="up" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div class="bg-surface border-4 border-primary neo-shadow p-8 text-center">
           <p class="font-display-xl text-4xl text-primary" id="stat-empleos">0</p>
           <p class="font-label-bold uppercase text-sm text-secondary mt-2">Empleos publicados</p>
@@ -188,7 +188,7 @@
       </section>
 
       <section id="seccion-publicar" class="hidden">
-        <div class="bg-surface border-4 border-primary neo-shadow-lg p-10 max-w-2xl">
+        <div data-reveal="up" class="bg-surface border-4 border-primary neo-shadow-lg p-10 max-w-2xl">
           <h2 class="font-headline-md text-3xl uppercase mb-8 text-primary">Nuevo empleo</h2>
           <form id="nuevoEmpleoForm" class="space-y-6">
             <div>
@@ -270,5 +270,6 @@
 
   <script src="js/dashboard.js"></script>
   <script src="js/theme.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>

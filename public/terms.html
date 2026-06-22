@@ -119,7 +119,7 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary page-transition">
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
       <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary" href="/">CHAMBA</a>
@@ -156,7 +156,7 @@
     <div class="max-w-3xl mx-auto">
       <h1 class="font-display-xl text-headline-md md:text-headline-lg uppercase leading-none mb-8 text-primary">Términos y<br/>Condiciones</h1>
 
-      <div class="space-y-8 text-secondary leading-relaxed">
+      <div data-reveal="up" class="space-y-8 text-secondary leading-relaxed">
         <div class="bg-surface border-4 border-primary neo-shadow p-8">
           <h2 class="font-headline-md text-xl uppercase mb-4 text-primary">1. Aceptación de los términos</h2>
           <p>Al acceder y utilizar CHAMBA, usted acepta estos términos y condiciones. Si no está de acuerdo, no debe utilizar nuestra plataforma.</p>
@@ -199,5 +199,6 @@
     </div>
   </footer>
   <script src="js/theme.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>

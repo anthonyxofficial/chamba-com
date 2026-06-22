@@ -119,7 +119,7 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary page-transition">
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
       <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary" href="/">CHAMBA</a>
@@ -162,7 +162,7 @@
       <p class="text-secondary mb-12 font-body-lg">¿Tienes preguntas? Estamos aquí para ayudarte.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div class="bg-surface border-4 border-primary neo-shadow-lg p-10">
+        <div data-reveal="up" class="bg-surface border-4 border-primary neo-shadow-lg p-10">
           <h2 class="font-headline-md text-2xl uppercase mb-8 text-primary">Envíanos un mensaje</h2>
           <form id="contactForm" class="space-y-6">
             <div>
@@ -190,7 +190,7 @@
           </div>
         </div>
 
-        <div class="space-y-8">
+        <div data-reveal="up" class="space-y-8">
           <div class="bg-surface border-4 border-primary neo-shadow p-8">
             <div class="flex items-center gap-4 mb-4">
               <span class="material-symbols-outlined text-[32px] text-primary">email</span>
@@ -231,6 +231,7 @@
   </footer>
 
   <script src="js/theme.js"></script>
+  <script src="js/animations.js"></script>
   <script>
     document.getElementById('contactForm').addEventListener('submit', (e) => {
       e.preventDefault();

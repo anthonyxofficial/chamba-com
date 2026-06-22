@@ -118,7 +118,7 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md selection:bg-primary selection:text-on-primary">
+<body class="bg-background text-on-background font-body-md selection:bg-primary selection:text-on-primary page-transition">
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
       <div class="flex items-center gap-10">
@@ -160,7 +160,7 @@
 
   <main class="py-20 px-6">
     <div class="max-w-3xl mx-auto">
-      <div id="form-content" class="bg-surface border-4 border-primary neo-shadow-lg p-10 md:p-16">
+      <div data-reveal="up" id="form-content" class="bg-surface border-4 border-primary neo-shadow-lg p-10 md:p-16">
         <div class="mb-10">
           <div class="inline-block bg-primary text-on-primary px-4 py-1 font-label-bold uppercase text-xs tracking-[0.2em] border-2 border-primary neo-shadow mb-6">
             NUEVA VACANTE
@@ -248,6 +248,7 @@
   </footer>
 
   <script src="js/theme.js"></script>
+  <script src="js/animations.js"></script>
   <script>
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || user.tipo !== 'empresa') {
