@@ -1,6 +1,6 @@
 const API_URL = '/api/empleos';
 const POSTULACIONES_URL = '/api/postulaciones';
-const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem('user') || 'null');
 
 if (!user || user.tipo !== 'empresa') {
   window.location.href = '/login.html';

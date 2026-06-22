@@ -259,7 +259,7 @@
               <h4 class="font-headline-md text-xl uppercase text-primary group-hover:underline decoration-2 mb-2">${e.titulo}</h4>
               <p class="font-label-bold text-label-sm uppercase tracking-wider text-secondary mb-3">${e.empresa} • ${fecha}</p>
             </div>
-            <a href="/" class="bg-primary text-on-primary px-4 py-2 font-label-bold uppercase text-xs border-2 border-primary neo-shadow text-center transition-all hover:-translate-y-0.5">VER EMPLEO</a>
+            <a href="/?empleo=${e.id}" class="bg-primary text-on-primary px-4 py-2 font-label-bold uppercase text-xs border-2 border-primary neo-shadow text-center transition-all hover:-translate-y-0.5">VER EMPLEO</a>
           </div>`;
       }).join('');
     }

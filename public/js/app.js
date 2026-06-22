@@ -177,6 +177,7 @@ function renderEmpleos(empleos) {
         </div>
       </div>`;
   }).join('');
+  if (window.refreshCardStagger) window.refreshCardStagger();
 }
 
 function renderPagination(current, total, totalItems) {
@@ -348,6 +349,13 @@ function debounceSearch() {
 document.addEventListener('DOMContentLoaded', () => {
   cargarEmpleos(1);
   cargarCategorias();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const empleoId = urlParams.get('empleo');
+  if (empleoId) {
+    setTimeout(() => abrirEmpleo(parseInt(empleoId)), 300);
+    window.history.replaceState({}, '', '/');
+  }
 
   const heroSearchBtn = document.getElementById('btnBuscarHero');
   if (heroSearchBtn) {

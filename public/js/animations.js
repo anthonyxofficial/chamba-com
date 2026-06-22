@@ -78,24 +78,23 @@
     obs.observe(heroLines[0]);
   }
 
-  // --- JOB CARD STAGGER ---
-  function initCardStagger() {
-    const cards = document.querySelectorAll('.card-stagger');
-    if (!cards.length) return;
-
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          cards.forEach((el, i) => {
-            setTimeout(() => el.classList.add('revealed'), i * 100);
-          });
-          obs.disconnect();
-        }
-      });
-    }, { threshold: 0.08 });
-
-    obs.observe(cards[0]);
+  // --- JOB CARD STAGGER (called after each renderEmpleos) ---
+  function refreshCardStagger() {
+    requestAnimationFrame(() => {
+      const cards = document.querySelectorAll('.card-stagger:not(.revealed)');
+      if (!cards.length) return;
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            cards.forEach((el, i) => setTimeout(() => el.classList.add('revealed'), i * 100));
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.08 });
+      obs.observe(cards[0]);
+    });
   }
+  window.refreshCardStagger = refreshCardStagger;
 
   // --- CATEGORY CARD POP ---
   function initCatStagger() {
@@ -167,8 +166,8 @@
 
   // --- INIT ---
   function init() {
+    document.body.classList.remove('page-exit');
     initHeroStagger();
-    initCardStagger();
     initCatStagger();
     initCounters();
     initPageTransitions();
