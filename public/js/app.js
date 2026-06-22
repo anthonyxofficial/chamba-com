@@ -148,30 +148,30 @@ function renderEmpleos(empleos) {
       <div class="brutalist-card bg-${colorName} border-4 border-primary p-lg neo-shadow-hover transition-all group flex flex-col h-full">
         <div class="flex justify-between items-start mb-xl">
           <div class="w-16 h-16 border-4 border-primary overflow-hidden flex items-center justify-center bg-primary">
-            <span class="material-symbols-outlined text-black text-[32px]">${ICONS[e.categoria] || 'work'}</span>
+            <span class="material-symbols-outlined text-inverse-on-surface text-[32px]">${ICONS[e.categoria] || 'work'}</span>
           </div>
           <div class="flex flex-col items-end gap-xs">
             ${expirado ? '<span class="bg-error text-white font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary font-bold">CERRADO</span>' : ''}
-            <span class="bg-black text-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary">${TAGS[e.categoria] || 'EMPLEO'}</span>
+            <span class="bg-inverse-surface text-on-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary">${TAGS[e.categoria] || 'EMPLEO'}</span>
           </div>
         </div>
-        <h3 class="font-display-xl text-3xl uppercase mb-sm leading-tight group-hover:translate-x-1 transition-transform text-white cursor-pointer" onclick="abrirEmpleo(${e.id})">${e.titulo}</h3>
-        <p class="font-label-bold text-label-bold uppercase text-black mb-xl">${e.empresa}</p>
+        <h3 class="font-display-xl text-3xl uppercase mb-sm leading-tight group-hover:translate-x-1 transition-transform text-on-background cursor-pointer" onclick="abrirEmpleo(${e.id})">${e.titulo}</h3>
+        <p class="font-label-bold text-label-bold uppercase text-on-surface-variant mb-xl">${e.empresa}</p>
         <div class="mt-auto pt-lg border-t-2 border-primary/20 space-y-md">
           <div class="flex items-center gap-md">
             <span class="material-symbols-outlined text-xl bg-surface p-1 border-2 border-primary text-primary">location_on</span>
-            <span class="font-label-bold text-label-sm uppercase text-white">${e.departamento}</span>
+            <span class="font-label-bold text-label-sm uppercase text-on-background">${e.departamento}</span>
           </div>
           <div class="flex items-center gap-md">
             <span class="material-symbols-outlined text-xl bg-surface p-1 border-2 border-primary text-primary">payments</span>
-            <span class="font-label-bold text-label-sm uppercase text-white">${salary}</span>
+            <span class="font-label-bold text-label-sm uppercase text-on-background">${salary}</span>
           </div>
         </div>
         <div class="flex gap-sm mt-lg">
-          <button onclick="toggleFavorite(${e.id})" data-fav-id="${e.id}" class="flex-1 py-lg border-4 border-primary font-label-bold text-label-bold uppercase bg-transparent text-primary hover:bg-primary hover:text-black transition-all neo-shadow-active ${isFavorite(e.id) ? 'bg-red-500/10 border-red-500' : ''}">
+          <button onclick="toggleFavorite(${e.id})" data-fav-id="${e.id}" class="flex-1 py-lg border-4 border-primary font-label-bold text-label-bold uppercase bg-transparent text-primary hover:bg-primary hover:text-on-primary transition-all neo-shadow-active ${isFavorite(e.id) ? 'bg-red-500/10 border-red-500' : ''}">
             <span class="material-symbols-outlined text-lg align-middle">${favIcon}</span> Guardar
           </button>
-          <button onclick="abrirEmpleo(${e.id})" class="flex-[2] py-lg border-4 border-primary font-label-bold text-label-bold uppercase bg-transparent text-primary hover:bg-primary hover:text-black transition-all neo-shadow-active">
+          <button onclick="abrirEmpleo(${e.id})" class="flex-[2] py-lg border-4 border-primary font-label-bold text-label-bold uppercase bg-transparent text-primary hover:bg-primary hover:text-on-primary transition-all neo-shadow-active">
             ${expirado ? 'CERRADO' : 'Postularme'}
           </button>
         </div>
@@ -221,20 +221,20 @@ async function abrirEmpleo(id) {
         <div class="grid grid-cols-2 gap-md">
           <div>
             <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Nombre completo</label>
-            <input type="text" name="nombre" required class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] outline-none"/>
+            <input type="text" name="nombre" required class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_var(--ch-stroke)] outline-none"/>
           </div>
           <div>
             <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Email</label>
-            <input type="email" name="email" required class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] outline-none"/>
+            <input type="email" name="email" required class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_var(--ch-stroke)] outline-none"/>
           </div>
         </div>
         <div>
           <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Teléfono</label>
-          <input type="tel" name="telefono" class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] outline-none"/>
+          <input type="tel" name="telefono" class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_var(--ch-stroke)] outline-none"/>
         </div>
         <div>
           <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Carta de presentación</label>
-          <textarea name="carta" rows="4" class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] outline-none resize-none" placeholder="Cuéntanos por qué eres el candidato ideal..."></textarea>
+          <textarea name="carta" rows="4" class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_var(--ch-stroke)] outline-none resize-none" placeholder="Cuéntanos por qué eres el candidato ideal..."></textarea>
         </div>
         <button type="submit" class="w-full bg-primary text-on-primary px-xl py-lg font-label-bold uppercase tracking-widest text-sm border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">ENVIAR POSTULACIÓN</button>
       </form>`;
@@ -246,10 +246,10 @@ async function abrirEmpleo(id) {
           <div class="flex items-start justify-between">
             <div class="flex items-center gap-lg">
               <div class="w-16 h-16 border-4 border-primary overflow-hidden flex items-center justify-center bg-primary">
-                <span class="material-symbols-outlined text-black text-[32px]">${ICONS[empleo.categoria] || 'work'}</span>
+                <span class="material-symbols-outlined text-inverse-on-surface text-[32px]">${ICONS[empleo.categoria] || 'work'}</span>
               </div>
               <div>
-                <span class="bg-black text-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary">${TAGS[empleo.categoria] || 'EMPLEO'}</span>
+                <span class="bg-inverse-surface text-on-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary">${TAGS[empleo.categoria] || 'EMPLEO'}</span>
                 <h2 class="font-headline-md text-3xl uppercase text-primary mt-sm">${empleo.titulo}</h2>
                 <p class="text-secondary font-label-bold uppercase tracking-wider mt-xs text-sm">${empleo.empresa}</p>
               </div>
