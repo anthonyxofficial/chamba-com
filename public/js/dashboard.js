@@ -36,7 +36,7 @@ async function cargarMisEmpleos() {
   const list = document.getElementById('mis-empleos-list');
   if (empleos.length === 0) {
     list.innerHTML = `<div class="text-center py-20 border-4 border-dashed border-primary">
-      <span class="material-symbols-outlined text-[48px] text-outline">work_off</span>
+      <span class="material-symbols-outlined text-[48px] text-secondary">work_off</span>
       <h3 class="font-headline-md text-xl mt-4 text-primary">No tienes empleos publicados</h3>
       <p class="text-secondary mt-2 mb-6 font-label-bold uppercase text-sm">Publica tu primer empleo para comenzar a recibir postulaciones</p>
       <button onclick="mostrarSeccion('publicar')" class="bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm border-2 border-primary neo-shadow transition-all hover:-translate-y-0.5">PUBLICAR EMPLEO</button>
@@ -72,7 +72,7 @@ async function cargarPostulaciones() {
   const list = document.getElementById('postulaciones-list');
   if (postulaciones.length === 0) {
     list.innerHTML = `<div class="text-center py-20 border-4 border-dashed border-primary">
-      <span class="material-symbols-outlined text-[48px] text-outline">inbox</span>
+      <span class="material-symbols-outlined text-[48px] text-secondary">inbox</span>
       <h3 class="font-headline-md text-xl mt-4 text-primary">Sin postulaciones aún</h3>
       <p class="text-secondary mt-2 font-label-bold uppercase text-sm">Las postulaciones aparecerán aquí cuando alguien aplique a tus empleos</p>
     </div>`;

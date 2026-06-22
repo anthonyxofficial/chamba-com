@@ -148,7 +148,7 @@ function renderEmpleos(empleos) {
       <div class="brutalist-card bg-${colorName} border-4 border-primary p-lg neo-shadow-hover transition-all group flex flex-col h-full">
         <div class="flex justify-between items-start mb-xl">
           <div class="w-16 h-16 border-4 border-primary overflow-hidden flex items-center justify-center bg-primary">
-            <span class="material-symbols-outlined text-inverse-on-surface text-[32px]">${ICONS[e.categoria] || 'work'}</span>
+            <span class="material-symbols-outlined text-on-primary text-[32px]">${ICONS[e.categoria] || 'work'}</span>
           </div>
           <div class="flex flex-col items-end gap-xs">
             ${expirado ? '<span class="bg-error text-white font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary font-bold">CERRADO</span>' : ''}
@@ -246,7 +246,7 @@ async function abrirEmpleo(id) {
           <div class="flex items-start justify-between">
             <div class="flex items-center gap-lg">
               <div class="w-16 h-16 border-4 border-primary overflow-hidden flex items-center justify-center bg-primary">
-                <span class="material-symbols-outlined text-inverse-on-surface text-[32px]">${ICONS[empleo.categoria] || 'work'}</span>
+                <span class="material-symbols-outlined text-on-primary text-[32px]">${ICONS[empleo.categoria] || 'work'}</span>
               </div>
               <div>
                 <span class="bg-inverse-surface text-on-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary">${TAGS[empleo.categoria] || 'EMPLEO'}</span>

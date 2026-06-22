@@ -129,14 +129,14 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-black">
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary">
 
   <!-- Header -->
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-container-max mx-auto px-gutter h-20 flex justify-between items-center">
       <div class="flex items-center gap-xl">
         <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary group" href="/">
-          CHA<span class="group-hover:text-inverse-surface transition-colors">MBA</span>
+          CHA<span class="group-hover:text-inverse-primary transition-colors">MBA</span>
         </a>
         <div class="hidden md:flex gap-lg">
           <a class="font-label-bold text-label-bold uppercase tracking-wider text-primary border-b-4 border-primary pb-1" href="#empleos">Buscar Empleos</a>
@@ -186,7 +186,7 @@
           </div>
           <h1 class="font-display-xl text-headline-lg-mobile md:text-display-xl uppercase mb-lg text-on-background leading-tight">
             ENCUENTRA TU <br/><span class="text-on-primary bg-primary px-sm inline-block transform rotate-1 px-md">PRÓXIMO</span><br/>
-            <span class="inline-block bg-inverse-surface text-inverse-on-surface px-4 mt-4 transform -rotate-1">RETO</span>
+            <span class="inline-block bg-inverse-surface text-inverse-primary px-4 mt-4 transform -rotate-1">RETO</span>
           </h1>
           <p class="font-body-lg text-body-lg text-on-surface-variant mb-xl max-w-lg leading-relaxed">
             La plataforma para profesionales que no se conforman. Las mejores oportunidades en Tech, Diseño y Marketing están aquí.
@@ -223,7 +223,7 @@
                   <option value="Yoro">Yoro</option>
                 </select>
               </div>
-              <button id="btnBuscarHero" class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-xl py-lg hover:bg-inverse-surface hover:text-inverse-on-surface transition-colors neo-shadow-active">
+              <button id="btnBuscarHero" class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-xl py-lg hover:bg-inverse-surface hover:text-inverse-primary transition-colors neo-shadow-active">
                 BUSCAR CHAMBA
               </button>
             </div>
@@ -255,42 +255,42 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-lg" id="categorias-grid">
           <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Informática y Programación')">
-            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-inverse-surface transition-colors border-2 border-primary">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">code</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Software</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-tech">0</span> puestos</p>
           </div>
           <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Marketing y Comunicación')">
-            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-inverse-surface transition-colors border-2 border-primary">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">trending_up</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Marketing</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-marketing">0</span> puestos</p>
           </div>
           <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ventas y Comercial')">
-            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-inverse-surface transition-colors border-2 border-primary">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">shopping_bag</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Ventas</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-ventas">0</span> puestos</p>
           </div>
           <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Finanzas y Contabilidad')">
-            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-inverse-surface transition-colors border-2 border-primary">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">calculate</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Finanzas</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-finanzas">0</span> puestos</p>
           </div>
           <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ingeniería y Técnico')">
-            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-inverse-surface transition-colors border-2 border-primary">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">engineering</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Ingeniería</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-ingenieria">0</span> puestos</p>
           </div>
           <div class="bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="window.location.href='/buscar.html'">
-            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-inverse-surface transition-colors border-2 border-primary">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">more_horiz</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Ver Más</p>
@@ -365,18 +365,18 @@
   </main>
 
   <!-- Footer -->
-  <footer class="w-full bg-inverse-surface text-inverse-on-surface border-t-4 border-primary">
+  <footer class="w-full bg-inverse-surface text-inverse-primary border-t-4 border-primary">
     <div class="max-w-container-max mx-auto px-gutter py-24 flex flex-col md:flex-row justify-between gap-xl">
       <div class="space-y-xl max-w-md">
-        <h2 class="font-display-xl text-6xl uppercase text-primary">CHAMBA</h2>
-        <p class="text-inverse-on-surface/70 uppercase font-label-bold text-lg leading-snug">
+        <h2 class="font-display-xl text-6xl uppercase text-inverse-primary">CHAMBA</h2>
+        <p class="text-inverse-primary/70 uppercase font-label-bold text-lg leading-snug">
           La plataforma de empleo número uno para la nueva generación de profesionales. Construida para los valientes.
         </p>
         <div class="flex gap-lg pt-md">
-          <a class="w-14 h-14 border-4 border-primary flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all" href="#">
+          <a class="w-14 h-14 border-4 border-primary flex items-center justify-center text-inverse-primary hover:bg-primary hover:text-on-primary transition-all" href="#">
             <span class="material-symbols-outlined">share</span>
           </a>
-          <a class="w-14 h-14 border-4 border-primary flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all" href="#">
+          <a class="w-14 h-14 border-4 border-primary flex items-center justify-center text-inverse-primary hover:bg-primary hover:text-on-primary transition-all" href="#">
             <span class="material-symbols-outlined">language</span>
           </a>
         </div>

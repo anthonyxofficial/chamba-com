@@ -113,15 +113,15 @@
     .glow-neon { box-shadow: 0 0 15px var(--ch-shadow); }
     @keyframes subtle-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
     .float-animation { animation: subtle-float 4s ease-in-out infinite; }
-    .tipo-btn { border: 4px solid #333; padding: 20px; cursor: pointer; transition: all 0.2s; text-align: center; }
-    .tipo-btn.active { background: #fff; color: #000; border-color: #fff; }
-    .tipo-btn:not(.active):hover { background: #1a1a1a; }
+    .tipo-btn { border: 4px solid var(--ch-outline); padding: 20px; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .tipo-btn.active { background: var(--ch-surface); color: var(--ch-primary); border-color: var(--ch-primary); }
+    .tipo-btn:not(.active):hover { background: var(--ch-surface-variant); }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-black">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
       <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary" href="/">CHAMBA</a>
