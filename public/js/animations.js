@@ -53,9 +53,10 @@
     /* MARQUEE SCROLL */
     .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
     .marquee-track {
-      display: inline-flex; gap: 6rem; width: max-content;
-      animation: marquee-scroll 25s linear infinite;
+      display: inline-flex; width: max-content;
+      animation: marquee-scroll 20s linear infinite;
     }
+    .marquee-track span { padding: 0 3rem; }
     .marquee-container:hover .marquee-track { animation-play-state: paused; }
     @keyframes marquee-scroll {
       0%   { transform: translateX(0); }
