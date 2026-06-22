@@ -13,68 +13,57 @@
       theme: {
         extend: {
           "colors": {
-            "on-primary": "#000000",
-            "primary": "#FFFFFF",
-            "secondary": "#A0A0A0",
-            "on-background": "#FFFFFF",
-            "background": "#000000",
-            "surface": "#131313",
-            "outline": "#333333",
-            "inverse-on-surface": "#f2f0ef",
-            "dark-text": "#E0E0E0",
-            "surface-tint": "#FFFFFF",
-            "secondary-fixed-dim": "#FFFFFF",
-            "on-surface": "#FFFFFF",
-            "on-primary-container": "#FFFFFF",
-            "dark-bg": "#0A0A0A",
-            "tertiary-fixed": "#FFFFFF",
-            "on-tertiary-container": "#FFFFFF",
-            "on-error": "#ffffff",
-            "error-container": "#93000a",
-            "on-secondary": "#000000",
-            "tertiary": "#FFFFFF",
-            "on-tertiary-fixed": "#000000",
-            "on-tertiary-fixed-variant": "#FFFFFF",
-            "inverse-primary": "#000000",
-            "tertiary-container": "#131313",
-            "surface-container": "#131313",
-            "on-secondary-fixed-variant": "#FFFFFF",
-            "primary-fixed-dim": "#FFFFFF",
-            "surface-container-low": "#0A0A0A",
-            "surface-container-highest": "#1A1A1A",
-            "surface-bright": "#131313",
-            "surface-dim": "#0A0A0A",
-            "primary-container": "#111111",
-            "secondary-container": "#131313",
-            "on-error-container": "#ffffff",
-            "on-primary-fixed": "#000000",
-            "on-secondary-container": "#FFFFFF",
-            "tertiary-fixed-dim": "#FFFFFF",
-            "on-tertiary": "#000000",
-            "on-surface-variant": "#A0A0A0",
-            "dark-surface": "#131313",
-            "inverse-surface": "#FFFFFF",
-            "surface-container-lowest": "#000000",
-            "primary-fixed": "#FFFFFF",
-            "on-primary-fixed-variant": "#000000",
-            "secondary-fixed": "#131313",
-            "outline-variant": "#333333",
-            "surface-container-high": "#1A1A1A",
-            "on-secondary-fixed": "#000000",
-          },
-          "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
-          "fontFamily": {
-            "display-xl": ["Bricolage Grotesque", "sans-serif"],
-            "body-md": ["Space Grotesk", "sans-serif"],
-            "label-bold": ["Space Grotesk", "sans-serif"],
-            "headline-lg": ["Bricolage Grotesque", "sans-serif"],
-            "label-sm": ["Space Grotesk", "sans-serif"],
-            "headline-md": ["Bricolage Grotesque", "sans-serif"],
-          },
-          "fontSize": {
-            "label-bold": ["16px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
-            "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
-            "headline-lg-mobile": ["42px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+            "primary": "var(--ch-primary)",
+            "on-primary": "var(--ch-on-primary)",
+            "background": "var(--ch-background)",
+            "surface": "var(--ch-surface)",
+            "surface-variant": "var(--ch-surface-variant)",
+            "on-background": "var(--ch-on-background)",
+            "on-surface": "var(--ch-on-surface)",
+            "on-surface-variant": "var(--ch-on-surface-variant)",
+            "secondary": "var(--ch-secondary)",
+            "outline": "var(--ch-outline)",
+            "outline-variant": "var(--ch-outline-variant)",
+            "error": "var(--ch-error)",
+            "favorite": "var(--ch-favorite)",
+            "primary-container": "var(--ch-primary-container)",
+            "on-primary-container": "var(--ch-on-primary-container)",
+            "surface-container": "var(--ch-surface-container)",
+            "surface-container-low": "var(--ch-surface-container-low)",
+            "surface-container-high": "var(--ch-surface-container-high)",
+            "surface-container-highest": "var(--ch-surface-container-highest)",
+            "surface-container-lowest": "var(--ch-surface-container-lowest)",
+            "surface-bright": "var(--ch-surface-bright)",
+            "surface-dim": "var(--ch-surface-dim)",
+            "inverse-surface": "var(--ch-inverse-surface)",
+            "inverse-on-surface": "var(--ch-inverse-on-surface)",
+            "inverse-primary": "var(--ch-inverse-primary)",
+            "tertiary": "var(--ch-tertiary)",
+            "tertiary-container": "var(--ch-tertiary-container)",
+            "on-tertiary": "var(--ch-on-tertiary)",
+            "on-tertiary-container": "var(--ch-on-tertiary-container)",
+            "secondary-container": "var(--ch-secondary-container)",
+            "on-secondary": "var(--ch-on-secondary)",
+            "on-secondary-container": "var(--ch-on-secondary-container)",
+            "dark-bg": "var(--ch-dark-bg)",
+            "dark-surface": "var(--ch-dark-surface)",
+            "dark-text": "var(--ch-dark-text)",
+            "on-error": "var(--ch-on-error)",
+            "error-container": "var(--ch-error-container)",
+            "on-error-container": "var(--ch-on-error-container)",
+            "surface-tint": "var(--ch-surface-tint)",
+            "primary-fixed": "var(--ch-primary-fixed)",
+            "primary-fixed-dim": "var(--ch-primary-fixed-dim)",
+            "on-primary-fixed": "var(--ch-on-primary-fixed)",
+            "on-primary-fixed-variant": "var(--ch-on-primary-fixed-variant)",
+            "secondary-fixed": "var(--ch-secondary-fixed)",
+            "secondary-fixed-dim": "var(--ch-secondary-fixed-dim)",
+            "on-secondary-fixed": "var(--ch-on-secondary-fixed)",
+            "on-secondary-fixed-variant": "var(--ch-on-secondary-fixed-variant)",
+            "tertiary-fixed": "var(--ch-tertiary-fixed)",
+            "tertiary-fixed-dim": "var(--ch-tertiary-fixed-dim)",
+            "on-tertiary-fixed": "var(--ch-on-tertiary-fixed)",
+            "on-tertiary-fixed-variant": "var(--ch-on-tertiary-fixed-variant)"
           },
           "spacing": {
             "sm": "8px",
@@ -86,23 +75,47 @@
             "xl": "40px",
             "gutter": "24px"
           },
+          "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+          "fontFamily": {
+            "display-xl": ["Bricolage Grotesque", "sans-serif"],
+            "body-md": ["Space Grotesk", "sans-serif"],
+            "label-bold": ["Space Grotesk", "sans-serif"],
+            "headline-lg": ["Bricolage Grotesque", "sans-serif"],
+            "label-sm": ["Space Grotesk", "sans-serif"],
+            "body-lg": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Bricolage Grotesque", "sans-serif"],
+            "headline-lg-mobile": ["Bricolage Grotesque", "sans-serif"]
+          },
+          "fontSize": {
+            "display-xl": ["96px", {"lineHeight": "0.9", "letterSpacing": "-0.05em", "fontWeight": "800"}],
+            "body-md": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+            "label-bold": ["16px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+            "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "body-lg": ["22px", {"lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+            "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "headline-lg-mobile": ["42px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}]
+          }
         },
       },
     }
   </script>
   <style>
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    .neo-shadow { box-shadow: 4px 4px 0px 0px #FFFFFF; }
-    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #FFFFFF; }
-    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px #333; transform: translate(4px, 4px); }
-    .text-stroke { -webkit-text-stroke: 1px #FFFFFF; color: transparent; }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px var(--ch-stroke); }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--ch-stroke); }
+    .neo-shadow-hover:hover { box-shadow: 12px 12px 0px 0px var(--ch-stroke); transform: translate(-4px, -4px); }
+    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px var(--ch-stroke); transform: translate(4px, 4px); }
+    .pattern-grid { background-image: radial-gradient(var(--ch-pattern) 1px, transparent 0); background-size: 24px 24px; }
+    .brutalist-img { filter: grayscale(100%) contrast(120%) brightness(0.8); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .brutalist-card:hover .brutalist-img { filter: grayscale(0%) contrast(100%) brightness(1); }
+    .text-stroke { -webkit-text-stroke: 1px var(--ch-stroke); color: transparent; }
+    .glow-neon { box-shadow: 0 0 15px var(--ch-shadow); }
+    @keyframes subtle-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+    .float-animation { animation: subtle-float 4s ease-in-out infinite; }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
-    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #f5f3f2; --text: #1b1c1c; --text-sec: #5e5e5e; --border: #000000; --shadow: rgba(0,0,0,1); }
-    html.light body { background: var(--bg); color: var(--text); }
-    html.light .neo-shadow { box-shadow: 4px 4px 0px 0px var(--shadow); }
-    html.light .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--shadow); }
-    html.light .text-stroke { -webkit-text-stroke: 1px #000; }
+    .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
 <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-black">
@@ -114,9 +127,30 @@
           <span class="material-symbols-outlined text-[24px]">light_mode</span>
         </button>
         <a href="/" class="bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm border-2 border-primary neo-shadow neo-shadow-active">INICIO</a>
+        <button onclick="openMobileMenu()" class="md:hidden p-2" style="color: var(--ch-primary);" aria-label="Menu">
+          <span class="material-symbols-outlined text-[28px]">menu</span>
+        </button>
       </div>
     </nav>
   </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden fixed inset-0 z-[100] flex flex-col p-gutter" style="background: var(--ch-background); color: var(--ch-on-background);">
+    <div class="flex justify-between items-center mb-xl">
+      <a class="font-display-xl text-4xl uppercase tracking-tighter" style="color: var(--ch-primary);" href="/">CHAMBA</a>
+      <button onclick="closeMobileMenu()" class="p-2" style="color: var(--ch-primary);" aria-label="Cerrar menu">
+        <span class="material-symbols-outlined text-[32px]">close</span>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-lg">
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="#empleos" onclick="closeMobileMenu()">Buscar Empleos</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/buscar.html" onclick="closeMobileMenu()">Explorar</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/publicar.html" onclick="closeMobileMenu()">Empresas</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/favoritos.html" onclick="closeMobileMenu()">Guardados</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/login.html" onclick="closeMobileMenu()">Iniciar Sesión</a>
+      <a class="font-headline-md text-headline-md uppercase" style="color: var(--ch-primary);" href="/registro.html" onclick="closeMobileMenu()">Crear Cuenta</a>
+    </nav>
+  </div>
 
   <main class="flex-1 flex items-center justify-center py-20 px-6">
     <div class="text-center">
