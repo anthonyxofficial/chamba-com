@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html class="light" lang="es">
+<html class="dark" lang="es">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Empleos Guardados - Chamba.com</title>
-  <meta name="description" content="Tus empleos guardados en Chamba.com"/>
+  <title>Empleos Guardados - CHAMBA</title>
+  <meta name="description" content="Tus empleos guardados en CHAMBA"/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <script>
     tailwind.config = {
@@ -14,101 +14,96 @@
       theme: {
         extend: {
           "colors": {
-            "on-primary": "#ffffff",
-            "background": { DEFAULT: "#fbf9f8", dark: "#0a0a0a" },
-            "primary": { DEFAULT: "#000000", dark: "#ffffff" },
-            "secondary": { DEFAULT: "#4a4a4a", dark: "#a0a0a0" },
-            "on-background": { DEFAULT: "#1b1c1c", dark: "#e0e0e0" },
-            "surface": { DEFAULT: "#ffffff", dark: "#2a2a2a" },
+            "on-primary": "#000000",
+            "primary": "#FFFFFF",
+            "secondary": "#A0A0A0",
+            "on-background": "#FFFFFF",
+            "background": "#000000",
+            "surface": "#131313",
+            "surface-variant": "#1A1A1A",
+            "outline": "#333333",
+            "error": "#FF4444",
+            "job-pink": "#E91E63",
+            "job-green": "#00C853",
+            "job-blue": "#2979FF",
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
-            "label-bold": ["Space Grotesk"],
-            "body-md": ["Space Grotesk"],
-            "headline-md": ["Bricolage Grotesque"],
-            "headline-lg": ["Bricolage Grotesque"]
+            "display-xl": ["Bricolage Grotesque", "sans-serif"],
+            "body-md": ["Space Grotesk", "sans-serif"],
+            "label-bold": ["Space Grotesk", "sans-serif"],
+            "headline-lg": ["Bricolage Grotesque", "sans-serif"],
+            "label-sm": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Bricolage Grotesque", "sans-serif"],
+          },
+          "fontSize": {
+            "label-bold": ["16px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+            "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
           }
         },
       },
     }
   </script>
   <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
-    .brutalist-card { border: 3px solid #000; box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); transition: all 0.2s ease; }
-    .brutalist-card:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px 0px rgba(0,0,0,1); }
-    .brutalist-btn { border: 2px solid #000; box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); transition: all 0.1s ease; }
-    .brutalist-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 rgba(0,0,0,1); }
-    .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
-    .fav-btn.favorited { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
-    .fav-btn.favorited .material-symbols-outlined { color: #ef4444; }
-    .dark .brutalist-card { border-color: #fff; box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.3); }
-    .dark .brutalist-card:hover { box-shadow: 10px 10px 0px 0px rgba(255,255,255,0.3); }
-    .dark .brutalist-btn { border-color: #fff; box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.3); }
-    .dark .glass-header { background-color: rgba(10, 10, 10, 0.95); }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px #333; }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #333; }
+    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px #333; transform: translate(4px, 4px); }
+    .text-stroke { -webkit-text-stroke: 2px #FFFFFF; color: transparent; }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
-    .dark .text-primary { color: #ffffff !important; }
-    .dark .bg-primary { background-color: #000000 !important; }
-    .dark .border-primary { border-color: #ffffff !important; }
-    .dark .text-on-background { color: #e0e0e0 !important; }
-    .dark .text-secondary { color: #b0b0b0 !important; }
-    .dark .text-on-surface { color: #e0e0e0 !important; }
-    .dark label { color: #e0e0e0 !important; }
+    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #e3e2e2; --text: #1b1c1c; --text-sec: #4a4a4a; --border: #000000; --shadow: rgba(0,0,0,1); }
+    html.light body { background: var(--bg); color: var(--text); }
+    html.light .neo-shadow { box-shadow: 4px 4px 0px 0px var(--shadow); }
+    html.light .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--shadow); }
+    html.light .text-stroke { -webkit-text-stroke: 2px #000; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col dark:bg-background-dark dark:text-on-background-dark">
-  <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
-    <div class="flex items-center gap-10">
-      <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
-      <nav class="hidden lg:flex gap-8">
-        <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="/">INICIO</a>
-        <a class="font-label-bold text-primary hover:underline decoration-[3px] underline-offset-8" href="/favoritos.html">GUARDADOS</a>
-      </nav>
-    </div>
-    <div class="flex items-center gap-4">
-      <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-full transition-colors" aria-label="Cambiar tema">
-        <span class="material-symbols-outlined text-[24px]">dark_mode</span>
-      </button>
-      <a href="/login.html" class="px-6 py-2 text-primary font-label-bold hover:underline decoration-[2px] underline-offset-4">LOGIN</a>
-    </div>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-white selection:text-black">
+  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-outline">
+    <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
+      <div class="flex items-center gap-10">
+        <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary" href="/">CHAMBA</a>
+        <div class="hidden md:flex gap-8">
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all" href="/">Inicio</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-primary border-b-4 border-primary pb-1" href="/favoritos.html">Guardados</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-surface-variant rounded-full transition-colors" aria-label="Cambiar tema">
+          <span class="material-symbols-outlined text-[24px]">light_mode</span>
+        </button>
+        <a href="/login.html" class="hidden md:block font-label-bold text-label-bold uppercase text-primary hover:underline decoration-4 underline-offset-4 transition-colors">Iniciar Sesión</a>
+      </div>
+    </nav>
   </header>
 
   <main class="flex-1 py-12 px-6">
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-[1200px] mx-auto">
       <div class="mb-10">
-        <h1 class="font-headline-lg text-headline-lg uppercase leading-none">Empleos<br/><span class="italic font-normal">guardados</span></h1>
-        <p class="text-secondary mt-4" id="fav-count"></p>
+        <h1 class="font-display-xl text-headline-md md:text-headline-lg uppercase leading-none text-primary">Empleos<br/><span class="text-stroke">GUARDADOS</span></h1>
+        <p class="text-secondary mt-4 font-label-bold uppercase text-sm" id="fav-count"></p>
       </div>
 
-      <div id="favoritos-list" class="space-y-6"></div>
+      <div id="favoritos-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </div>
   </main>
 
   <div id="modal-empleo"></div>
 
-  <footer class="bg-black text-white w-full px-6 py-10 border-t-[5px] border-primary">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
-      <p class="font-label-sm text-white/40">© 2026 CHAMBA.COM. TODOS LOS DERECHOS RESERVADOS.</p>
-      <p class="font-label-sm text-white/40 uppercase tracking-widest">BUILT FOR THE BOLD</p>
+  <footer class="bg-black text-white w-full border-t-4 border-outline mt-20">
+    <div class="max-w-[1200px] mx-auto px-6 py-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="font-label-bold text-label-sm uppercase opacity-50">© 2026 CHAMBA. TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="font-label-bold text-label-sm uppercase tracking-widest opacity-50">CONSTRUIDA PARA LOS VALIENTES</p>
     </div>
   </footer>
 
   <script src="js/theme.js"></script>
   <script>
-    const API_URL = window.location.hostname.includes('netlify.app')
-      ? '/.netlify/functions/empleos'
-      : '/api/empleos';
-    const ICONS = {
-      'Informática y Programación': 'terminal',
-      'Ventas y Comercial': 'shopping_bag',
-      'Finanzas y Contabilidad': 'calculate',
-      'Ingeniería y Técnico': 'engineering',
-      'Servicio al Cliente': 'support_agent',
-      'Administración de Empresas': 'corporate_fare',
-      'Recursos Humanos': 'people',
-      'Marketing y Comunicación': 'campaign',
-      'Logística, Almacén y Compras': 'local_shipping'
-    };
+    const API_URL = '/api/empleos';
+    const COLOR_MAP = { pink: 'job-pink', green: 'job-green', blue: 'job-blue' };
     const TAGS = {
       'Informática y Programación': 'TECNOLOGÍA',
       'Ventas y Comercial': 'VENTAS',
@@ -120,18 +115,18 @@
       'Marketing y Comunicación': 'MARKETING',
       'Logística, Almacén y Compras': 'LOGÍSTICA'
     };
-
     let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
     function toggleFavorite(id) {
       const index = favorites.indexOf(id);
-      if (index === -1) {
-        favorites.push(id);
-      } else {
-        favorites.splice(index, 1);
-      }
+      if (index === -1) favorites.push(id); else favorites.splice(index, 1);
       localStorage.setItem('favorites', JSON.stringify(favorites));
       cargarFavoritos();
+    }
+
+    function getColorForJob(empleo) {
+      if (empleo.color && COLOR_MAP[empleo.color]) return empleo.color;
+      return ['pink', 'green', 'blue'][empleo.id % 3];
     }
 
     function formatDate(dateStr) {
@@ -140,26 +135,17 @@
       return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
     }
 
-    async function shareJob(empleo) {
-      const text = `¡Mira este empleo en Chamba.com! ${empleo.titulo} - ${empleo.empresa}`;
-      if (navigator.share) {
-        navigator.share({ title: empleo.titulo, text, url: window.location.href });
-      } else {
-        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-      }
-    }
-
     async function cargarFavoritos() {
       const list = document.getElementById('favoritos-list');
 
       if (favorites.length === 0) {
         document.getElementById('fav-count').textContent = '0 empleos guardados';
         list.innerHTML = `
-          <div class="text-center py-20 border-[3px] border-dashed border-black dark:border-white">
-            <span class="material-symbols-outlined text-[64px] text-neutral-300">favorite_border</span>
-            <h3 class="font-headline-md text-xl mt-4">No tienes empleos guardados</h3>
-            <p class="text-secondary mt-2 mb-6">Haz click en el corazón de cualquier empleo para guardarlo</p>
-            <a href="/" class="brutalist-btn bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm inline-block">VER EMPLEOS</a>
+          <div class="text-center py-20 col-span-full border-4 border-dashed border-outline">
+            <span class="material-symbols-outlined text-[64px] text-outline">favorite_border</span>
+            <h3 class="font-headline-md text-xl mt-4 text-primary">No tienes empleos guardados</h3>
+            <p class="text-secondary mt-2 mb-6 font-label-bold uppercase text-sm">Haz click en el corazón de cualquier empleo para guardarlo</p>
+            <a href="/" class="bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm border-2 border-outline neo-shadow inline-block transition-all hover:-translate-y-0.5">VER EMPLEOS</a>
           </div>`;
         return;
       }
@@ -172,30 +158,28 @@
       document.getElementById('fav-count').textContent = `${empleos.length} empleos guardados`;
 
       list.innerHTML = empleos.map(e => {
-        const icon = ICONS[e.categoria] || 'work';
-        const tag = TAGS[e.categoria] || 'EMPLEO';
+        const color = getColorForJob(e);
+        const colorName = COLOR_MAP[color];
         const fecha = formatDate(e.fecha_limite);
         return `
-          <div class="bg-white dark:bg-surface-dark p-8 border-[3px] border-black dark:border-white brutalist-card flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-8 w-full md:w-auto flex-1">
-              <div class="w-20 h-20 bg-neutral-100 dark:bg-neutral-700 border-2 border-black dark:border-white flex items-center justify-center">
-                <span class="material-symbols-outlined text-[40px]">${icon}</span>
+          <div class="bg-surface border-4 border-${colorName} neo-shadow p-6 flex flex-col group">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-14 h-14 bg-${colorName}/20 flex items-center justify-center border-2 border-${colorName}">
+                <span class="material-symbols-outlined text-${colorName} text-[28px]">favorite</span>
               </div>
-              <div>
-                <div class="flex gap-2 mb-2">
-                  <span class="bg-neutral-900 text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${tag}</span>
-                  <span class="bg-neutral-200 dark:bg-neutral-600 text-black dark:text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${e.departamento}</span>
-                </div>
-                <h4 class="font-headline-md text-2xl uppercase">${e.titulo}</h4>
-                <p class="text-secondary font-label-sm mt-1 uppercase tracking-wider">${e.empresa} • ${fecha}</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <button onclick="toggleFavorite(${e.id})" class="fav-btn favorited w-12 h-12 border-2 border-red-500 flex items-center justify-center hover:bg-red-50 transition-colors">
-                <span class="material-symbols-outlined">favorite</span>
+              <button onclick="toggleFavorite(${e.id})" class="w-10 h-10 border-2 border-outline flex items-center justify-center hover:border-job-pink transition-colors">
+                <span class="material-symbols-outlined text-[20px] text-job-pink">favorite</span>
               </button>
-              <a href="/" class="brutalist-btn bg-primary text-on-primary px-8 py-4 font-label-bold uppercase text-sm">VER EMPLEO</a>
             </div>
+            <div class="flex-1">
+              <div class="flex gap-2 mb-3 flex-wrap">
+                <span class="bg-${colorName} text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${TAGS[e.categoria] || 'EMPLEO'}</span>
+                <span class="bg-surface-variant text-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter border border-outline">${e.departamento}</span>
+              </div>
+              <h4 class="font-headline-md text-xl uppercase text-primary group-hover:underline decoration-2 mb-2">${e.titulo}</h4>
+              <p class="font-label-bold text-label-sm uppercase tracking-wider text-secondary mb-3">${e.empresa} • ${fecha}</p>
+            </div>
+            <a href="/" class="bg-primary text-on-primary px-4 py-2 font-label-bold uppercase text-xs border-2 border-outline neo-shadow text-center transition-all hover:-translate-y-0.5">VER EMPLEO</a>
           </div>`;
       }).join('');
     }

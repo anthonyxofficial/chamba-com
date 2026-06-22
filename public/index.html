@@ -1,23 +1,19 @@
 <!DOCTYPE html>
-<html class="light" lang="es">
+<html class="dark" lang="es">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Chamba.com | Encuentra tu primer empleo profesional en Honduras</title>
+  <title>CHAMBA | Encuentra tu próximo reto</title>
   <meta name="description" content="Portal de empleos en Honduras. Conectamos talento emergente con empresas que innovan. Busca tu primer empleo profesional sin burocracia."/>
-  <meta name="keywords" content="empleos honduras, trabajo, vacantes, empleo junior, primer empleo, chamba"/>
-  <meta property="og:title" content="Chamba.com | Encuentra tu primer empleo profesional"/>
+  <meta property="og:title" content="CHAMBA | Encuentra tu próximo reto"/>
   <meta property="og:description" content="Portal de empleos en Honduras. Conectamos talento emergente con empresas que innovan."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://chamba.com"/>
   <meta property="og:image" content="https://chamba.com/favicon.svg"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Chamba.com | Encuentra tu primer empleo"/>
-  <meta name="twitter:description" content="Portal de empleos en Honduras. Conectamos talento emergente con empresas que innovan."/>
   <link rel="canonical" href="https://chamba.com"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <script>
     tailwind.config = {
@@ -25,187 +21,124 @@
       theme: {
         extend: {
           "colors": {
-            "on-surface": "#1b1c1c",
-            "surface-variant": "#e3e2e2",
-            "on-primary": "#ffffff",
-            "background": { DEFAULT: "#fbf9f8", dark: "#0a0a0a" },
-            "primary": { DEFAULT: "#000000", dark: "#ffffff" },
-            "secondary": { DEFAULT: "#4a4a4a", dark: "#a0a0a0" },
-            "on-background": { DEFAULT: "#1b1c1c", dark: "#e0e0e0" },
-            "surface": { DEFAULT: "#ffffff", dark: "#333333" },
+            "on-primary": "#000000",
+            "primary": "#FFFFFF",
+            "secondary": "#A0A0A0",
+            "on-background": "#FFFFFF",
+            "background": "#000000",
+            "surface": "#131313",
+            "surface-variant": "#1A1A1A",
+            "outline": "#333333",
+            "error": "#FF4444",
+            "favorite": "#FF4444",
+            "job-pink": "#E91E63",
+            "job-green": "#00C853",
+            "job-blue": "#2979FF",
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
-            "headline-lg-mobile": ["Bricolage Grotesque"],
-            "label-sm": ["Space Grotesk"],
-            "label-bold": ["Space Grotesk"],
-            "body-md": ["Space Grotesk"],
-            "display-xl": ["Bricolage Grotesque"],
-            "body-lg": ["Space Grotesk"],
-            "headline-md": ["Bricolage Grotesque"],
-            "headline-lg": ["Bricolage Grotesque"]
+            "display-xl": ["Bricolage Grotesque", "sans-serif"],
+            "body-md": ["Space Grotesk", "sans-serif"],
+            "label-bold": ["Space Grotesk", "sans-serif"],
+            "headline-lg": ["Bricolage Grotesque", "sans-serif"],
+            "label-sm": ["Space Grotesk", "sans-serif"],
+            "body-lg": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Bricolage Grotesque", "sans-serif"],
           },
           "fontSize": {
-            "headline-lg-mobile": ["36px", {"lineHeight": "40px", "fontWeight": "800"}],
-            "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
-            "label-bold": ["16px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700"}],
-            "body-md": ["18px", {"lineHeight": "26px", "fontWeight": "400"}],
-            "display-xl": ["88px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "800"}],
-            "body-lg": ["22px", {"lineHeight": "32px", "fontWeight": "400"}],
-            "headline-md": ["40px", {"lineHeight": "44px", "fontWeight": "800"}],
-            "headline-lg": ["56px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+            "display-xl": ["96px", {"lineHeight": "0.9", "letterSpacing": "-0.05em", "fontWeight": "800"}],
+            "body-md": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "label-bold": ["16px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+            "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "body-lg": ["22px", {"lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+            "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
           }
         },
       },
     }
   </script>
   <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      vertical-align: middle;
-    }
-    .brutalist-card {
-      border: 3px solid #000000;
-      box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
-      transition: all 0.2s ease;
-    }
-    .dark .brutalist-card {
-      border-color: #ffffff;
-      box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.3);
-    }
-    .brutalist-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 10px 10px 0px 0px rgba(0,0,0,1);
-    }
-    .dark .brutalist-card:hover {
-      box-shadow: 10px 10px 0px 0px rgba(255,255,255,0.3);
-    }
-    .brutalist-btn {
-      border: 2px solid #000000;
-      box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
-      transition: all 0.1s ease;
-    }
-    .dark .brutalist-btn {
-      border-color: #ffffff;
-      box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.3);
-    }
-    .brutalist-btn:active {
-      transform: translate(2px, 2px);
-      box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
-    }
-    .glass-header {
-      backdrop-filter: blur(8px);
-      background-color: rgba(251, 249, 249, 0.95);
-    }
-    .dark .glass-header {
-      background-color: rgba(10, 10, 10, 0.95);
-    }
-    .text-outline-black {
-      -webkit-text-stroke: 1px black;
-      color: transparent;
-    }
-    .dark .text-outline-black {
-      -webkit-text-stroke: 1px white;
-    }
-    .form-select {
-      width: 100%;
-      padding: 14px 16px;
-      border: 3px solid #000;
-      background: #fff;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 14px;
-      outline: none;
-      appearance: none;
-      cursor: pointer;
-    }
-    .dark .form-select {
-      border-color: #ffffff;
-      background: #333333;
-      color: #e0e0e0;
-    }
-    .form-select:focus {
-      box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
-    }
-    .dark .form-select:focus {
-      box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.3);
-    }
-    .fav-btn { transition: all 0.2s; }
-    .fav-btn.favorited { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
-    .dark .fav-btn.favorited { background: #3b1111; }
-    .fav-btn.favorited .material-symbols-outlined { color: #ef4444; }
-    .fav-btn:hover { background: #fef2f2; }
-    .dark .fav-btn:hover { background: #3b1111; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px #333; }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #333; }
+    .neo-shadow-hover:hover { box-shadow: 12px 12px 0px 0px #333; transform: translate(-4px, -4px); }
+    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px #333; transform: translate(4px, 4px); }
+    .pattern-grid { background-image: radial-gradient(#FFFFFF 1px, transparent 0); background-size: 24px 24px; }
+    .brutalist-img { filter: grayscale(100%) contrast(120%) brightness(0.8); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .brutalist-card:hover .brutalist-img { filter: grayscale(0%) contrast(100%) brightness(1); }
+    .text-stroke { -webkit-text-stroke: 2px #FFFFFF; color: transparent; }
+    .glow-neon { box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+    @keyframes subtle-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+    .float-animation { animation: subtle-float 4s ease-in-out infinite; }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
-    .dark .text-primary { color: #ffffff !important; }
-    .dark .bg-primary { background-color: #000000 !important; }
-    .dark .border-primary { border-color: #ffffff !important; }
-    .dark .text-on-background { color: #e0e0e0 !important; }
-    .dark .text-secondary { color: #b0b0b0 !important; }
-    .dark .text-on-surface { color: #e0e0e0 !important; }
-    .dark .placeholder\:text-neutral-500::placeholder { color: #999 !important; }
-    .dark label { color: #e0e0e0 !important; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .animate-spin { animation: spin 1s linear infinite; }
+    .dark .brutalist-card { border-color: #333; }
+    .dark .brutalist-btn { border-color: #333; }
+    /* Light mode overrides */
+    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #e3e2e2; --text: #1b1c1c; --text-sec: #4a4a4a; --border: #000000; --shadow: rgba(0,0,0,1); }
+    html.light body { background: var(--bg); color: var(--text); }
+    html.light .neo-shadow { box-shadow: 4px 4px 0px 0px var(--shadow); }
+    html.light .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--shadow); }
+    html.light .neo-shadow-hover:hover { box-shadow: 12px 12px 0px 0px var(--shadow); }
+    html.light .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px var(--shadow); }
+    html.light .pattern-grid { background-image: radial-gradient(#000 1px, transparent 0); }
+    html.light .text-stroke { -webkit-text-stroke: 2px #000; }
   </style>
 </head>
-<body class="bg-background dark:bg-background-dark text-on-background dark:text-on-background-dark font-body-md selection:bg-primary selection:text-on-primary">
-  <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
-    <div class="flex items-center gap-10">
-      <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
-      <nav class="hidden lg:flex gap-8">
-        <a class="font-label-bold text-primary hover:underline decoration-[3px] underline-offset-8" href="#empleos">EXPLORAR</a>
-        <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="#categorias">CATEGORÍAS</a>
-        <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="/favoritos.html">GUARDADOS</a>
-        <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="#testimonios">TESTIMONIOS</a>
-      </nav>
-    </div>
-    <div class="flex items-center gap-4">
-      <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-full transition-colors" aria-label="Cambiar tema">
-        <span class="material-symbols-outlined text-[24px]">dark_mode</span>
-      </button>
-      <a href="/login.html" class="px-6 py-2 text-primary font-label-bold hover:underline decoration-[2px] underline-offset-4">LOGIN</a>
-      <a href="/publicar.html" class="brutalist-btn bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm tracking-widest">Publicar</a>
-    </div>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-white selection:text-black">
+
+  <!-- Header -->
+  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-outline">
+    <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
+      <div class="flex items-center gap-10">
+        <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary group" href="/">
+          CHA<span class="group-hover:text-black dark:group-hover:text-black transition-colors">MBA</span>
+        </a>
+        <div class="hidden md:flex gap-8">
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-primary border-b-4 border-primary pb-1" href="#empleos">Buscar Empleos</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all hover:-translate-y-0.5" href="/publicar.html">Empresas</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all hover:-translate-y-0.5" href="/buscar.html">Explorar</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all hover:-translate-y-0.5" href="/favoritos.html">Guardados</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-surface-variant rounded-full transition-colors" aria-label="Cambiar tema">
+          <span class="material-symbols-outlined text-[24px]">light_mode</span>
+        </button>
+        <a href="/login.html" class="hidden md:block font-label-bold text-label-bold uppercase text-primary hover:underline decoration-4 underline-offset-4 transition-colors">Iniciar Sesión</a>
+        <a href="/publicar.html" class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-6 py-3 border-2 border-outline neo-shadow neo-shadow-active">Publicar Empleo</a>
+      </div>
+    </nav>
   </header>
 
   <main>
     <!-- Hero Section -->
-    <section class="relative pt-24 pb-20 px-6">
-      <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
-        <div class="w-full md:w-3/5 space-y-8">
-          <div class="inline-block bg-primary text-on-primary px-4 py-1 font-label-bold uppercase text-xs tracking-[0.2em] brutalist-btn">
-            TALENTO HONDUREÑO
+    <section class="relative w-full overflow-hidden pt-24 pb-32 pattern-grid bg-background">
+      <div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7 z-10 pr-6">
+          <div class="inline-block bg-primary text-on-primary font-label-bold px-2 py-1 border-2 border-primary mb-6 -rotate-1">
+            BETA 1.0 — AHORA EN HONDURAS
           </div>
-          <h1 class="font-display-xl text-display-xl leading-tight">
-            ENCUENTRA TU <br/>
-            <span class="bg-primary text-on-primary px-4 inline-block transform -rotate-1">PRIMER</span><br/>
-            <span class="italic font-normal">EMPLEO REAL</span>
+          <h1 class="font-display-xl text-headline-md md:text-display-xl uppercase mb-6 text-white leading-tight">
+            ENCUENTRA TU <br><span class="text-on-primary bg-primary px-2 inline-block transform rotate-1 px-4">PRÓXIMO</span><br>
+            <span class="inline-block bg-white text-black px-4 mt-4 transform -rotate-1">RETO</span>
           </h1>
-          <p class="font-body-lg text-secondary max-w-xl leading-relaxed border-l-4 border-primary pl-6">
-            Conectamos el talento emergente de Honduras con las empresas que no temen innovar. Sin burocracia, solo oportunidades.
+          <p class="font-body-lg text-body-lg text-secondary mb-10 max-w-lg leading-relaxed">
+            La plataforma para profesionales que no se conforman. Las mejores oportunidades en Tech, Diseño y Marketing están aquí.
           </p>
-          <div class="pt-4">
-            <div class="flex flex-col sm:flex-row items-stretch bg-white dark:bg-surface-dark border-[3px] border-black dark:border-white brutalist-card p-2 gap-2">
-              <div class="flex items-center flex-grow px-4">
-                <span class="material-symbols-outlined text-primary mr-3">search</span>
-                <input id="busqueda" class="w-full border-none focus:ring-0 font-body-md py-3 bg-transparent text-on-background placeholder:text-neutral-500" placeholder="¿Qué puesto buscas?" type="text"/>
+          <!-- Search Bar -->
+          <div class="relative max-w-2xl">
+            <div class="absolute -inset-2 bg-white/5 border-2 border-dashed border-white/20 -z-10"></div>
+            <div class="bg-surface border-4 border-outline neo-shadow-lg flex flex-col md:flex-row p-1">
+              <div class="flex-1 flex items-center px-6 py-4 border-b-4 md:border-b-0 md:border-r-4 border-outline bg-surface-variant">
+                <span class="material-symbols-outlined mr-4 text-primary font-bold">search</span>
+                <input id="busqueda-hero" class="w-full border-none focus:ring-0 bg-transparent font-label-bold uppercase text-white placeholder-secondary/60" placeholder="Puesto o palabra clave" type="text"/>
               </div>
-              <div class="flex gap-2">
-                <select id="categoria" class="form-select border-2 border-black brutalist-btn bg-white px-4 py-3 font-label-bold text-xs uppercase">
-                  <option value="">Categoría</option>
-                  <option value="Informática y Programación">Tecnología</option>
-                  <option value="Ventas y Comercial">Ventas</option>
-                  <option value="Finanzas y Contabilidad">Finanzas</option>
-                  <option value="Ingeniería y Técnico">Ingeniería</option>
-                  <option value="Servicio al Cliente">Servicio</option>
-                  <option value="Administración de Empresas">Administración</option>
-                  <option value="Recursos Humanos">RRHH</option>
-                  <option value="Marketing y Comunicación">Marketing</option>
-                  <option value="Logística, Almacén y Compras">Logística</option>
-                </select>
-                <select id="departamentos" class="form-select border-2 border-black brutalist-btn bg-white px-4 py-3 font-label-bold text-xs uppercase">
-                  <option value="">Ubicación</option>
+              <div class="flex-1 flex items-center px-6 py-4 bg-surface-variant">
+                <span class="material-symbols-outlined mr-4 text-primary font-bold">location_on</span>
+                <select id="departamentos-hero" class="w-full border-none focus:ring-0 bg-transparent font-label-bold uppercase text-white placeholder-secondary/60 appearance-none cursor-pointer">
+                  <option value="">Ciudad o región</option>
                   <option value="Atlántida">Atlántida</option>
                   <option value="Choluteca">Choluteca</option>
                   <option value="Colón">Colón</option>
@@ -225,205 +158,198 @@
                   <option value="Valle">Valle</option>
                   <option value="Yoro">Yoro</option>
                 </select>
-                <button id="btnBuscar" class="brutalist-btn bg-primary text-on-primary px-8 py-3 font-label-bold uppercase flex items-center justify-center gap-2">
-                  BUSCAR <span class="material-symbols-outlined">north_east</span>
-                </button>
               </div>
+              <button id="btnBuscarHero" class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-8 py-4 hover:bg-black hover:text-white transition-colors neo-shadow-active">
+                BUSCAR CHAMBA
+              </button>
             </div>
+          </div>
+          <div class="mt-6 flex flex-wrap gap-3 items-center">
+            <span class="font-label-sm text-label-sm uppercase font-bold text-white/40">Tendencias:</span>
+            <a class="font-label-sm text-label-sm uppercase bg-surface-variant text-white border-2 border-outline px-2 py-1 hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Frontend">Frontend</a>
+            <a class="font-label-sm text-label-sm uppercase bg-surface-variant text-white border-2 border-outline px-2 py-1 hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Diseño">Product Designer</a>
+            <a class="font-label-sm text-label-sm uppercase bg-surface-variant text-white border-2 border-outline px-2 py-1 hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Marketing">Marketing</a>
           </div>
         </div>
-        <div class="w-full md:w-2/5 hidden md:block">
-          <div class="brutalist-card relative h-[500px] overflow-hidden group bg-neutral-100">
-            <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=500&fit=crop&crop=center" alt="Equipo de trabajo" class="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500"/>
-            <div class="absolute bottom-6 left-6 right-6 bg-white dark:bg-surface-dark border-[3px] border-black dark:border-white p-4 brutalist-btn">
-              <p class="font-label-bold text-sm">MARINA S. • UX JUNIOR</p>
-              <p class="text-xs text-secondary italic">"Encontré mi primer equipo en Chamba.com"</p>
-            </div>
+        <div class="lg:col-span-5 relative mt-16 lg:mt-0">
+          <div class="relative z-10 border-4 border-outline neo-shadow-lg bg-surface rotate-3 transition-transform hover:rotate-0 duration-700 ease-out overflow-hidden">
+            <img alt="Profesional en oficina moderna" class="w-full h-[550px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=550&fit=crop&crop=center"/>
+            <div class="absolute inset-0 border-[12px] border-primary/10 pointer-events-none"></div>
           </div>
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 border-4 border-outline -z-10 animate-pulse"></div>
+          <div class="absolute -bottom-12 -left-12 w-64 h-64 border-4 border-outline -z-20 pattern-grid opacity-30"></div>
         </div>
       </div>
     </section>
 
-    <!-- Categories -->
-    <section id="categorias" class="px-6 py-20 bg-primary">
-      <div class="max-w-6xl mx-auto">
-        <h2 class="text-on-primary font-headline-lg mb-12 uppercase tracking-tighter">Explora por áreas</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="categorias-grid">
-          <div class="bg-white dark:bg-surface-dark p-8 brutalist-card flex flex-col justify-between h-72 cursor-pointer" onclick="filtrarCategoria('Informática y Programación')">
-            <span class="material-symbols-outlined text-[64px] text-primary">terminal</span>
-            <div>
-              <h3 class="font-headline-md text-2xl uppercase">Tecnología</h3>
-              <p class="font-label-sm text-secondary mt-2"><span id="cat-tech">0</span> PUESTOS ABIERTOS</p>
+    <!-- Categories Section -->
+    <section class="bg-surface py-24 border-y-4 border-outline">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-baseline mb-10 gap-6 pr-6">
+          <h2 class="font-display-xl text-headline-md text-primary uppercase">Categorías TOP</h2>
+          <div class="h-1 flex-1 bg-primary/20 mx-6 hidden md:block"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6" id="categorias-grid">
+          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Informática y Programación')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+              <span class="material-symbols-outlined text-[48px]">code</span>
             </div>
+            <p class="font-label-bold text-label-bold uppercase text-white">Software</p>
+            <p class="font-label-sm text-secondary mt-1"><span id="cat-tech">0</span> puestos</p>
           </div>
-          <div class="bg-white dark:bg-surface-dark p-8 brutalist-card flex flex-col justify-between h-72 lg:mt-12 cursor-pointer" onclick="filtrarCategoria('Ventas y Comercial')">
-            <span class="material-symbols-outlined text-[64px] text-primary">shopping_bag</span>
-            <div>
-              <h3 class="font-headline-md text-2xl uppercase">Ventas</h3>
-              <p class="font-label-sm text-secondary mt-2"><span id="cat-ventas">0</span> PUESTOS ABIERTOS</p>
+          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-6" onclick="filtrarCategoria('Marketing y Comunicación')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+              <span class="material-symbols-outlined text-[48px]">trending_up</span>
             </div>
+            <p class="font-label-bold text-label-bold uppercase text-white">Marketing</p>
+            <p class="font-label-sm text-secondary mt-1"><span id="cat-marketing">0</span> puestos</p>
           </div>
-          <div class="bg-white dark:bg-surface-dark p-8 brutalist-card flex flex-col justify-between h-72 cursor-pointer" onclick="filtrarCategoria('Ingeniería y Técnico')">
-            <span class="material-symbols-outlined text-[64px] text-primary">engineering</span>
-            <div>
-              <h3 class="font-headline-md text-2xl uppercase">Ingeniería</h3>
-              <p class="font-label-sm text-secondary mt-2"><span id="cat-ingenieria">0</span> PUESTOS ABIERTOS</p>
+          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ventas y Comercial')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+              <span class="material-symbols-outlined text-[48px]">shopping_bag</span>
             </div>
+            <p class="font-label-bold text-label-bold uppercase text-white">Ventas</p>
+            <p class="font-label-sm text-secondary mt-1"><span id="cat-ventas">0</span> puestos</p>
           </div>
-          <div class="bg-white dark:bg-surface-dark p-8 brutalist-card flex flex-col justify-between h-72 lg:mt-12 cursor-pointer" onclick="filtrarCategoria('Finanzas y Contabilidad')">
-            <span class="material-symbols-outlined text-[64px] text-primary">calculate</span>
-            <div>
-              <h3 class="font-headline-md text-2xl uppercase">Finanzas</h3>
-              <p class="font-label-sm text-secondary mt-2"><span id="cat-finanzas">0</span> PUESTOS ABIERTOS</p>
+          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-6" onclick="filtrarCategoria('Finanzas y Contabilidad')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+              <span class="material-symbols-outlined text-[48px]">calculate</span>
             </div>
+            <p class="font-label-bold text-label-bold uppercase text-white">Finanzas</p>
+            <p class="font-label-sm text-secondary mt-1"><span id="cat-finanzas">0</span> puestos</p>
+          </div>
+          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ingeniería y Técnico')">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+              <span class="material-symbols-outlined text-[48px]">engineering</span>
+            </div>
+            <p class="font-label-bold text-label-bold uppercase text-white">Ingeniería</p>
+            <p class="font-label-sm text-secondary mt-1"><span id="cat-ingenieria">0</span> puestos</p>
+          </div>
+          <div class="bg-surface-variant border-4 border-outline p-6 text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-6" onclick="window.location.href='/buscar.html'">
+            <div class="bg-black text-primary w-20 h-20 mx-auto flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-black transition-colors border-2 border-outline">
+              <span class="material-symbols-outlined text-[48px]">more_horiz</span>
+            </div>
+            <p class="font-label-bold text-label-bold uppercase text-white">Ver Más</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Featured Jobs -->
-    <section id="empleos" class="py-20 px-6">
-      <div class="max-w-5xl mx-auto">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4">
-          <div class="space-y-2">
-            <h2 class="font-headline-lg text-headline-lg uppercase leading-none">Oportunidades<br/><span class="text-outline-black italic">Disponibles</span></h2>
-            <p class="text-secondary border-l-2 border-primary pl-4" id="job-count"></p>
+    <section id="empleos" class="py-24 bg-background relative overflow-hidden">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-10 border-b-4 border-outline pb-4 gap-4 pr-6">
+          <div>
+            <h2 class="font-display-xl text-headline-md uppercase text-white">Empleos Destacados</h2>
+            <p class="text-secondary mt-2 font-label-sm" id="job-count"></p>
           </div>
-          <a class="brutalist-btn bg-white dark:bg-surface-dark px-8 py-3 font-label-bold uppercase text-sm border-2 border-black dark:border-white" href="#">Ver todas las vacantes</a>
+          <a class="font-label-bold text-label-bold uppercase underline decoration-4 underline-offset-8 text-primary hover:text-white group flex items-center" href="/buscar.html">
+            Ver todos los empleos
+            <span class="material-symbols-outlined ml-2 group-hover:translate-x-2 transition-transform">arrow_forward</span>
+          </a>
         </div>
-        <div id="empleos-list" class="space-y-6"></div>
+        <div id="empleos-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
         <div id="pagination"></div>
       </div>
     </section>
     <div id="modal-empleo"></div>
 
-    <!-- Testimonials -->
-    <section id="testimonios" class="py-24 px-6 bg-surface-container-low dark:bg-neutral-800 border-y-[3px] border-black dark:border-white">
-      <div class="max-w-6xl mx-auto">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4">
-          <div class="space-y-2">
-            <h2 class="font-headline-lg text-headline-lg uppercase leading-none">Lo que dicen<br/><span class="text-outline-black italic">nuestros usuarios</span></h2>
+    <!-- Recruitment Section -->
+    <section class="py-32 bg-background relative border-y-4 border-outline overflow-hidden">
+      <div class="absolute inset-0 pattern-grid opacity-10 pointer-events-none"></div>
+      <div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
+        <div class="order-2 lg:order-1 pr-6">
+          <div class="relative inline-block">
+            <div class="border-4 border-outline neo-shadow-lg bg-surface-variant p-4 -rotate-3 transition-transform hover:rotate-0 duration-500">
+              <img alt="Equipo de negocios profesional" class="w-full h-[400px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&h=400&fit=crop"/>
+            </div>
+            <div class="absolute -bottom-12 -right-12 bg-primary border-4 border-outline p-6 neo-shadow float-animation rotate-2">
+              <p class="font-display-xl text-5xl uppercase leading-none text-black">+50</p>
+              <p class="font-label-bold text-label-bold uppercase text-black">Empresas TOP</p>
+            </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="brutalist-card bg-white dark:bg-surface-dark p-8">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-14 h-14 bg-primary text-on-primary flex items-center justify-center font-headline-md text-xl">M</div>
-              <div>
-                <p class="font-label-bold">María López</p>
-                <p class="text-xs text-secondary uppercase">Desarrolladora Web</p>
-              </div>
-            </div>
-            <p class="font-body-md text-secondary leading-relaxed">"Conseguí mi trabajo actual gracias a Chamba.com. En menos de una semana me contactaron de una empresa excelente en San Pedro Sula."</p>
-          </div>
-          <div class="brutalist-card bg-white dark:bg-surface-dark p-8 lg:mt-8">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-14 h-14 bg-primary text-on-primary flex items-center justify-center font-headline-md text-xl">C</div>
-              <div>
-                <p class="font-label-bold">Carlos Ramírez</p>
-                <p class="text-xs text-secondary uppercase">Gerente de RRHH, BAC</p>
-              </div>
-            </div>
-            <p class="font-body-md text-secondary leading-relaxed">"Como empresa, encontramos al candidato perfecto. La plataforma es fácil de usar y muy efectiva para reclutar talento local."</p>
-          </div>
-          <div class="brutalist-card bg-white dark:bg-surface-dark p-8 md:mt-16">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-14 h-14 bg-primary text-on-primary flex items-center justify-center font-headline-md text-xl">A</div>
-              <div>
-                <p class="font-label-bold">Ana Martínez</p>
-                <p class="text-xs text-secondary uppercase">Contadora, Ficohsa</p>
-              </div>
-            </div>
-            <p class="font-body-md text-secondary leading-relaxed">"La mejor plataforma de empleos en Honduras. Simple, rápida y sin complicaciones. 100% recomendada para buscar oportunidades."</p>
+        <div class="order-1 lg:order-2">
+          <h2 class="font-display-xl text-headline-lg uppercase mb-6 leading-none text-white">¿BUSCAS EL <span class="text-stroke">MEJOR</span> TALENTO?</h2>
+          <p class="font-body-lg text-body-lg text-secondary mb-10 leading-relaxed">
+            Llega a miles de profesionales calificados en las industrias creativas y tecnológicas. Publica tu vacante hoy y encuentra al candidato ideal con las mejores herramientas de reclutamiento.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-6">
+            <a href="/publicar.html" class="bg-primary text-black font-label-bold text-label-bold uppercase px-8 py-4 border-4 border-outline neo-shadow-lg hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all text-center">
+              PUBLICAR EMPLEO
+            </a>
+            <a href="/registro.html" class="bg-transparent text-primary font-label-bold text-label-bold uppercase px-8 py-4 border-4 border-outline hover:bg-primary hover:text-black transition-colors text-center">
+              CREAR CUENTA
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Resources -->
-    <section class="py-24 px-6">
-      <div class="max-w-6xl mx-auto">
-        <div class="flex flex-col md:flex-row gap-16">
-          <div class="w-full md:w-1/3 space-y-6">
-            <h2 class="font-headline-lg uppercase leading-none">Afila tus <br/><span class="bg-black dark:bg-white text-white dark:text-black px-2">habilidades</span></h2>
-            <p class="font-body-md text-secondary">No solo buscamos trabajo por ti, te preparamos para que lo consigas y lo mantengas.</p>
-            <ul class="space-y-4 pt-4">
-              <li class="flex items-center gap-3 font-label-bold uppercase text-sm group cursor-pointer">
-                <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span> CV Builder Profesional
-              </li>
-              <li class="flex items-center gap-3 font-label-bold uppercase text-sm group cursor-pointer">
-                <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span> Guía de Entrevistas
-              </li>
-              <li class="flex items-center gap-3 font-label-bold uppercase text-sm group cursor-pointer">
-                <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span> Mentoria 1-on-1
-              </li>
-            </ul>
-          </div>
-          <div class="w-full md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-8">
-            <div class="brutalist-card bg-white dark:bg-surface-dark overflow-hidden group">
-              <div class="h-48 bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=200&fit=crop" alt="Entrevista" class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-500"/>
-              </div>
-              <div class="p-6 border-t-[3px] border-black dark:border-white">
-                <span class="text-[10px] font-black uppercase tracking-widest text-primary">MENTORÍA</span>
-                <h3 class="font-headline-md text-xl mt-2 mb-4 leading-tight">DOMINA TU ENTREVISTA TÉCNICA</h3>
-                <a class="font-label-bold text-sm uppercase flex items-center gap-2 group-hover:underline" href="#">LEER MÁS <span class="material-symbols-outlined text-sm">east</span></a>
-              </div>
-            </div>
-            <div class="brutalist-card bg-white dark:bg-surface-dark overflow-hidden group">
-              <div class="h-48 bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=200&fit=crop" alt="Networking" class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-500"/>
-              </div>
-              <div class="p-6 border-t-[3px] border-black dark:border-white">
-                <span class="text-[10px] font-black uppercase tracking-widest text-primary">NETWORKING</span>
-                <h3 class="font-headline-md text-xl mt-2 mb-4 leading-tight">REDES DESDE CERO ABSOLUTO</h3>
-                <a class="font-label-bold text-sm uppercase flex items-center gap-2 group-hover:underline" href="#">LEER MÁS <span class="material-symbols-outlined text-sm">east</span></a>
-              </div>
-            </div>
-          </div>
+    <!-- Trust Logos -->
+    <section class="py-20 bg-background border-b-4 border-outline overflow-hidden">
+      <div class="max-w-[1200px] mx-auto px-6 text-center">
+        <p class="font-label-bold text-label-bold uppercase tracking-widest text-primary/40 mb-12">Alianzas Estratégicas</p>
+        <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20">
+          <span class="font-display-xl text-4xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">BAC</span>
+          <span class="font-display-xl text-4xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">TIGO</span>
+          <span class="font-display-xl text-4xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">FICOHSA</span>
+          <span class="font-display-xl text-4xl uppercase tracking-tighter text-white/30 hover:text-primary transition-all cursor-default">CLARO</span>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="bg-black text-white w-full px-6 py-20 border-t-[5px] border-primary">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col lg:flex-row justify-between gap-16">
-        <div class="space-y-8 max-w-sm">
-          <span class="font-headline-lg text-6xl font-black text-white tracking-tighter uppercase leading-none block">CHAMBA.COM</span>
-          <p class="font-body-md text-white/60 leading-relaxed">
-            La plataforma definitiva para el talento hondureño que no tiene miedo a ser el primero en entrar.
-          </p>
-          <div class="flex gap-4">
-            <div class="w-10 h-10 border-2 border-white flex items-center justify-center hover:bg-white hover:text-black transition-colors cursor-pointer">X</div>
-            <div class="w-10 h-10 border-2 border-white flex items-center justify-center hover:bg-white hover:text-black transition-colors cursor-pointer">in</div>
-            <div class="w-10 h-10 border-2 border-white flex items-center justify-center hover:bg-white hover:text-black transition-colors cursor-pointer">ig</div>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-10">
-          <div class="flex flex-col gap-4">
-            <span class="text-xs font-black uppercase tracking-[0.2em] text-white/40 mb-2">Candidatos</span>
-            <a class="text-white hover:text-white/80 transition-colors font-label-bold text-sm uppercase" href="/buscar.html">Buscar Empleos</a>
-            <a class="text-white hover:text-white/80 transition-colors font-label-bold text-sm uppercase" href="/registro.html">Crear Cuenta</a>
-            <a class="text-white hover:text-white/80 transition-colors font-label-bold text-sm uppercase" href="/login.html">Iniciar Sesión</a>
-          </div>
-          <div class="flex flex-col gap-4">
-            <span class="text-xs font-black uppercase tracking-[0.2em] text-white/40 mb-2">Empresas</span>
-            <a class="text-white hover:text-white/80 transition-colors font-label-bold text-sm uppercase" href="/publicar.html">Publicar Empleo</a>
-            <a class="text-white hover:text-white/80 transition-colors font-label-bold text-sm uppercase" href="/dashboard.html">Dashboard</a>
-            <a class="text-white hover:text-white/80 transition-colors font-label-bold text-sm uppercase" href="/registro.html">Registrarse</a>
-          </div>
-          <div class="flex flex-col gap-4">
-            <span class="text-xs font-black uppercase tracking-[0.2em] text-white/40 mb-2">Legal</span>
-            <a class="text-white hover:text-white/80 transition-colors font-label-bold text-sm uppercase" href="/privacy.html">Privacidad</a>
-            <a class="text-white hover:text-white/80 transition-colors font-label-bold text-sm uppercase" href="/terms.html">Términos</a>
-            <a class="text-white hover:text-white/80 transition-colors font-label-bold text-sm uppercase" href="/contacto.html">Contacto</a>
-          </div>
+  <!-- Footer -->
+  <footer class="w-full bg-black text-white border-t-4 border-outline">
+    <div class="max-w-[1200px] mx-auto px-6 py-20 flex flex-col md:flex-row justify-between gap-10">
+      <div class="space-y-6 max-w-md">
+        <h2 class="font-display-xl text-6xl uppercase text-primary">CHAMBA</h2>
+        <p class="text-white/70 uppercase font-label-bold text-lg leading-snug">
+          La plataforma de empleo número uno para la nueva generación de profesionales. Construida para los valientes.
+        </p>
+        <div class="flex gap-4 pt-2">
+          <a class="w-12 h-12 border-4 border-outline flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all" href="#">
+            <span class="material-symbols-outlined">share</span>
+          </a>
+          <a class="w-12 h-12 border-4 border-outline flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all" href="#">
+            <span class="material-symbols-outlined">language</span>
+          </a>
         </div>
       </div>
-      <div class="mt-20 pt-10 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-6">
-        <p class="font-label-sm text-white/40">© 2026 CHAMBA.COM. TODOS LOS DERECHOS RESERVADOS.</p>
-        <p class="font-label-sm text-white/40 uppercase tracking-widest">BUILT FOR THE BOLD</p>
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-20">
+        <div class="space-y-4">
+          <p class="font-label-bold text-label-bold uppercase text-primary border-b-2 border-primary pb-1 inline-block">Candidatos</p>
+          <ul class="space-y-3">
+            <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/buscar.html">Buscar Empleos</a></li>
+            <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/registro.html">Crear Cuenta</a></li>
+            <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/login.html">Iniciar Sesión</a></li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <p class="font-label-bold text-label-bold uppercase text-primary border-b-2 border-primary pb-1 inline-block">Empresas</p>
+          <ul class="space-y-3">
+            <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/publicar.html">Publicar Empleo</a></li>
+            <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <p class="font-label-bold text-label-bold uppercase text-primary border-b-2 border-primary pb-1 inline-block">Legal</p>
+          <ul class="space-y-3">
+            <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/privacy.html">Privacidad</a></li>
+            <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/terms.html">Términos</a></li>
+            <li><a class="font-label-bold text-label-bold uppercase opacity-70 hover:opacity-100 hover:text-primary hover:translate-x-1 transition-all inline-block" href="/contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-[1200px] mx-auto px-6 py-6 border-t-2 border-outline">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="font-label-bold text-label-sm uppercase opacity-50">© 2026 CHAMBA. MADE WITH GUTS.</p>
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 bg-primary glow-neon"></div>
+          <p class="font-label-bold text-label-sm uppercase tracking-widest text-primary">Construida para los valientes</p>
+        </div>
       </div>
     </div>
   </footer>

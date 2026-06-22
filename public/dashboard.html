@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html class="light" lang="es">
+<html class="dark" lang="es">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Panel de Empresa - Chamba.com</title>
+  <title>Panel de Empresa - CHAMBA</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <script>
     tailwind.config = {
@@ -13,116 +13,114 @@
       theme: {
         extend: {
           "colors": {
-            "on-primary": "#ffffff",
-            "background": { DEFAULT: "#fbf9f8", dark: "#0a0a0a" },
-            "primary": { DEFAULT: "#000000", dark: "#ffffff" },
-            "secondary": { DEFAULT: "#4a4a4a", dark: "#a0a0a0" },
-            "on-background": { DEFAULT: "#1b1c1c", dark: "#e0e0e0" },
-            "surface": { DEFAULT: "#ffffff", dark: "#333333" },
+            "on-primary": "#000000",
+            "primary": "#FFFFFF",
+            "secondary": "#A0A0A0",
+            "on-background": "#FFFFFF",
+            "background": "#000000",
+            "surface": "#131313",
+            "surface-variant": "#1A1A1A",
+            "outline": "#333333",
+            "error": "#FF4444",
+            "job-green": "#00C853",
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
-            "label-bold": ["Space Grotesk"],
-            "body-md": ["Space Grotesk"],
-            "headline-md": ["Bricolage Grotesque"],
-            "headline-lg": ["Bricolage Grotesque"]
+            "display-xl": ["Bricolage Grotesque", "sans-serif"],
+            "body-md": ["Space Grotesk", "sans-serif"],
+            "label-bold": ["Space Grotesk", "sans-serif"],
+            "headline-lg": ["Bricolage Grotesque", "sans-serif"],
+            "label-sm": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Bricolage Grotesque", "sans-serif"],
+          },
+          "fontSize": {
+            "label-bold": ["16px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+            "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
           }
         },
       },
     }
   </script>
   <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
-    .brutalist-card { border: 3px solid #000; box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
-    .dark .brutalist-card { border-color: #fff; box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.3); }
-    .brutalist-btn { border: 2px solid #000; box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); transition: all 0.1s ease; }
-    .dark .brutalist-btn { border-color: #fff; box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.3); }
-    .brutalist-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 rgba(0,0,0,1); }
-    .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
-    .dark .glass-header { background-color: rgba(10, 10, 10, 0.95); }
-    .form-input { width: 100%; padding: 12px 14px; border: 3px solid #000; background: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; outline: none; }
-    .dark .form-input { border-color: #fff; background: #333333; color: #e0e0e0; }
-    .form-input:focus { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
-    .form-select { width: 100%; padding: 12px 14px; border: 3px solid #000; background: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; outline: none; appearance: none; cursor: pointer; }
-    .dark .form-select { border-color: #fff; background: #333333; color: #e0e0e0; }
-    .tab-active { border-bottom: 3px solid #000; font-weight: 700; }
-    .dark .tab-active { border-bottom-color: #fff; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px #333; }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #333; }
+    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px #333; transform: translate(4px, 4px); }
+    .tab-active { border-bottom: 4px solid #fff; font-weight: 700; }
+    html.light .tab-active { border-bottom-color: #000; }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
-    .dark .text-primary { color: #ffffff !important; }
-    .dark .bg-primary { background-color: #000000 !important; }
-    .dark .border-primary { border-color: #ffffff !important; }
-    .dark .text-on-background { color: #e0e0e0 !important; }
-    .dark .text-secondary { color: #b0b0b0 !important; }
-    .dark .text-on-surface { color: #e0e0e0 !important; }
-    .dark label { color: #e0e0e0 !important; }
+    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #e3e2e2; --text: #1b1c1c; --text-sec: #4a4a4a; --border: #000000; --shadow: rgba(0,0,0,1); }
+    html.light body { background: var(--bg); color: var(--text); }
+    html.light .neo-shadow { box-shadow: 4px 4px 0px 0px var(--shadow); }
+    html.light .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--shadow); }
   </style>
 </head>
-<body class="bg-background dark:bg-background-dark text-on-background dark:text-on-background-dark font-body-md min-h-screen flex flex-col">
-  <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
-    <div class="flex items-center gap-10">
-      <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
-      <nav class="hidden lg:flex gap-8">
-        <a class="font-label-bold text-primary hover:underline decoration-[3px] underline-offset-8" href="#mis-empleos">MIS EMPLEOS</a>
-        <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="#publicar">PUBLICAR</a>
-      </nav>
-    </div>
-    <div class="flex items-center gap-4">
-      <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-full transition-colors" aria-label="Cambiar tema">
-        <span class="material-symbols-outlined text-[24px]">dark_mode</span>
-      </button>
-      <span class="font-label-bold text-sm" id="user-name"></span>
-      <button onclick="logout()" class="brutalist-btn bg-white dark:bg-surface-dark text-primary px-6 py-2 font-label-bold uppercase text-sm">SALIR</button>
-    </div>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-white selection:text-black">
+  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-outline">
+    <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
+      <div class="flex items-center gap-10">
+        <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary" href="/">CHAMBA</a>
+        <div class="hidden md:flex gap-8">
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-primary border-b-4 border-primary pb-1" href="#mis-empleos">Mis Empleos</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all" href="#publicar">Publicar</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-surface-variant rounded-full transition-colors" aria-label="Cambiar tema">
+          <span class="material-symbols-outlined text-[24px]">light_mode</span>
+        </button>
+        <span class="font-label-bold text-label-sm text-secondary" id="user-name"></span>
+        <button onclick="logout()" class="bg-surface border-2 border-outline text-primary px-6 py-2 font-label-bold uppercase text-sm neo-shadow transition-all hover:-translate-y-0.5">SALIR</button>
+      </div>
+    </nav>
   </header>
 
   <main class="flex-1 py-12 px-6">
-    <div class="max-w-6xl mx-auto">
-      <!-- Stats -->
+    <div class="max-w-[1200px] mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div class="brutalist-card bg-white dark:bg-surface-dark p-8 text-center">
-          <p class="font-headline-md text-4xl" id="stat-empleos">0</p>
+        <div class="bg-surface border-4 border-outline neo-shadow p-8 text-center">
+          <p class="font-display-xl text-4xl text-primary" id="stat-empleos">0</p>
           <p class="font-label-bold uppercase text-sm text-secondary mt-2">Empleos publicados</p>
         </div>
-        <div class="brutalist-card bg-white dark:bg-surface-dark p-8 text-center">
-          <p class="font-headline-md text-4xl" id="stat-postulaciones">0</p>
+        <div class="bg-surface border-4 border-outline neo-shadow p-8 text-center">
+          <p class="font-display-xl text-4xl text-primary" id="stat-postulaciones">0</p>
           <p class="font-label-bold uppercase text-sm text-secondary mt-2">Postulaciones recibidas</p>
         </div>
-        <div class="brutalist-card bg-white dark:bg-surface-dark p-8 text-center">
-          <p class="font-headline-md text-4xl" id="stat-activos">0</p>
+        <div class="bg-surface border-4 border-outline neo-shadow p-8 text-center">
+          <p class="font-display-xl text-4xl text-primary" id="stat-activos">0</p>
           <p class="font-label-bold uppercase text-sm text-secondary mt-2">Empleos activos</p>
         </div>
       </div>
 
-      <!-- Tabs -->
-      <div class="flex gap-8 border-b-[3px] border-black dark:border-white mb-10">
-        <button onclick="mostrarSeccion('mis-empleos')" class="pb-4 font-label-bold uppercase text-sm tab-active" id="tab-mis-empleos">Mis Empleos</button>
-        <button onclick="mostrarSeccion('publicar')" class="pb-4 font-label-bold uppercase text-sm text-secondary hover:text-primary" id="tab-publicar">Publicar Nuevo</button>
-        <button onclick="mostrarSeccion('postulaciones')" class="pb-4 font-label-bold uppercase text-sm text-secondary hover:text-primary" id="tab-postulaciones">Postulaciones</button>
+      <div class="flex gap-8 border-b-4 border-outline mb-10">
+        <button onclick="mostrarSeccion('mis-empleos')" class="pb-4 font-label-bold uppercase text-sm tab-active text-primary" id="tab-mis-empleos">Mis Empleos</button>
+        <button onclick="mostrarSeccion('publicar')" class="pb-4 font-label-bold uppercase text-sm text-secondary hover:text-primary transition-colors" id="tab-publicar">Publicar Nuevo</button>
+        <button onclick="mostrarSeccion('postulaciones')" class="pb-4 font-label-bold uppercase text-sm text-secondary hover:text-primary transition-colors" id="tab-postulaciones">Postulaciones</button>
       </div>
 
-      <!-- Mis Empleos -->
       <section id="seccion-mis-empleos">
         <div id="mis-empleos-list" class="space-y-4"></div>
       </section>
 
-      <!-- Publicar Nuevo -->
       <section id="seccion-publicar" class="hidden">
-        <div class="brutalist-card bg-white dark:bg-surface-dark p-10 max-w-2xl">
-          <h2 class="font-headline-md text-3xl uppercase mb-8">Nuevo empleo</h2>
+        <div class="bg-surface border-4 border-outline neo-shadow-lg p-10 max-w-2xl">
+          <h2 class="font-headline-md text-3xl uppercase mb-8 text-primary">Nuevo empleo</h2>
           <form id="nuevoEmpleoForm" class="space-y-6">
             <div>
-              <label class="font-label-bold text-xs uppercase block mb-2">Título del puesto</label>
-              <input type="text" id="titulo" required class="form-input" placeholder="Ej: Desarrollador Web"/>
+              <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Título del puesto</label>
+              <input type="text" id="titulo" required class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary" placeholder="Ej: Desarrollador Web"/>
             </div>
             <div>
-              <label class="font-label-bold text-xs uppercase block mb-2">Nombre de la empresa</label>
-              <input type="text" id="empresa" required class="form-input"/>
+              <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Nombre de la empresa</label>
+              <input type="text" id="empresa" required class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary"/>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="font-label-bold text-xs uppercase block mb-2">Categoría</label>
-                <select id="categoria" class="form-select" required>
+                <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Categoría</label>
+                <select id="categoria" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none appearance-none cursor-pointer" required>
                   <option value="">Seleccionar...</option>
                   <option value="Informática y Programación">Informática</option>
                   <option value="Ventas y Comercial">Ventas</option>
@@ -136,8 +134,8 @@
                 </select>
               </div>
               <div>
-                <label class="font-label-bold text-xs uppercase block mb-2">Departamento</label>
-                <select id="departamentos" class="form-select" required>
+                <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Departamento</label>
+                <select id="departamentos" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none appearance-none cursor-pointer" required>
                   <option value="">Seleccionar...</option>
                   <option value="Atlántida">Atlántida</option>
                   <option value="Choluteca">Choluteca</option>
@@ -161,19 +159,18 @@
               </div>
             </div>
             <div>
-              <label class="font-label-bold text-xs uppercase block mb-2">Descripción</label>
-              <textarea id="descripcion" rows="4" class="form-input resize-none" placeholder="Describe el puesto, requisitos y beneficios..."></textarea>
+              <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Descripción</label>
+              <textarea id="descripcion" rows="4" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors resize-none placeholder-secondary" placeholder="Describe el puesto, requisitos y beneficios..."></textarea>
             </div>
             <div>
-              <label class="font-label-bold text-xs uppercase block mb-2">Fecha límite</label>
-              <input type="date" id="fecha_limite" class="form-input" required/>
+              <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Fecha límite</label>
+              <input type="date" id="fecha_limite" class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors" required/>
             </div>
-            <button type="submit" class="w-full brutalist-btn bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm">PUBLICAR EMPLEO</button>
+            <button type="submit" class="w-full bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm border-4 border-outline neo-shadow transition-all hover:-translate-y-0.5 hover:shadow-none">PUBLICAR EMPLEO</button>
           </form>
         </div>
       </section>
 
-      <!-- Postulaciones -->
       <section id="seccion-postulaciones" class="hidden">
         <div id="postulaciones-list" class="space-y-4"></div>
       </section>
@@ -182,10 +179,10 @@
 
   <div id="modal-empleo"></div>
 
-  <footer class="bg-black text-white w-full px-6 py-10 border-t-[5px] border-primary mt-20">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
-      <p class="font-label-sm text-white/40">© 2026 CHAMBA.COM. TODOS LOS DERECHOS RESERVADOS.</p>
-      <p class="font-label-sm text-white/40 uppercase tracking-widest">BUILT FOR THE BOLD</p>
+  <footer class="bg-black text-white w-full border-t-4 border-outline mt-20">
+    <div class="max-w-[1200px] mx-auto px-6 py-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="font-label-bold text-label-sm uppercase opacity-50">© 2026 CHAMBA. TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="font-label-bold text-label-sm uppercase tracking-widest opacity-50">CONSTRUIDA PARA LOS VALIENTES</p>
     </div>
   </footer>
 

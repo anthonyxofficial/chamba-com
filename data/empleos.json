@@ -6,7 +6,10 @@
     "categoria": "Informática y Programación",
     "departamento": "Cortés",
     "descripcion": "Buscamos desarrollador con experiencia en Node.js y React. Trabajo híbrido en San Pedro Sula.",
-    "fecha_limite": "2026-07-15"
+    "salario": "L18k - L25k",
+    "color": "pink",
+    "fecha_limite": "2026-07-15",
+    "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
     "id": 2,
@@ -15,7 +18,10 @@
     "categoria": "Ventas y Comercial",
     "departamento": "Francisco Morazán",
     "descripcion": "Se requiere ejecutivo con experiencia en ventas corporativas. Zona: Tegucigalpa.",
-    "fecha_limite": "2026-06-30"
+    "salario": "L12k - L18k",
+    "color": "green",
+    "fecha_limite": "2026-06-30",
+    "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
     "id": 3,
@@ -24,7 +30,10 @@
     "categoria": "Finanzas y Contabilidad",
     "departamento": "Cortés",
     "descripcion": "Profesional en contabilidad con mínimo 3 años de experiencia en banca.",
-    "fecha_limite": "2026-07-20"
+    "salario": "L15k - L22k",
+    "color": "blue",
+    "fecha_limite": "2026-07-20",
+    "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
     "id": 4,
@@ -33,7 +42,10 @@
     "categoria": "Ingeniería y Técnico",
     "departamento": "Cortés",
     "descripcion": "Ingeniero para mantenimiento de infraestructura de redes y servidores.",
-    "fecha_limite": "2026-07-10"
+    "salario": "L20k - L28k",
+    "color": "pink",
+    "fecha_limite": "2026-07-10",
+    "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
     "id": 5,
@@ -42,7 +54,10 @@
     "categoria": "Servicio al Cliente",
     "departamento": "Cortés",
     "descripcion": "Se necesitan agentes bilingües (español/inglés). Turnos flexibles.",
-    "fecha_limite": "2026-06-25"
+    "salario": "L8k - L12k",
+    "color": "green",
+    "fecha_limite": "2026-06-25",
+    "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
     "id": 6,
@@ -51,7 +66,10 @@
     "categoria": "Recursos Humanos",
     "departamento": "Francisco Morazán",
     "descripcion": "Profesional de RRHH con experiencia en gestión de talento y nómina.",
-    "fecha_limite": "2026-07-25"
+    "salario": "L22k - L30k",
+    "color": "blue",
+    "fecha_limite": "2026-07-25",
+    "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
     "id": 7,
@@ -60,7 +78,10 @@
     "categoria": "Marketing y Comunicación",
     "departamento": "Francisco Morazán",
     "descripcion": "Gestión de redes sociales y contenido digital para marca corporativa.",
-    "fecha_limite": "2026-07-05"
+    "salario": "L10k - L16k",
+    "color": "pink",
+    "fecha_limite": "2026-07-05",
+    "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
     "id": 8,
@@ -69,6 +90,9 @@
     "categoria": "Logística, Almacén y Compras",
     "departamento": "Cortés",
     "descripcion": "Coordinación de envíos y control de inventario en zona franca.",
-    "fecha_limite": "2026-06-28"
+    "salario": "L9k - L14k",
+    "color": "green",
+    "fecha_limite": "2026-06-28",
+    "createdAt": "2026-06-15T00:00:00.000Z"
   }
 ]

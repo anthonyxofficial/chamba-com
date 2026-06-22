@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html class="light" lang="es">
+<html class="dark" lang="es">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Contacto - Chamba.com</title>
-  <meta name="description" content="Contáctanos en Chamba.com. Estamos aquí para ayudarte con cualquier pregunta sobre empleos."/>
+  <title>Contacto - CHAMBA</title>
+  <meta name="description" content="Contáctanos en CHAMBA. Estamos aquí para ayudarte con cualquier pregunta sobre empleos."/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <script>
     tailwind.config = {
@@ -14,120 +14,122 @@
       theme: {
         extend: {
           "colors": {
-            "on-primary": "#ffffff",
-            "background": { DEFAULT: "#fbf9f8", dark: "#0a0a0a" },
-            "primary": { DEFAULT: "#000000", dark: "#ffffff" },
-            "secondary": { DEFAULT: "#4a4a4a", dark: "#a0a0a0" },
-            "on-background": { DEFAULT: "#1b1c1c", dark: "#e0e0e0" },
-            "surface": { DEFAULT: "#ffffff", dark: "#333333" },
+            "on-primary": "#000000",
+            "primary": "#FFFFFF",
+            "secondary": "#A0A0A0",
+            "on-background": "#FFFFFF",
+            "background": "#000000",
+            "surface": "#131313",
+            "surface-variant": "#1A1A1A",
+            "outline": "#333333",
+            "job-green": "#00C853",
           },
           "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
           "fontFamily": {
-            "label-bold": ["Space Grotesk"],
-            "body-md": ["Space Grotesk"],
-            "headline-md": ["Bricolage Grotesque"],
-            "headline-lg": ["Bricolage Grotesque"]
+            "display-xl": ["Bricolage Grotesque", "sans-serif"],
+            "body-md": ["Space Grotesk", "sans-serif"],
+            "label-bold": ["Space Grotesk", "sans-serif"],
+            "headline-lg": ["Bricolage Grotesque", "sans-serif"],
+            "label-sm": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Bricolage Grotesque", "sans-serif"],
+          },
+          "fontSize": {
+            "label-bold": ["16px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+            "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
           }
         },
       },
     }
   </script>
   <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
-    .brutalist-card { border: 3px solid #000; box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
-    .brutalist-btn { border: 2px solid #000; box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); transition: all 0.1s ease; }
-    .brutalist-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 rgba(0,0,0,1); }
-    .glass-header { backdrop-filter: blur(8px); background-color: rgba(251, 249, 249, 0.95); }
-    .form-input { width: 100%; padding: 12px 14px; border: 3px solid #000; background: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 16px; outline: none; }
-    .form-input:focus { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
-    .dark .brutalist-card { border-color: #fff; box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.3); }
-    .dark .brutalist-card:hover { box-shadow: 10px 10px 0px 0px rgba(255,255,255,0.3); }
-    .dark .brutalist-btn { border-color: #fff; box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.3); }
-    .dark .glass-header { background-color: rgba(10, 10, 10, 0.95); }
-    .dark .form-input { border-color: #fff; background: #333333; color: #e0e0e0; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px #333; }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px #333; }
+    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px #333; transform: translate(4px, 4px); }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
-    .dark .text-primary { color: #ffffff !important; }
-    .dark .bg-primary { background-color: #000000 !important; }
-    .dark .border-primary { border-color: #ffffff !important; }
-    .dark .text-on-background { color: #e0e0e0 !important; }
-    .dark .text-secondary { color: #b0b0b0 !important; }
-    .dark .text-on-surface { color: #e0e0e0 !important; }
-    .dark label { color: #e0e0e0 !important; }
+    html.light { --bg: #fbf9f8; --surface: #ffffff; --surface-var: #e3e2e2; --text: #1b1c1c; --text-sec: #4a4a4a; --border: #000000; --shadow: rgba(0,0,0,1); }
+    html.light body { background: var(--bg); color: var(--text); }
+    html.light .neo-shadow { box-shadow: 4px 4px 0px 0px var(--shadow); }
+    html.light .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--shadow); }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col dark:bg-background-dark dark:text-on-background-dark">
-  <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 glass-header w-full border-b-[3px] border-primary">
-    <a href="/" class="font-headline-md text-[32px] font-black text-primary tracking-tighter uppercase">Chamba.com</a>
-    <div class="flex items-center gap-4">
-      <nav class="hidden lg:flex gap-8">
-        <a class="font-label-bold text-primary/60 hover:text-primary transition-colors" href="/">INICIO</a>
-        <a class="font-label-bold text-primary hover:underline decoration-[3px] underline-offset-8" href="/contacto.html">CONTACTO</a>
-      </nav>
-      <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-full transition-colors" aria-label="Cambiar tema">
-        <span class="material-symbols-outlined text-[24px]">dark_mode</span>
-      </button>
-    </div>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-white selection:text-black">
+  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-outline">
+    <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
+      <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary" href="/">CHAMBA</a>
+      <div class="flex items-center gap-4">
+        <nav class="hidden md:flex gap-8">
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all" href="/">Inicio</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-primary border-b-4 border-primary pb-1" href="/contacto.html">Contacto</a>
+        </nav>
+        <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-surface-variant rounded-full transition-colors" aria-label="Cambiar tema">
+          <span class="material-symbols-outlined text-[24px]">light_mode</span>
+        </button>
+      </div>
+    </nav>
   </header>
 
   <main class="flex-1 py-20 px-6">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="font-headline-lg text-headline-lg uppercase leading-none mb-4">Contacto</h1>
-      <p class="text-secondary mb-12 text-lg">¿Tienes preguntas? Estamos aquí para ayudarte.</p>
+    <div class="max-w-[1200px] mx-auto">
+      <h1 class="font-display-xl text-headline-md md:text-headline-lg uppercase leading-none mb-4 text-primary">Contacto</h1>
+      <p class="text-secondary mb-12 font-body-lg">¿Tienes preguntas? Estamos aquí para ayudarte.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div class="brutalist-card bg-white dark:bg-surface-dark p-10">
-          <h2 class="font-headline-md text-2xl uppercase mb-8">Envíanos un mensaje</h2>
+        <div class="bg-surface border-4 border-outline neo-shadow-lg p-10">
+          <h2 class="font-headline-md text-2xl uppercase mb-8 text-primary">Envíanos un mensaje</h2>
           <form id="contactForm" class="space-y-6">
             <div>
-              <label class="font-label-bold text-xs uppercase block mb-2">Nombre</label>
-              <input type="text" required class="form-input"/>
+              <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Nombre</label>
+              <input type="text" required class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary"/>
             </div>
             <div>
-              <label class="font-label-bold text-xs uppercase block mb-2">Email</label>
-              <input type="email" required class="form-input"/>
+              <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Email</label>
+              <input type="email" required class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary"/>
             </div>
             <div>
-              <label class="font-label-bold text-xs uppercase block mb-2">Asunto</label>
-              <input type="text" required class="form-input"/>
+              <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Asunto</label>
+              <input type="text" required class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary"/>
             </div>
             <div>
-              <label class="font-label-bold text-xs uppercase block mb-2">Mensaje</label>
-              <textarea rows="5" required class="form-input resize-none"></textarea>
+              <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Mensaje</label>
+              <textarea rows="5" required class="w-full px-4 py-3 border-4 border-outline bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors resize-none placeholder-secondary"></textarea>
             </div>
-            <button type="submit" class="w-full brutalist-btn bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm">ENVIAR</button>
+            <button type="submit" class="w-full bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm border-4 border-outline neo-shadow transition-all hover:-translate-y-0.5 hover:shadow-none">ENVIAR</button>
           </form>
           <div id="success-msg" class="hidden text-center py-8">
-            <span class="material-symbols-outlined text-[64px] text-green-600">check_circle</span>
-            <h3 class="font-headline-md text-xl mt-4 uppercase">¡Mensaje enviado!</h3>
-            <p class="text-secondary mt-2">Te responderemos pronto</p>
+            <span class="material-symbols-outlined text-[64px] text-job-green">check_circle</span>
+            <h3 class="font-headline-md text-xl mt-4 uppercase text-primary">¡Mensaje enviado!</h3>
+            <p class="text-secondary mt-2 font-label-bold uppercase text-sm">Te responderemos pronto</p>
           </div>
         </div>
 
         <div class="space-y-8">
-          <div class="brutalist-card bg-white dark:bg-surface-dark p-8">
+          <div class="bg-surface border-4 border-outline neo-shadow p-8">
             <div class="flex items-center gap-4 mb-4">
-              <span class="material-symbols-outlined text-[32px]">email</span>
+              <span class="material-symbols-outlined text-[32px] text-primary">email</span>
               <div>
-                <h3 class="font-label-bold uppercase">Email</h3>
+                <h3 class="font-label-bold uppercase text-primary">Email</h3>
                 <p class="text-secondary">info@chamba.com</p>
               </div>
             </div>
           </div>
-          <div class="brutalist-card bg-white dark:bg-surface-dark p-8">
+          <div class="bg-surface border-4 border-outline neo-shadow p-8">
             <div class="flex items-center gap-4 mb-4">
-              <span class="material-symbols-outlined text-[32px]">location_on</span>
+              <span class="material-symbols-outlined text-[32px] text-primary">location_on</span>
               <div>
-                <h3 class="font-label-bold uppercase">Ubicación</h3>
+                <h3 class="font-label-bold uppercase text-primary">Ubicación</h3>
                 <p class="text-secondary">Tegucigalpa, Honduras</p>
               </div>
             </div>
           </div>
-          <div class="brutalist-card bg-white dark:bg-surface-dark p-8">
+          <div class="bg-surface border-4 border-outline neo-shadow p-8">
             <div class="flex items-center gap-4 mb-4">
-              <span class="material-symbols-outlined text-[32px]">schedule</span>
+              <span class="material-symbols-outlined text-[32px] text-primary">schedule</span>
               <div>
-                <h3 class="font-label-bold uppercase">Horario</h3>
+                <h3 class="font-label-bold uppercase text-primary">Horario</h3>
                 <p class="text-secondary">Lun - Vie: 8:00 AM - 5:00 PM</p>
               </div>
             </div>
@@ -137,10 +139,10 @@
     </div>
   </main>
 
-  <footer class="bg-black text-white w-full px-6 py-10 border-t-[5px] border-primary">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
-      <p class="font-label-sm text-white/40">© 2026 CHAMBA.COM. TODOS LOS DERECHOS RESERVADOS.</p>
-      <p class="font-label-sm text-white/40 uppercase tracking-widest">BUILT FOR THE BOLD</p>
+  <footer class="bg-black text-white w-full border-t-4 border-outline">
+    <div class="max-w-[1200px] mx-auto px-6 py-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="font-label-bold text-label-sm uppercase opacity-50">© 2026 CHAMBA. TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="font-label-bold text-label-sm uppercase tracking-widest opacity-50">CONSTRUIDA PARA LOS VALIENTES</p>
     </div>
   </footer>
 
