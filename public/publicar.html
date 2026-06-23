@@ -1,7 +1,13 @@
 <!DOCTYPE html>
-<html class="dark" lang="es">
+<html lang="es">
 <head>
   <meta charset="utf-8"/>
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.classList.add(t);
+    })();
+  </script>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Publicar Empleo - CHAMBA</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -149,7 +155,7 @@
       </button>
     </div>
     <nav class="flex flex-col gap-lg">
-      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="#empleos" onclick="closeMobileMenu()">Buscar Empleos</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/buscar.html" onclick="closeMobileMenu()">Buscar Empleos</a>
       <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/buscar.html" onclick="closeMobileMenu()">Explorar</a>
       <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/publicar.html" onclick="closeMobileMenu()">Empresas</a>
       <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/favoritos.html" onclick="closeMobileMenu()">Guardados</a>
@@ -248,6 +254,7 @@
   </footer>
 
   <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
   <script src="js/animations.js"></script>
   <script>
     const user = JSON.parse(localStorage.getItem('user'));

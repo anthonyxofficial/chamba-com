@@ -34,7 +34,12 @@ let currentPage = 1;
 let currentCategoria = '';
 let currentDepartamento = '';
 let currentBusqueda = '';
-let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+let favorites;
+try {
+  favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+} catch {
+  favorites = [];
+}
 let debounceTimer = null;
 
 function toggleFavorite(id) {
@@ -126,13 +131,19 @@ async function cargarEmpleos(page = 1) {
   if (currentCategoria) params.append('categoria', currentCategoria);
   if (currentDepartamento) params.append('departamentos', currentDepartamento);
 
-  const res = await fetch(`${API_URL}?${params}`);
-  const data = await res.json();
+  try {
+    const res = await fetch(`${API_URL}?${params}`);
+    if (!res.ok) throw new Error('Error al cargar empleos');
+    const data = await res.json();
 
-  const countEl = document.getElementById('job-count');
-  if (countEl) countEl.textContent = `${data.total} empleos encontrados`;
-  renderEmpleos(data.empleos);
-  renderPagination(data.page, data.totalPages, data.total);
+    const countEl = document.getElementById('job-count');
+    if (countEl) countEl.textContent = `${data.total} empleos encontrados`;
+    renderEmpleos(data.empleos || []);
+    renderPagination(data.page, data.totalPages, data.total);
+  } catch (err) {
+    console.error(err);
+    hideLoading();
+  }
 }
 
 function renderEmpleos(empleos) {
@@ -217,12 +228,26 @@ function renderPagination(current, total, totalItems) {
 function goToPage(page) {
   currentPage = page;
   cargarEmpleos(page);
-  document.getElementById('empleos').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('empleos')?.scrollIntoView({ behavior: 'smooth' });
 }
 
 async function abrirEmpleo(id) {
-  const res = await fetch(`${API_URL}/${id}`);
-  const empleo = await res.json();
+  try {
+    const res = await fetch(`${API_URL}/${id}`);
+    if (!res.ok) throw new Error('Empleo no encontrado');
+    var empleo = await res.json();
+  } catch (err) {
+    console.error(err);
+    document.getElementById('modal-empleo').innerHTML = `
+      <div class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4" onclick="cerrarModal(event)">
+        <div class="bg-surface border-4 border-primary neo-shadow-lg max-w-md w-full text-center p-12" onclick="event.stopPropagation()">
+          <span class="material-symbols-outlined text-[80px] text-error">error</span>
+          <h2 class="font-headline-md text-xl mt-lg uppercase text-primary">Error al cargar empleo</h2>
+          <button onclick="cerrarModal()" class="mt-lg bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
+        </div>
+      </div>`;
+    return;
+  }
   const color = getColorForJob(empleo);
   const colorName = COLOR_MAP[color];
   const salary = getSalaryForJob(empleo);
@@ -310,28 +335,36 @@ async function abrirEmpleo(id) {
       </div>
     </div>`;
 
-  document.getElementById('postularForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    data.empleo_id = parseInt(data.empleo_id);
+  const postularForm = document.getElementById('postularForm');
+  if (postularForm) {
+    postularForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      data.empleo_id = parseInt(data.empleo_id);
 
-    await fetch('/api/postulaciones', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      try {
+        const res = await fetch('/api/postulaciones', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('Error al enviar postulación');
+      } catch (err) {
+        console.error(err);
+      }
+
+      document.getElementById('modal-empleo').innerHTML = `
+        <div class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4" onclick="cerrarModal(event)">
+          <div class="bg-surface border-4 border-primary neo-shadow-lg max-w-md w-full text-center p-12" onclick="event.stopPropagation()">
+            <span class="material-symbols-outlined text-[80px] text-job-green">check_circle</span>
+            <h2 class="font-headline-md text-3xl mt-lg uppercase text-primary">¡Postulación enviada!</h2>
+            <p class="text-secondary mt-md mb-xl font-label-bold uppercase text-sm">Tu aplicación ha sido enviada exitosamente</p>
+            <button onclick="cerrarModal()" class="bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
+          </div>
+        </div>`;
     });
-
-    document.getElementById('modal-empleo').innerHTML = `
-      <div class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4" onclick="cerrarModal(event)">
-        <div class="bg-surface border-4 border-primary neo-shadow-lg max-w-md w-full text-center p-12" onclick="event.stopPropagation()">
-          <span class="material-symbols-outlined text-[80px] text-job-green">check_circle</span>
-          <h2 class="font-headline-md text-3xl mt-lg uppercase text-primary">¡Postulación enviada!</h2>
-          <p class="text-secondary mt-md mb-xl font-label-bold uppercase text-sm">Tu aplicación ha sido enviada exitosamente</p>
-          <button onclick="cerrarModal()" class="bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
-        </div>
-      </div>`;
-  });
+  }
 }
 
 function cerrarModal(e) {
