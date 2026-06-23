@@ -72,6 +72,43 @@
     }
     @media (hover: none), (pointer: none) {
       .neo-cursor-dot, .neo-cursor-ring { display: none !important; }
+      .trail-dot { display: none !important; }
+    }
+
+    /* CURSOR TRAIL - Cuadritos que siguen al mouse */
+    .trail-dot {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--ch-primary);
+      border: 2px solid var(--ch-stroke);
+      pointer-events: none;
+      z-index: 99997;
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
+    .trail-dot.fade {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.3);
+    }
+
+    /* NOISE / GRAIN OVERLAY */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99990;
+      pointer-events: none;
+      opacity: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+      mix-blend-mode: overlay;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .noise-overlay { opacity: 0.06; }
+    }
+    @media (hover: none), (pointer: none) {
+      .noise-overlay { opacity: 0.03; }
     }
 
     /* GLITCH EFFECT */
@@ -435,6 +472,61 @@
     update();
   }
 
+  // --- CURSOR TRAIL ---
+  function initCursorTrail() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const TRAIL_LENGTH = 8;
+    const dots = [];
+    const history = [];
+
+    for (let i = 0; i < TRAIL_LENGTH; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'trail-dot';
+      dot.style.opacity = '0';
+      document.body.appendChild(dot);
+      dots.push(dot);
+      history.push({ x: 0, y: 0 });
+    }
+
+    let mx = 0, my = 0;
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+
+    function tick() {
+      history.unshift({ x: mx, y: my });
+      if (history.length > TRAIL_LENGTH) history.length = TRAIL_LENGTH;
+
+      for (let i = 0; i < TRAIL_LENGTH; i++) {
+        const pos = history[Math.min(i, history.length - 1)];
+        const dot = dots[i];
+        dot.style.left = pos.x + 'px';
+        dot.style.top = pos.y + 'px';
+
+        // Tamaño decreciente: 8px → 3px
+        const size = Math.max(3, 8 - (i * 0.7));
+        dot.style.width = size + 'px';
+        dot.style.height = size + 'px';
+
+        // Cada cuadrito es más transparente
+        const alpha = Math.max(0, 1 - (i / TRAIL_LENGTH) * 1.2);
+        dot.style.opacity = alpha;
+      }
+
+      requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  // --- NOISE OVERLAY ---
+  function initNoiseOverlay() {
+    const overlay = document.createElement('div');
+    overlay.className = 'noise-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(overlay);
+  }
+
   // --- INIT ---
   function init() {
     document.body.classList.remove('page-exit');
@@ -453,6 +545,8 @@
     initGlitch();
     initPageTransitions();
     initScrollProgress();
+    initCursorTrail();
+    initNoiseOverlay();
   }
 
   if (document.readyState === 'loading') {
