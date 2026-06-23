@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="es">
+<html lang="es">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -10,8 +10,20 @@
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://chamba.com"/>
   <meta property="og:image" content="https://chamba.com/favicon.svg"/>
+  <meta name="theme-color" content="#000000"/>
   <link rel="canonical" href="https://chamba.com"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com"/>
+  <link rel="preconnect" href="https://images.unsplash.com"/>
+  <script>
+    // Anti-FOUC: aplicar tema antes de que pinte la página
+    (function() {
+      var t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.classList.add(t);
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -133,9 +145,18 @@
     .marquee-container:hover .marquee-track { animation-play-state: paused; }
     @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+    /* SCROLL PROGRESS BAR */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 4px; width: 0%;
+      background: var(--ch-primary); z-index: 100;
+      transition: width 0.1s ease-out;
+    }
+    @media (prefers-reduced-motion: reduce) { .scroll-progress { transition: none; } }
   </style>
 </head>
 <body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
+  <div class="scroll-progress" id="scroll-progress"></div>
 
   <!-- Header -->
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
@@ -243,7 +264,7 @@
         </div>
         <div class="lg:col-span-5 relative mt-16 lg:mt-0" data-reveal="right">
           <div class="relative z-10 border-4 border-primary neo-shadow-lg bg-surface rotate-3 transition-transform hover:rotate-0 duration-700 ease-out overflow-hidden">
-            <img alt="Profesional en oficina moderna" class="w-full h-[550px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=550&fit=crop&crop=center"/>
+            <img alt="Profesional en oficina moderna" class="w-full h-[550px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=550&fit=crop&crop=center" width="600" height="550" loading="eager" fetchpriority="high"/>
             <div class="absolute inset-0 border-[12px] border-primary/10 pointer-events-none"></div>
           </div>
           <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 border-4 border-primary -z-10 animate-pulse"></div>
@@ -295,6 +316,34 @@
             <p class="font-label-bold text-label-bold uppercase text-on-background">Ingeniería</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-ingenieria">0</span> puestos</p>
           </div>
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Servicio al Cliente')">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
+              <span class="material-symbols-outlined text-[48px]">support_agent</span>
+            </div>
+            <p class="font-label-bold text-label-bold uppercase text-on-background">Servicio</p>
+            <p class="font-label-sm text-secondary mt-1"><span id="cat-servicio">0</span> puestos</p>
+          </div>
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Administración de Empresas')">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
+              <span class="material-symbols-outlined text-[48px]">corporate_fare</span>
+            </div>
+            <p class="font-label-bold text-label-bold uppercase text-on-background">Admin</p>
+            <p class="font-label-sm text-secondary mt-1"><span id="cat-admin">0</span> puestos</p>
+          </div>
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Recursos Humanos')">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
+              <span class="material-symbols-outlined text-[48px]">people</span>
+            </div>
+            <p class="font-label-bold text-label-bold uppercase text-on-background">RRHH</p>
+            <p class="font-label-sm text-secondary mt-1"><span id="cat-rrhh">0</span> puestos</p>
+          </div>
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Logística, Almacén y Compras')">
+            <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
+              <span class="material-symbols-outlined text-[48px]">local_shipping</span>
+            </div>
+            <p class="font-label-bold text-label-bold uppercase text-on-background">Logística</p>
+            <p class="font-label-sm text-secondary mt-1"><span id="cat-logistica">0</span> puestos</p>
+          </div>
           <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="window.location.href='/buscar.html'">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">more_horiz</span>
@@ -331,7 +380,7 @@
         <div class="order-2 lg:order-1 pr-lg" data-reveal="right">
           <div class="relative inline-block">
             <div class="border-4 border-primary neo-shadow-lg bg-surface-variant p-4 rotate-[-4deg] transition-transform hover:rotate-0 duration-500">
-              <img alt="Equipo de negocios profesional" class="w-full h-[450px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&h=400&fit=crop"/>
+              <img alt="Equipo de negocios profesional" class="w-full h-[450px] object-cover brutalist-img" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&h=400&fit=crop" width="500" height="400" loading="lazy"/>
             </div>
             <div class="absolute -bottom-12 -right-12 bg-primary border-4 border-primary p-xl neo-shadow float-animation rotate-2">
               <p class="font-display-xl text-6xl uppercase leading-none text-on-primary" data-count="500" data-suffix="+">+500</p>

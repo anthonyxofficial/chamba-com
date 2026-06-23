@@ -154,35 +154,41 @@ function renderEmpleos(empleos) {
     const fecha = formatDate(e.fecha_limite);
     const favIcon = isFavorite(e.id) ? 'favorite' : 'favorite_border';
     const expirado = e.expirado;
+    const accentColors = {
+      pink: 'var(--ch-job-pink)',
+      green: 'var(--ch-job-green)',
+      blue: 'var(--ch-job-blue)'
+    };
+    const accentColor = accentColors[color];
 
     return `
-      <div class="card-stagger brutalist-card bg-${colorName} border-4 border-primary p-lg neo-shadow-hover transition-all group flex flex-col h-full">
+      <div class="card-stagger brutalist-card bg-surface border-4 border-primary p-lg neo-shadow-hover transition-all group flex flex-col h-full" style="--card-accent: ${accentColor};">
         <div class="flex justify-between items-start mb-xl">
-          <div class="w-16 h-16 border-4 border-primary overflow-hidden flex items-center justify-center bg-primary">
+          <div class="w-16 h-16 border-4 overflow-hidden flex items-center justify-center" style="border-color: var(--card-accent); background: var(--card-accent);">
             <span class="material-symbols-outlined text-on-primary text-[32px]">${ICONS[e.categoria] || 'work'}</span>
           </div>
           <div class="flex flex-col items-end gap-xs">
             ${expirado ? '<span class="bg-error text-white font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary font-bold">CERRADO</span>' : ''}
-            <span class="bg-inverse-surface text-on-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary">${TAGS[e.categoria] || 'EMPLEO'}</span>
+            <span class="text-on-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary" style="background: var(--card-accent);">${TAGS[e.categoria] || 'EMPLEO'}</span>
           </div>
         </div>
         <h3 class="font-display-xl text-3xl uppercase mb-sm leading-tight group-hover:translate-x-1 transition-transform text-on-background cursor-pointer" onclick="abrirEmpleo(${e.id})">${e.titulo}</h3>
         <p class="font-label-bold text-label-bold uppercase text-on-surface-variant mb-xl">${e.empresa}</p>
         <div class="mt-auto pt-lg border-t-2 border-primary/20 space-y-md">
           <div class="flex items-center gap-md">
-            <span class="material-symbols-outlined text-xl bg-surface p-1 border-2 border-primary text-primary">location_on</span>
+            <span class="material-symbols-outlined text-xl bg-surface p-1 border-2 text-primary" style="border-color: var(--card-accent); color: var(--card-accent);">location_on</span>
             <span class="font-label-bold text-label-sm uppercase text-on-background">${e.departamento}</span>
           </div>
           <div class="flex items-center gap-md">
-            <span class="material-symbols-outlined text-xl bg-surface p-1 border-2 border-primary text-primary">payments</span>
+            <span class="material-symbols-outlined text-xl bg-surface p-1 border-2 text-primary" style="border-color: var(--card-accent); color: var(--card-accent);">payments</span>
             <span class="font-label-bold text-label-sm uppercase text-on-background">${salary}</span>
           </div>
         </div>
         <div class="flex gap-sm mt-lg">
-          <button onclick="toggleFavorite(${e.id})" data-fav-id="${e.id}" class="flex-1 py-lg border-4 border-primary font-label-bold text-label-bold uppercase bg-transparent text-primary hover:bg-primary hover:text-on-primary transition-all neo-shadow-active ${isFavorite(e.id) ? 'bg-red-500/10 border-red-500' : ''}">
+          <button onclick="toggleFavorite(${e.id})" data-fav-id="${e.id}" class="flex-1 py-lg border-4 font-label-bold text-label-bold uppercase bg-transparent text-primary hover:bg-primary hover:text-on-primary transition-all neo-shadow-active ${isFavorite(e.id) ? 'bg-red-500/10 border-red-500' : 'border-primary'}" style="${isFavorite(e.id) ? '' : 'border-color: var(--card-accent);'}">
             <span class="material-symbols-outlined text-lg align-middle">${favIcon}</span> Guardar
           </button>
-          <button onclick="abrirEmpleo(${e.id})" class="flex-[2] py-lg border-4 border-primary font-label-bold text-label-bold uppercase bg-transparent text-primary hover:bg-primary hover:text-on-primary transition-all neo-shadow-active">
+          <button onclick="abrirEmpleo(${e.id})" class="flex-[2] py-lg border-4 border-primary font-label-bold text-label-bold uppercase text-on-primary hover:bg-transparent hover:text-primary transition-all neo-shadow-active" style="background: var(--card-accent); border-color: var(--card-accent);">
             ${expirado ? 'CERRADO' : 'Postularme'}
           </button>
         </div>
@@ -426,6 +432,14 @@ async function cargarCategorias() {
     if (ingenieriaEl) ingenieriaEl.textContent = counts['Ingeniería y Técnico'] || 0;
     if (finanzasEl) finanzasEl.textContent = counts['Finanzas y Contabilidad'] || 0;
     if (marketingEl) marketingEl.textContent = counts['Marketing y Comunicación'] || 0;
+    const servicioEl = document.getElementById('cat-servicio');
+    const adminEl = document.getElementById('cat-admin');
+    const rrhhEl = document.getElementById('cat-rrhh');
+    const logisticaEl = document.getElementById('cat-logistica');
+    if (servicioEl) servicioEl.textContent = counts['Servicio al Cliente'] || 0;
+    if (adminEl) adminEl.textContent = counts['Administración de Empresas'] || 0;
+    if (rrhhEl) rrhhEl.textContent = counts['Recursos Humanos'] || 0;
+    if (logisticaEl) logisticaEl.textContent = counts['Logística, Almacén y Compras'] || 0;
   } catch (err) {
     console.error('Error cargando categorías:', err);
   }

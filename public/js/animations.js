@@ -414,6 +414,27 @@
     });
   }
 
+  // --- SCROLL PROGRESS BAR ---
+  function initScrollProgress() {
+    const bar = document.getElementById('scroll-progress');
+    if (!bar) return;
+    let ticking = false;
+    function update() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = pct + '%';
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
+  }
+
   // --- INIT ---
   function init() {
     document.body.classList.remove('page-exit');
@@ -431,6 +452,7 @@
     initCardTilt();
     initGlitch();
     initPageTransitions();
+    initScrollProgress();
   }
 
   if (document.readyState === 'loading') {
