@@ -388,6 +388,7 @@
   // --- MAGNETIC BUTTONS ---
   function initMagneticButtons() {
     document.querySelectorAll('.magnetic').forEach(el => {
+      const saved = el.style.cssText;
       el.addEventListener('mousemove', (e) => {
         const rect = el.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
@@ -399,7 +400,7 @@
 
       el.addEventListener('mouseleave', () => {
         el.style.transition = 'transform 0.4s ease';
-        el.style.transform = 'translate(0, 0)';
+        el.style.transform = '';
         setTimeout(() => { el.style.transition = ''; }, 400);
       });
     });
@@ -528,25 +529,31 @@
   }
 
   // --- INIT ---
+  let _initialized = false;
   function init() {
     document.body.classList.remove('page-exit');
 
-    const cursorHTML = '<div class="neo-cursor-dot"></div><div class="neo-cursor-ring"></div>';
-    document.body.insertAdjacentHTML('beforeend', cursorHTML);
+    if (!_initialized) {
+      const cursorHTML = '<div class="neo-cursor-dot"></div><div class="neo-cursor-ring"></div>';
+      document.body.insertAdjacentHTML('beforeend', cursorHTML);
+    }
 
     initHeroStagger();
     initCatStagger();
     initCounters();
     initTextScramble();
     initMarquee();
-    initCustomCursor();
-    initMagneticButtons();
+    if (!_initialized) {
+      initCustomCursor();
+      initMagneticButtons();
+      initGlitch();
+      initPageTransitions();
+      initScrollProgress();
+      initCursorTrail();
+      initNoiseOverlay();
+    }
     initCardTilt();
-    initGlitch();
-    initPageTransitions();
-    initScrollProgress();
-    initCursorTrail();
-    initNoiseOverlay();
+    _initialized = true;
   }
 
   if (document.readyState === 'loading') {
@@ -554,4 +561,10 @@
   } else {
     init();
   }
+
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+      document.body.classList.remove('page-exit');
+    }
+  });
 })();

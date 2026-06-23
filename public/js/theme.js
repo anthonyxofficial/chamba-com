@@ -28,6 +28,7 @@
     '--ch-inverse-surface': '#FFFFFF',
     '--ch-inverse-on-surface': '#f2f0ef',
     '--ch-inverse-primary': '#000000',
+    '--ch-inverse-on-primary': '#FFFFFF',
     '--ch-tertiary': '#FFFFFF',
     '--ch-tertiary-container': '#131313',
     '--ch-on-tertiary': '#000000',
@@ -90,6 +91,7 @@
     '--ch-inverse-surface': '#303030',
     '--ch-inverse-on-surface': '#f2f0ef',
     '--ch-inverse-primary': '#c6c6c6',
+    '--ch-inverse-on-primary': '#000000',
     '--ch-tertiary': '#000000',
     '--ch-tertiary-container': '#002109',
     '--ch-on-tertiary': '#ffffff',
@@ -169,7 +171,14 @@
 
   function openMobileMenu() {
     const menu = document.getElementById('mobile-menu');
-    if (menu) menu.classList.remove('hidden');
+    if (menu) {
+      menu.classList.remove('hidden');
+      menu.setAttribute('role', 'dialog');
+      menu.setAttribute('aria-modal', 'true');
+      menu.setAttribute('aria-label', 'Menú de navegación');
+      const firstLink = menu.querySelector('a, button');
+      if (firstLink) firstLink.focus();
+    }
   }
 
   function closeMobileMenu() {

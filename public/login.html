@@ -10,7 +10,7 @@
   </script>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Iniciar Sesión - CHAMBA</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <script>
@@ -44,6 +44,7 @@
             "inverse-surface": "var(--ch-inverse-surface)",
             "inverse-on-surface": "var(--ch-inverse-on-surface)",
             "inverse-primary": "var(--ch-inverse-primary)",
+            "inverse-on-primary": "var(--ch-inverse-on-primary)",
             "tertiary": "var(--ch-tertiary)",
             "tertiary-container": "var(--ch-tertiary-container)",
             "on-tertiary": "var(--ch-on-tertiary)",
@@ -125,6 +126,8 @@
   </style>
 </head>
 <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary page-transition">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:border-4 focus:border-primary">Saltar al contenido principal</a>
+  <noscript><div class="bg-error text-on-error text-center py-4 font-label-bold uppercase text-sm">JavaScript es necesario para usar CHAMBA. Por favor habilítalo en tu navegador.</div></noscript>
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
     <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
       <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary glitch" data-text="CHAMBA" href="/">CHAMBA</a>
@@ -223,8 +226,8 @@
       }
     });
   </script>
-  <script src="js/theme.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/animations.js"></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/animations.js" defer></script>
 </body>
 </html>

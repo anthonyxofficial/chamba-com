@@ -9,7 +9,7 @@
   <meta property="og:description" content="Portal de empleos en Honduras. Conectamos talento emergente con empresas que innovan."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://chamba.com"/>
-  <meta property="og:image" content="https://chamba.com/favicon.svg"/>
+  <meta property="og:image" content="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&h=630&fit=crop"/>
   <meta name="theme-color" content="#000000"/>
   <link rel="canonical" href="https://chamba.com"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
@@ -24,7 +24,7 @@
       document.documentElement.classList.add(t);
     })();
   </script>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <script>
@@ -84,6 +84,7 @@
             "tertiary-fixed-dim": "var(--ch-tertiary-fixed-dim)",
             "on-tertiary-fixed": "var(--ch-on-tertiary-fixed)",
             "on-tertiary-fixed-variant": "var(--ch-on-tertiary-fixed-variant)",
+            "inverse-on-primary": "var(--ch-inverse-on-primary)",
             "job-pink": "#E91E63",
             "job-green": "#00C853",
             "job-blue": "#2979FF"
@@ -106,8 +107,7 @@
             "headline-lg": ["Bricolage Grotesque", "sans-serif"],
             "label-sm": ["Space Grotesk", "sans-serif"],
             "body-lg": ["Space Grotesk", "sans-serif"],
-            "headline-md": ["Bricolage Grotesque", "sans-serif"],
-            "headline-lg-mobile": ["Bricolage Grotesque", "sans-serif"]
+            "headline-md": ["Bricolage Grotesque", "sans-serif"]
           },
           "fontSize": {
             "display-xl": ["96px", {"lineHeight": "0.9", "letterSpacing": "-0.05em", "fontWeight": "800"}],
@@ -116,8 +116,7 @@
             "headline-lg": ["64px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
             "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
             "body-lg": ["22px", {"lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400"}],
-            "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-            "headline-lg-mobile": ["42px", {"lineHeight": "1", "letterSpacing": "-0.03em", "fontWeight": "800"}]
+            "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}]
           }
         },
       },
@@ -156,6 +155,8 @@
   </style>
 </head>
 <body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
+  <a href="#empleos" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:border-4 focus:border-primary">Saltar al contenido principal</a>
+  <noscript><div class="bg-error text-on-error text-center py-4 font-label-bold uppercase text-sm">JavaScript es necesario para usar CHAMBA. Por favor habilítalo en tu navegador.</div></noscript>
   <div class="scroll-progress" id="scroll-progress"></div>
 
   <!-- Header -->
@@ -224,11 +225,11 @@
             <div class="bg-surface border-4 border-primary neo-shadow-lg flex flex-col md:flex-row p-1">
               <div class="flex-1 flex items-center px-lg py-lg border-b-4 md:border-b-0 md:border-r-4 border-primary bg-surface-variant">
                 <span class="material-symbols-outlined mr-md text-primary font-bold">search</span>
-                <input id="busqueda-hero" class="w-full border-none focus:ring-0 bg-transparent font-label-bold uppercase text-on-background placeholder-on-surface-variant/60" placeholder="Puesto o palabra clave" type="text"/>
+                <input id="busqueda-hero" aria-label="Buscar por puesto o palabra clave" class="w-full border-none focus:ring-0 bg-transparent font-label-bold uppercase text-on-background placeholder-on-surface-variant/60" placeholder="Puesto o palabra clave" type="text"/>
               </div>
               <div class="flex-1 flex items-center px-lg py-lg bg-surface-variant">
                 <span class="material-symbols-outlined mr-md text-primary font-bold">location_on</span>
-                <select id="departamentos-hero" class="w-full border-none focus:ring-0 bg-transparent font-label-bold uppercase text-on-background placeholder-on-surface-variant/60 appearance-none cursor-pointer">
+                <select id="departamentos-hero" aria-label="Seleccionar departamento" class="w-full border-none focus:ring-0 bg-transparent font-label-bold uppercase text-on-background placeholder-on-surface-variant/60 appearance-none cursor-pointer">
                   <option value="">Ciudad o región</option>
                   <option value="Atlántida">Atlántida</option>
                   <option value="Choluteca">Choluteca</option>
@@ -256,7 +257,7 @@
             </div>
           </div>
           <div class="mt-lg flex flex-wrap gap-md items-center">
-            <span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant/40">Tendencias:</span>
+            <span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant/70">Tendencias:</span>
             <a class="font-label-sm text-label-sm uppercase bg-surface text-on-background border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Frontend">Frontend</a>
             <a class="font-label-sm text-label-sm uppercase bg-surface text-on-background border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Product Designer">Product Designer</a>
             <a class="font-label-sm text-label-sm uppercase bg-surface text-on-background border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Marketing">Marketing</a>
@@ -410,8 +411,8 @@
       <div class="max-w-container-max mx-auto px-gutter text-center mb-16">
         <p class="font-label-bold text-label-bold uppercase tracking-widest text-primary/40">Alianzas Estratégicas</p>
       </div>
-      <div class="marquee-container">
-        <div class="marquee-track">
+      <div class="marquee-container" role="img" aria-label="Alianzas estratégicas: BAC, TIGO, FICOHSA, CLARO">
+        <div class="marquee-track" aria-hidden="true">
           <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">BAC</span>
           <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">TIGO</span>
           <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">FICOHSA</span>
@@ -471,9 +472,9 @@
     </div>
   </footer>
 
-  <script src="js/theme.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/animations.js"></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/animations.js" defer></script>
   <script>
     document.querySelectorAll('button').forEach(button => {
       button.addEventListener('mousedown', () => {

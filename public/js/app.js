@@ -40,7 +40,6 @@ try {
 } catch {
   favorites = [];
 }
-let debounceTimer = null;
 
 function toggleFavorite(id) {
   const index = favorites.indexOf(id);
@@ -139,7 +138,7 @@ async function cargarEmpleos(page = 1) {
     const countEl = document.getElementById('job-count');
     if (countEl) countEl.textContent = `${data.total} empleos encontrados`;
     renderEmpleos(data.empleos || []);
-    renderPagination(data.page, data.totalPages, data.total);
+    renderPagination(data.page, data.totalPages);
   } catch (err) {
     console.error(err);
     hideLoading();
@@ -209,7 +208,7 @@ function renderEmpleos(empleos) {
   if (window.initCardTilt) window.initCardTilt();
 }
 
-function renderPagination(current, total, totalItems) {
+function renderPagination(current, total) {
   const container = document.getElementById('pagination');
   if (!container || total <= 1) { if (container) container.innerHTML = ''; return; }
 
@@ -249,7 +248,6 @@ async function abrirEmpleo(id) {
     return;
   }
   const color = getColorForJob(empleo);
-  const colorName = COLOR_MAP[color];
   const salary = getSalaryForJob(empleo);
   const fecha = formatDate(empleo.fecha_limite);
   const expirado = empleo.expirado;
@@ -387,25 +385,15 @@ function filtrarCategoria(categoria) {
   document.getElementById('empleos').scrollIntoView({ behavior: 'smooth' });
 }
 
-function debounceSearch() {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
-    currentBusqueda = document.getElementById('busqueda-hero')?.value || document.getElementById('busqueda')?.value || '';
-    currentDepartamento = document.getElementById('departamentos-hero')?.value || document.getElementById('departamentos')?.value || '';
-    currentPage = 1;
-    cargarEmpleos(1);
-  }, 400);
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   cargarEmpleos(1);
   cargarCategorias();
 
   const urlParams = new URLSearchParams(window.location.search);
   const empleoId = urlParams.get('empleo');
-  if (empleoId) {
+  if (empleoId && !isNaN(parseInt(empleoId))) {
     setTimeout(() => abrirEmpleo(parseInt(empleoId)), 300);
-    window.history.replaceState({}, '', '/');
+    window.history.replaceState({}, '', window.location.pathname);
   }
 
   const heroSearchBtn = document.getElementById('btnBuscarHero');
