@@ -243,8 +243,20 @@
   <script src="js/app.js" defer></script>
   <script src="js/animations.js" defer></script>
   <script>
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      try {
+        const res = await fetch('/api/contacto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('Error al enviar');
+      } catch (err) {
+        console.error(err);
+      }
       document.getElementById('contactForm').classList.add('hidden');
       document.getElementById('success-msg').classList.remove('hidden');
     });

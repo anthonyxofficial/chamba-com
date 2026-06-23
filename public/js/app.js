@@ -41,6 +41,27 @@ try {
   favorites = [];
 }
 
+function escapeHtml(str) {
+  if (str == null) return '';
+  const div = document.createElement('div');
+  div.textContent = String(str);
+  return div.innerHTML;
+}
+
+function getToken() {
+  try {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    return user && user.token ? user.token : null;
+  } catch { return null; }
+}
+
+function authHeaders() {
+  const token = getToken();
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  return headers;
+}
+
 function toggleFavorite(id) {
   const index = favorites.indexOf(id);
   if (index === -1) favorites.push(id); else favorites.splice(index, 1);
@@ -110,6 +131,11 @@ function showLoading() {
   grid.innerHTML = Array(6).fill(skel).join('');
 }
 
+function hideLoading() {
+  const grid = document.getElementById('empleos-list');
+  if (grid) grid.innerHTML = '<div class="text-center py-32 col-span-full"><p class="text-secondary font-label-bold uppercase text-sm">Error al cargar empleos</p></div>';
+}
+
 function getSalaryForJob(empleo) {
   if (empleo.salario) return empleo.salario;
   const salaries = ['L15k - L18k', 'L12k - L15k', 'L14k - L16k', 'L16k - L20k', 'L18k - L25k', 'L20k - L30k', 'L22k - L28k', 'L25k - L35k'];
@@ -147,6 +173,7 @@ async function cargarEmpleos(page = 1) {
 
 function renderEmpleos(empleos) {
   const grid = document.getElementById('empleos-list');
+  if (!grid) return;
   if (empleos.length === 0) {
     grid.innerHTML = `
       <div class="text-center py-32 col-span-full">
@@ -159,7 +186,6 @@ function renderEmpleos(empleos) {
 
   grid.innerHTML = empleos.map(e => {
     const color = getColorForJob(e);
-    const colorName = COLOR_MAP[color];
     const salary = getSalaryForJob(e);
     const fecha = formatDate(e.fecha_limite);
     const favIcon = isFavorite(e.id) ? 'favorite' : 'favorite_border';
@@ -182,23 +208,23 @@ function renderEmpleos(empleos) {
             <span class="text-on-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary" style="background: var(--card-accent);">${TAGS[e.categoria] || 'EMPLEO'}</span>
           </div>
         </div>
-        <h3 class="font-display-xl text-3xl uppercase mb-sm leading-tight group-hover:translate-x-1 transition-transform text-on-background cursor-pointer" onclick="abrirEmpleo(${e.id})">${e.titulo}</h3>
-        <p class="font-label-bold text-label-bold uppercase text-on-surface-variant mb-xl">${e.empresa}</p>
+        <h3 class="font-display-xl text-3xl uppercase mb-sm leading-tight group-hover:translate-x-1 transition-transform text-on-background cursor-pointer" onclick="abrirEmpleo(${parseInt(e.id) || 0})">${escapeHtml(e.titulo)}</h3>
+        <p class="font-label-bold text-label-bold uppercase text-on-surface-variant mb-xl">${escapeHtml(e.empresa)}</p>
         <div class="mt-auto pt-lg border-t-2 border-primary/20 space-y-md">
           <div class="flex items-center gap-md">
             <span class="material-symbols-outlined text-xl bg-surface p-1 border-2 text-primary" style="border-color: var(--card-accent); color: var(--card-accent);">location_on</span>
-            <span class="font-label-bold text-label-sm uppercase text-on-background">${e.departamento}</span>
+            <span class="font-label-bold text-label-sm uppercase text-on-background">${escapeHtml(e.departamento)}</span>
           </div>
           <div class="flex items-center gap-md">
             <span class="material-symbols-outlined text-xl bg-surface p-1 border-2 text-primary" style="border-color: var(--card-accent); color: var(--card-accent);">payments</span>
-            <span class="font-label-bold text-label-sm uppercase text-on-background">${salary}</span>
+            <span class="font-label-bold text-label-sm uppercase text-on-background">${escapeHtml(salary)}</span>
           </div>
         </div>
         <div class="flex gap-sm mt-lg">
-          <button onclick="toggleFavorite(${e.id})" data-fav-id="${e.id}" class="flex-1 py-lg border-4 font-label-bold text-label-bold uppercase bg-transparent text-primary hover:bg-primary hover:text-on-primary transition-all neo-shadow-active ${isFavorite(e.id) ? 'bg-red-500/10 border-red-500' : 'border-primary'}" style="${isFavorite(e.id) ? '' : 'border-color: var(--card-accent);'}">
+          <button onclick="toggleFavorite(${parseInt(e.id) || 0})" data-fav-id="${parseInt(e.id) || 0}" class="flex-1 py-lg border-4 font-label-bold text-label-bold uppercase bg-transparent text-primary hover:bg-primary hover:text-on-primary transition-all neo-shadow-active ${isFavorite(e.id) ? 'bg-red-500/10 border-red-500' : 'border-primary'}" style="${isFavorite(e.id) ? '' : 'border-color: var(--card-accent);'}">
             <span class="material-symbols-outlined text-lg align-middle">${favIcon}</span> Guardar
           </button>
-          <button onclick="abrirEmpleo(${e.id})" class="flex-[2] py-lg border-4 border-primary font-label-bold text-label-bold uppercase text-on-primary hover:bg-transparent hover:text-primary transition-all neo-shadow-active" style="background: var(--card-accent); border-color: var(--card-accent);">
+          <button onclick="abrirEmpleo(${parseInt(e.id) || 0})" class="flex-[2] py-lg border-4 border-primary font-label-bold text-label-bold uppercase text-on-primary hover:bg-transparent hover:text-primary transition-all neo-shadow-active" style="background: var(--card-accent); border-color: var(--card-accent);">
             ${expirado ? 'CERRADO' : 'Postularme'}
           </button>
         </div>
@@ -247,7 +273,6 @@ async function abrirEmpleo(id) {
       </div>`;
     return;
   }
-  const color = getColorForJob(empleo);
   const salary = getSalaryForJob(empleo);
   const fecha = formatDate(empleo.fecha_limite);
   const expirado = empleo.expirado;
@@ -259,7 +284,7 @@ async function abrirEmpleo(id) {
         <p class="text-secondary mt-2 font-label-bold uppercase text-sm">La fecha límite para aplicar ya pasó.</p>
       </div>`
     : `<form id="postularForm" class="space-y-lg">
-        <input type="hidden" value="${empleo.id}" name="empleo_id"/>
+        <input type="hidden" value="${parseInt(empleo.id) || 0}" name="empleo_id"/>
         <div class="grid grid-cols-2 gap-md">
           <div>
             <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Nombre completo</label>
@@ -281,6 +306,8 @@ async function abrirEmpleo(id) {
         <button type="submit" class="w-full bg-primary text-on-primary px-xl py-lg font-label-bold uppercase tracking-widest text-sm border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">ENVIAR POSTULACIÓN</button>
       </form>`;
 
+  const shareData = JSON.stringify({id: empleo.id, titulo: empleo.titulo, empresa: empleo.empresa, departamento: empleo.departamento});
+
   document.getElementById('modal-empleo').innerHTML = `
     <div class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4" onclick="cerrarModal(event)">
       <div class="bg-surface border-4 border-primary neo-shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
@@ -292,8 +319,8 @@ async function abrirEmpleo(id) {
               </div>
               <div>
                 <span class="bg-inverse-surface text-on-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary">${TAGS[empleo.categoria] || 'EMPLEO'}</span>
-                <h2 class="font-headline-md text-3xl uppercase text-primary mt-sm">${empleo.titulo}</h2>
-                <p class="text-secondary font-label-bold uppercase tracking-wider mt-xs text-sm">${empleo.empresa}</p>
+                <h2 class="font-headline-md text-3xl uppercase text-primary mt-sm">${escapeHtml(empleo.titulo)}</h2>
+                <p class="text-secondary font-label-bold uppercase tracking-wider mt-xs text-sm">${escapeHtml(empleo.empresa)}</p>
               </div>
             </div>
             <button onclick="cerrarModal()" class="w-10 h-10 border-4 border-primary flex items-center justify-center hover:bg-surface-variant transition-colors text-primary">
@@ -305,26 +332,26 @@ async function abrirEmpleo(id) {
           <div class="grid grid-cols-2 gap-md mb-lg">
             <div class="flex items-center gap-md">
               <span class="material-symbols-outlined text-secondary">calendar_today</span>
-              <span class="font-label-bold text-sm text-primary">Fecha límite: ${fecha}</span>
+              <span class="font-label-bold text-sm text-primary">Fecha límite: ${escapeHtml(fecha)}</span>
             </div>
             <div class="flex items-center gap-md">
               <span class="material-symbols-outlined text-secondary">location_on</span>
-              <span class="font-label-bold text-sm text-primary">${empleo.departamento}, Honduras</span>
+              <span class="font-label-bold text-sm text-primary">${escapeHtml(empleo.departamento)}, Honduras</span>
             </div>
             <div class="flex items-center gap-md">
               <span class="material-symbols-outlined text-secondary">payments</span>
-              <span class="font-label-bold text-sm text-primary">${salary}</span>
+              <span class="font-label-bold text-sm text-primary">${escapeHtml(salary)}</span>
             </div>
           </div>
           <div class="mb-lg">
             <h3 class="font-label-bold uppercase text-sm mb-sm text-primary">Descripción del puesto</h3>
-            <p class="text-secondary leading-relaxed">${empleo.descripcion}</p>
+            <p class="text-secondary leading-relaxed">${escapeHtml(empleo.descripcion)}</p>
           </div>
           <div class="flex gap-md mb-lg">
-            <button onclick="shareJob({id:${empleo.id},titulo:'${empleo.titulo.replace(/'/g,"\\'")}',empresa:'${empleo.empresa.replace(/'/g,"\\'")}',departamento:'${empleo.departamento.replace(/'/g,"\\'")}'})" class="bg-surface border-4 border-primary px-lg py-md font-label-bold uppercase text-sm flex items-center gap-md neo-shadow transition-all hover:-translate-y-0.5 text-primary">
+            <button data-share='${shareData.replace(/'/g, "&#39;")}' onclick="shareJob(JSON.parse(this.dataset.share))" class="bg-surface border-4 border-primary px-lg py-md font-label-bold uppercase text-sm flex items-center gap-md neo-shadow transition-all hover:-translate-y-0.5 text-primary">
               <span class="material-symbols-outlined">share</span> Compartir
             </button>
-            <button onclick="toggleFavorite(${empleo.id})" class="bg-surface border-4 border-primary px-lg py-md font-label-bold uppercase text-sm flex items-center gap-md neo-shadow transition-all hover:-translate-y-0.5 text-primary">
+            <button onclick="toggleFavorite(${parseInt(empleo.id) || 0})" class="bg-surface border-4 border-primary px-lg py-md font-label-bold uppercase text-sm flex items-center gap-md neo-shadow transition-all hover:-translate-y-0.5 text-primary">
               <span class="material-symbols-outlined">${isFavorite(empleo.id) ? 'favorite' : 'favorite_border'}</span> Guardar
             </button>
           </div>
@@ -344,7 +371,7 @@ async function abrirEmpleo(id) {
       try {
         const res = await fetch('/api/postulaciones', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: authHeaders(),
           body: JSON.stringify(data)
         });
         if (!res.ok) throw new Error('Error al enviar postulación');
@@ -372,6 +399,7 @@ function cerrarModal(e) {
 
 function formatDate(dateStr) {
   const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return dateStr;
   const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
   return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
 }
@@ -382,7 +410,7 @@ function filtrarCategoria(categoria) {
   currentBusqueda = '';
   currentPage = 1;
   cargarEmpleos(1);
-  document.getElementById('empleos').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('empleos')?.scrollIntoView({ behavior: 'smooth' });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -403,7 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentDepartamento = document.getElementById('departamentos-hero').value;
       currentPage = 1;
       cargarEmpleos(1);
-      document.getElementById('empleos').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('empleos')?.scrollIntoView({ behavior: 'smooth' });
     });
     document.getElementById('busqueda-hero')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') heroSearchBtn.click(); });
     document.getElementById('departamentos-hero')?.addEventListener('change', () => { heroSearchBtn.click(); });
@@ -417,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentDepartamento = document.getElementById('departamentos')?.value || '';
       currentPage = 1;
       cargarEmpleos(1);
-      document.getElementById('empleos').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('empleos')?.scrollIntoView({ behavior: 'smooth' });
     });
   }
 
@@ -429,7 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentBusqueda = searchTerm;
       currentPage = 1;
       cargarEmpleos(1);
-      document.getElementById('empleos').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('empleos')?.scrollIntoView({ behavior: 'smooth' });
     });
   });
 });

@@ -213,7 +213,7 @@
           return;
         }
 
-        localStorage.setItem('user', JSON.stringify(result));
+        localStorage.setItem('user', JSON.stringify({ ...result.user, token: result.token }));
 
         if (result.tipo === 'empresa') {
           window.location.href = '/dashboard.html';

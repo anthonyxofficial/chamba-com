@@ -261,7 +261,7 @@
   <script src="js/animations.js" defer></script>
   <script>
     const user = JSON.parse(localStorage.getItem('user'));
-    if (!user || user.tipo !== 'empresa') {
+    if (!user || user.tipo !== 'empresa' || !user.token) {
       window.location.href = '/login.html';
     }
 
@@ -275,9 +275,12 @@
         descripcion: document.getElementById('descripcion').value,
         fecha_limite: document.getElementById('fecha_limite').value
       };
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      const headers = { 'Content-Type': 'application/json' };
+      if (user && user.token) headers['Authorization'] = `Bearer ${user.token}`;
       const res = await fetch('/api/empleos', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify(data)
       });
       if (res.ok) {

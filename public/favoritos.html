@@ -207,6 +207,13 @@
     };
     let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
+    function escapeHtml(str) {
+      if (str == null) return '';
+      const div = document.createElement('div');
+      div.textContent = String(str);
+      return div.innerHTML;
+    }
+
     function toggleFavorite(id) {
       const index = favorites.indexOf(id);
       if (index === -1) favorites.push(id); else favorites.splice(index, 1);
@@ -221,6 +228,7 @@
 
     function formatDate(dateStr) {
       const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return dateStr;
       const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
       return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
     }
@@ -235,7 +243,7 @@
             <span class="material-symbols-outlined text-[64px] text-secondary">favorite_border</span>
             <h3 class="font-headline-md text-xl mt-4 text-primary">No tienes empleos guardados</h3>
             <p class="text-secondary mt-2 mb-6 font-label-bold uppercase text-sm">Haz click en el corazón de cualquier empleo para guardarlo</p>
-            <a href="/" class="bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm border-2 border-primary neo-shadow inline-block transition-all hover:-translate-y-0.5">VER EMPLEOS</a>
+            <a href="/buscar.html" class="bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm border-2 border-primary neo-shadow inline-block transition-all hover:-translate-y-0.5">VER EMPLEOS</a>
           </div>`;
         return;
       }
@@ -257,19 +265,19 @@
               <div class="w-14 h-14 bg-${colorName}/20 flex items-center justify-center border-2 border-${colorName}">
                 <span class="material-symbols-outlined text-${colorName} text-[28px]">favorite</span>
               </div>
-              <button onclick="toggleFavorite(${e.id})" class="w-10 h-10 border-2 border-primary flex items-center justify-center hover:border-job-pink transition-colors">
+              <button onclick="toggleFavorite(${parseInt(e.id) || 0})" class="w-10 h-10 border-2 border-primary flex items-center justify-center hover:border-job-pink transition-colors">
                 <span class="material-symbols-outlined text-[20px] text-job-pink">favorite</span>
               </button>
             </div>
             <div class="flex-1">
               <div class="flex gap-2 mb-3 flex-wrap">
                 <span class="bg-${colorName} text-on-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter">${TAGS[e.categoria] || 'EMPLEO'}</span>
-                <span class="bg-surface-variant text-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter border border-primary">${e.departamento}</span>
+                <span class="bg-surface-variant text-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter border border-primary">${escapeHtml(e.departamento)}</span>
               </div>
-              <h4 class="font-headline-md text-xl uppercase text-primary group-hover:underline decoration-2 mb-2">${e.titulo}</h4>
-              <p class="font-label-bold text-label-sm uppercase tracking-wider text-secondary mb-3">${e.empresa} • ${fecha}</p>
+              <h4 class="font-headline-md text-xl uppercase text-primary group-hover:underline decoration-2 mb-2">${escapeHtml(e.titulo)}</h4>
+              <p class="font-label-bold text-label-sm uppercase tracking-wider text-secondary mb-3">${escapeHtml(e.empresa)} • ${escapeHtml(fecha)}</p>
             </div>
-            <a href="/?empleo=${e.id}" class="bg-primary text-on-primary px-4 py-2 font-label-bold uppercase text-xs border-2 border-primary neo-shadow text-center transition-all hover:-translate-y-0.5">VER EMPLEO</a>
+            <a href="/?empleo=${parseInt(e.id) || 0}" class="bg-primary text-on-primary px-4 py-2 font-label-bold uppercase text-xs border-2 border-primary neo-shadow text-center transition-all hover:-translate-y-0.5">VER EMPLEO</a>
           </div>`;
       }).join('');
     }

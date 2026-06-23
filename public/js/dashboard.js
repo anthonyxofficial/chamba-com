@@ -1,3 +1,24 @@
+function escapeHtml(str) {
+  if (str == null) return '';
+  const div = document.createElement('div');
+  div.textContent = String(str);
+  return div.innerHTML;
+}
+
+function getToken() {
+  try {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    return user && user.token ? user.token : null;
+  } catch { return null; }
+}
+
+function authHeaders() {
+  const token = getToken();
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  return headers;
+}
+
 const API_URL = '/api/empleos';
 const POSTULACIONES_URL = '/api/postulaciones';
 const user = JSON.parse(localStorage.getItem('user') || 'null');
@@ -26,7 +47,7 @@ function mostrarSeccion(seccion) {
 }
 
 async function cargarMisEmpleos() {
-  const res = await fetch(`${API_URL}?limit=100`);
+  const res = await fetch(`${API_URL}?limit=100`, { headers: authHeaders() });
   const data = await res.json();
   const empleos = (data.empleos || data).filter(e => e.empresa === user.nombre);
 
@@ -47,8 +68,8 @@ async function cargarMisEmpleos() {
   list.innerHTML = empleos.map(e => `
     <div class="bg-surface border-4 border-primary neo-shadow p-6 flex items-center justify-between">
       <div class="flex-1">
-        <h4 class="font-headline-md text-xl uppercase text-primary">${e.titulo}</h4>
-        <p class="text-secondary font-label-sm mt-1">${e.departamento} • ${formatDate(e.fecha_limite)}</p>
+        <h4 class="font-headline-md text-xl uppercase text-primary">${escapeHtml(e.titulo)}</h4>
+        <p class="text-secondary font-label-sm mt-1">${escapeHtml(e.departamento)} • ${formatDate(e.fecha_limite)}</p>
       </div>
       <div class="flex gap-3">
         <button onclick="eliminarEmpleo(${e.id})" class="bg-surface text-error px-4 py-2 font-label-bold uppercase text-xs border-2 border-error hover:bg-error hover:text-white transition-colors">ELIMINAR</button>
@@ -58,12 +79,12 @@ async function cargarMisEmpleos() {
 }
 
 async function cargarPostulaciones() {
-  const resEmpleos = await fetch(`${API_URL}?limit=100`);
+  const resEmpleos = await fetch(`${API_URL}?limit=100`, { headers: authHeaders() });
   const dataEmpleos = await resEmpleos.json();
   const misEmpleos = (dataEmpleos.empleos || dataEmpleos).filter(e => e.empresa === user.nombre);
   const misEmpleoIds = misEmpleos.map(e => e.id);
 
-  const res = await fetch(POSTULACIONES_URL);
+  const res = await fetch(POSTULACIONES_URL, { headers: authHeaders() });
   const allPostulaciones = await res.json();
   const postulaciones = allPostulaciones.filter(p => misEmpleoIds.includes(p.empleo_id));
 
@@ -83,9 +104,9 @@ async function cargarPostulaciones() {
     <div class="bg-surface border-4 border-primary neo-shadow p-6">
       <div class="flex items-start justify-between">
         <div>
-          <h4 class="font-label-bold uppercase text-primary">${p.nombre}</h4>
-          <p class="text-secondary text-sm">${p.email} • ${p.telefono || 'Sin teléfono'}</p>
-          ${p.carta ? `<p class="mt-3 text-secondary text-sm italic">"${p.carta}"</p>` : ''}
+          <h4 class="font-label-bold uppercase text-primary">${escapeHtml(p.nombre)}</h4>
+          <p class="text-secondary text-sm">${escapeHtml(p.email)} • ${escapeHtml(p.telefono || 'Sin teléfono')}</p>
+          ${p.carta ? `<p class="mt-3 text-secondary text-sm italic">"${escapeHtml(p.carta)}"</p>` : ''}
         </div>
         <span class="bg-surface-variant text-secondary px-3 py-1 text-[10px] font-bold uppercase border border-primary">Empleo #${p.empleo_id}</span>
       </div>
@@ -95,7 +116,7 @@ async function cargarPostulaciones() {
 
 async function eliminarEmpleo(id) {
   if (!confirm('¿Eliminar este empleo?')) return;
-  await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+  await fetch(`${API_URL}/${id}`, { method: 'DELETE', headers: authHeaders() });
   cargarMisEmpleos();
 }
 
@@ -118,7 +139,7 @@ document.getElementById('nuevoEmpleoForm').addEventListener('submit', async (e) 
 
   await fetch(API_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: authHeaders(),
     body: JSON.stringify(data)
   });
 
