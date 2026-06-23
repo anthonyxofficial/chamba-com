@@ -129,6 +129,7 @@
   function getPreferredTheme() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) return stored;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
     return 'dark';
   }
 
@@ -156,13 +157,9 @@
   function updateMobileMenuColors(theme) {
     const menu = document.getElementById('mobile-menu');
     if (!menu) return;
-    if (theme === 'light') {
-      menu.style.background = '#fbf9f8';
-      menu.style.color = '#1b1c1c';
-    } else {
-      menu.style.background = '#000000';
-      menu.style.color = '#FFFFFF';
-    }
+    const vars = theme === 'dark' ? DARK : LIGHT;
+    menu.style.background = vars['--ch-background'];
+    menu.style.color = vars['--ch-on-background'];
   }
 
   function toggleTheme() {

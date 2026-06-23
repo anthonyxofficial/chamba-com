@@ -258,7 +258,7 @@
           <div class="mt-lg flex flex-wrap gap-md items-center">
             <span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant/40">Tendencias:</span>
             <a class="font-label-sm text-label-sm uppercase bg-surface text-on-background border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Frontend">Frontend</a>
-            <a class="font-label-sm text-label-sm uppercase bg-surface text-on-background border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Diseño">Product Designer</a>
+            <a class="font-label-sm text-label-sm uppercase bg-surface text-on-background border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Product Designer">Product Designer</a>
             <a class="font-label-sm text-label-sm uppercase bg-surface text-on-background border-2 border-primary px-sm py-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer tag-search" data-tag="Marketing">Marketing</a>
           </div>
         </div>
@@ -281,70 +281,70 @@
           <div class="h-1 flex-1 bg-primary/20 mx-lg hidden md:block"></div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-lg" id="categorias-grid">
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Informática y Programación')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" role="button" tabindex="0" onclick="filtrarCategoria('Informática y Programación')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filtrarCategoria('Informática y Programación')}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">code</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Software</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-tech">0</span> puestos</p>
           </div>
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Marketing y Comunicación')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" role="button" tabindex="0" onclick="filtrarCategoria('Marketing y Comunicación')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filtrarCategoria('Marketing y Comunicación')}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">trending_up</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Marketing</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-marketing">0</span> puestos</p>
           </div>
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ventas y Comercial')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" role="button" tabindex="0" onclick="filtrarCategoria('Ventas y Comercial')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filtrarCategoria('Ventas y Comercial')}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">shopping_bag</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Ventas</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-ventas">0</span> puestos</p>
           </div>
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Finanzas y Contabilidad')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" role="button" tabindex="0" onclick="filtrarCategoria('Finanzas y Contabilidad')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filtrarCategoria('Finanzas y Contabilidad')}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">calculate</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Finanzas</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-finanzas">0</span> puestos</p>
           </div>
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Ingeniería y Técnico')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" role="button" tabindex="0" onclick="filtrarCategoria('Ingeniería y Técnico')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filtrarCategoria('Ingeniería y Técnico')}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">engineering</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Ingeniería</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-ingenieria">0</span> puestos</p>
           </div>
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Servicio al Cliente')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" role="button" tabindex="0" onclick="filtrarCategoria('Servicio al Cliente')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filtrarCategoria('Servicio al Cliente')}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">support_agent</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Servicio</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-servicio">0</span> puestos</p>
           </div>
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Administración de Empresas')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" role="button" tabindex="0" onclick="filtrarCategoria('Administración de Empresas')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filtrarCategoria('Administración de Empresas')}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">corporate_fare</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Admin</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-admin">0</span> puestos</p>
           </div>
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="filtrarCategoria('Recursos Humanos')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" role="button" tabindex="0" onclick="filtrarCategoria('Recursos Humanos')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filtrarCategoria('Recursos Humanos')}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">people</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">RRHH</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-rrhh">0</span> puestos</p>
           </div>
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" onclick="filtrarCategoria('Logística, Almacén y Compras')">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2" role="button" tabindex="0" onclick="filtrarCategoria('Logística, Almacén y Compras')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filtrarCategoria('Logística, Almacén y Compras')}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">local_shipping</span>
             </div>
             <p class="font-label-bold text-label-bold uppercase text-on-background">Logística</p>
             <p class="font-label-sm text-secondary mt-1"><span id="cat-logistica">0</span> puestos</p>
           </div>
-          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" onclick="window.location.href='/buscar.html'">
+          <div class="cat-stagger bg-surface-variant border-4 border-primary p-xl text-center neo-shadow-hover transition-all cursor-pointer group hover:-translate-y-2 lg:mt-lg" role="button" tabindex="0" onclick="window.location.href='/buscar.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='/buscar.html'}">
             <div class="bg-inverse-surface text-inverse-on-primary w-20 h-20 mx-auto flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors border-2 border-primary">
               <span class="material-symbols-outlined text-[48px]">more_horiz</span>
             </div>
