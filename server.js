@@ -396,11 +396,34 @@ app.post('/api/contacto', postLimiter, (req, res) => {
   res.status(201).json({ success: true });
 });
 
+// --- Health Check ---
+app.get('/api/health', (req, res) => {
+  const empleos = readJSON(DATA_FILE);
+  const users = readJSON(USERS_FILE);
+  const postulaciones = readJSON(POSTULACIONES_FILE);
+  const contactos = readJSON(CONTACTO_FILE);
+  res.json({
+    status: 'ok',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    counts: {
+      empleos: empleos.length,
+      users: users.length,
+      postulaciones: postulaciones.length,
+      contactos: contactos.length
+    }
+  });
+});
+
 // 404 handler
 app.get('*', (req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Chamba.com corriendo en http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Chamba.com corriendo en http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
