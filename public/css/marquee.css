@@ -9,9 +9,18 @@
   animation: marquee-scroll 20s linear infinite;
 }
 
-#marquee-track span {
+#marquee-track img {
   padding: 0 3rem;
   flex-shrink: 0;
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+#marquee-track img:hover {
+  opacity: 1;
 }
 
 .marquee-wrapper:hover #marquee-track {
