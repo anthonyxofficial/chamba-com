@@ -146,6 +146,9 @@
       100% { clip-path: inset(35% 0 40% 0); transform: translate(-3px, 1px); }
     }
 
+    /* MARQUEE - injected via JS to bypass Tailwind CDN layers */
+    @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
     /* REDUCED MOTION */
     @media (prefers-reduced-motion: reduce) {
       .skeleton { animation: none; background-position: 0 0; }
@@ -345,9 +348,16 @@
 
   // --- MARQUEE SCROLL (content pre-duplicated in HTML) ---
   function initMarquee() {
-    const track = document.querySelector('.marquee-track');
+    const track = document.getElementById('marquee-track');
     if (!track) return;
     track.setAttribute('aria-hidden', 'true');
+    if (REDUCED) return;
+    track.style.animation = 'marquee-scroll 20s linear infinite';
+    const container = track.parentElement;
+    if (container) {
+      container.addEventListener('mouseenter', () => { track.style.animationPlayState = 'paused'; });
+      container.addEventListener('mouseleave', () => { track.style.animationPlayState = 'running'; });
+    }
   }
 
   // --- CUSTOM CURSOR ---

@@ -138,12 +138,6 @@
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
     .mobile-menu-open { overflow: hidden; }
-    .marquee-container { overflow: hidden !important; white-space: nowrap !important; width: 100% !important; }
-    .marquee-track { display: flex !important; width: max-content !important; animation: marquee-scroll 20s linear infinite !important; }
-    .marquee-track span { padding: 0 3rem !important; flex-shrink: 0 !important; }
-    .marquee-container:hover .marquee-track { animation-play-state: paused !important; }
-    @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none !important; } }
 
     /* SCROLL PROGRESS BAR */
     .scroll-progress {
@@ -411,16 +405,16 @@
       <div class="max-w-container-max mx-auto px-gutter text-center mb-16">
         <p class="font-label-bold text-label-bold uppercase tracking-widest text-primary/40">Alianzas Estratégicas</p>
       </div>
-      <div class="marquee-container" role="img" aria-label="Alianzas estratégicas: BAC, TIGO, FICOHSA, CLARO">
-        <div class="marquee-track" aria-hidden="true">
-          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">BAC</span>
-          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">TIGO</span>
-          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">FICOHSA</span>
-          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">CLARO</span>
-          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">BAC</span>
-          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">TIGO</span>
-          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">FICOHSA</span>
-          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default">CLARO</span>
+      <div style="overflow:hidden;white-space:nowrap;width:100%" role="img" aria-label="Alianzas estratégicas: BAC, TIGO, FICOHSA, CLARO">
+        <div id="marquee-track" style="display:flex;width:max-content" aria-hidden="true">
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default" style="padding:0 3rem;flex-shrink:0">BAC</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default" style="padding:0 3rem;flex-shrink:0">TIGO</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default" style="padding:0 3rem;flex-shrink:0">FICOHSA</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default" style="padding:0 3rem;flex-shrink:0">CLARO</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default" style="padding:0 3rem;flex-shrink:0">BAC</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default" style="padding:0 3rem;flex-shrink:0">TIGO</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default" style="padding:0 3rem;flex-shrink:0">FICOHSA</span>
+          <span class="font-display-xl text-5xl uppercase tracking-tighter text-on-background/30 hover:text-primary transition-all cursor-default" style="padding:0 3rem;flex-shrink:0">CLARO</span>
         </div>
       </div>
     </section>
