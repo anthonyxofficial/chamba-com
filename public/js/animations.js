@@ -4,6 +4,11 @@
 
   const STYLE = document.createElement('style');
   STYLE.textContent = `
+    /* PREMIUM BEZIER - global timing */
+    .transition-all, .transition-transform, .transition-colors {
+      transition-timing-function: var(--premium-bezier, cubic-bezier(0.23, 1, 0.32, 1)) !important;
+    }
+
     [data-reveal] { opacity: 0; will-change: transform, opacity; }
     [data-reveal="up"]    { transform: translateY(32px); }
     [data-reveal="down"]  { transform: translateY(-32px); }
@@ -144,6 +149,41 @@
       50%  { clip-path: inset(50% 0 20% 0); transform: translate(-2px, 2px); }
       75%  { clip-path: inset(5% 0 60% 0);  transform: translate(3px, -1px); }
       100% { clip-path: inset(35% 0 40% 0); transform: translate(-3px, 1px); }
+    }
+
+    /* DEPTH CARD - 3D tilt with perspective */
+    .depth-card {
+      transition: transform 0.4s var(--premium-bezier, cubic-bezier(0.23, 1, 0.32, 1)),
+                  box-shadow 0.4s var(--premium-bezier, cubic-bezier(0.23, 1, 0.32, 1));
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+    .depth-card:hover {
+      transform: translateY(-16px) rotateX(4deg) rotateY(-2deg);
+      box-shadow: 24px 24px 0px 0px var(--ch-stroke, #000);
+    }
+
+    /* SHADER CANVAS BACKGROUND */
+    #bg-canvas-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -2; pointer-events: none;
+    }
+
+    /* FLOATING PARTICLES */
+    .floating-particle {
+      position: fixed; font-family: 'Space Grotesk', monospace;
+      font-size: 10px; color: rgba(0,0,0,0.15);
+      pointer-events: none; z-index: -1; white-space: nowrap;
+      text-transform: uppercase; font-weight: 700;
+    }
+
+    /* FLOAT GENTLE */
+    @keyframes float-gentle {
+      0%, 100% { transform: translateY(0px) rotate(1deg); }
+      50% { transform: translateY(-10px) rotate(-1deg); }
+    }
+    .float-highlight-1 {
+      animation: float-gentle 4s var(--premium-bezier, cubic-bezier(0.23, 1, 0.32, 1)) infinite;
     }
 
     /* REDUCED MOTION */
@@ -521,6 +561,134 @@
     document.body.appendChild(overlay);
   }
 
+  // --- SHADER BACKGROUND (WebGL) ---
+  function initShaderBackground() {
+    const container = document.getElementById('bg-canvas-container');
+    const canvas = document.getElementById('shader-canvas');
+    if (!container || !canvas) return;
+    const gl = canvas.getContext('webgl');
+    if (!gl) return;
+
+    const vsSource = `
+      attribute vec2 position;
+      varying vec2 v_texCoord;
+      void main() {
+        v_texCoord = position * 0.5 + 0.5;
+        v_texCoord.y = 1.0 - v_texCoord.y;
+        gl_Position = vec4(position, 0.0, 1.0);
+      }
+    `;
+    const fsSource = `
+      precision highp float;
+      varying vec2 v_texCoord;
+      uniform float u_time;
+      uniform vec2 u_resolution;
+      uniform vec2 u_mouse;
+      float random(vec2 st) { return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123); }
+      float noise(vec2 st) {
+        vec2 i = floor(st); vec2 f = fract(st);
+        float a = random(i); float b = random(i + vec2(1.0, 0.0));
+        float c = random(i + vec2(0.0, 1.0)); float d = random(i + vec2(1.0, 1.0));
+        vec2 u = f * f * (3.0 - 2.0 * f);
+        return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+      }
+      void main() {
+        vec2 uv = v_texCoord;
+        vec2 mouse = u_mouse / u_resolution;
+        float n = noise(uv * 150.0 + u_time * 0.1);
+        vec3 color = vec3(0.98, 0.97, 0.96) - n * 0.04;
+        float dist = distance(uv, mouse);
+        float strength = smoothstep(0.4, 0.0, dist);
+        vec2 distorted_uv = uv + (uv - mouse) * strength * 0.1;
+        vec2 grid_uv = distorted_uv * 40.0;
+        vec2 dot_uv = fract(grid_uv) - 0.5;
+        float dots = smoothstep(0.08, 0.04, length(dot_uv));
+        dots *= (0.2 + 0.8 * strength);
+        color = mix(color, vec3(0.0, 0.0, 0.0), dots * 0.15);
+        float scan = smoothstep(0.01, 0.0, abs(fract(uv.y * 10.0 - u_time * 0.15) - 0.5));
+        color -= scan * 0.012;
+        float vignette = smoothstep(0.8, 0.2, length(uv - 0.5));
+        color *= mix(1.0, 0.95, 1.0 - vignette);
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+    function createShader(type, source) {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, source);
+      gl.compileShader(s);
+      return s;
+    }
+    const program = gl.createProgram();
+    gl.attachShader(program, createShader(gl.VERTEX_SHADER, vsSource));
+    gl.attachShader(program, createShader(gl.FRAGMENT_SHADER, fsSource));
+    gl.linkProgram(program);
+    gl.useProgram(program);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
+    const posLoc = gl.getAttribLocation(program, 'position');
+    gl.enableVertexAttribArray(posLoc);
+    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+    const uTime = gl.getUniformLocation(program, 'u_time');
+    const uRes = gl.getUniformLocation(program, 'u_resolution');
+    const uMouse = gl.getUniformLocation(program, 'u_mouse');
+    let mx = 0, my = 0;
+    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+    function render(t) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform1f(uTime, t * 0.001);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform2f(uMouse, mx, my);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+  }
+
+  // --- FLOATING PARTICLES ---
+  function initFloatingParticles() {
+    const container = document.getElementById('particle-container');
+    if (!container) return;
+    const texts = ['REF_ID: 082', 'STATUS: OK', 'COORD_X: 192', 'LAT: 14.07', 'PROC: 001', 'CHAN: HOND', 'SYS: GRID'];
+    for (let i = 0; i < 15; i++) {
+      const p = document.createElement('div');
+      p.className = 'floating-particle';
+      p.textContent = texts[Math.floor(Math.random() * texts.length)];
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.animation = 'float-gentle ' + (5 + Math.random() * 5) + 's ease-in-out infinite alternate';
+      p.style.opacity = 0.05 + Math.random() * 0.1;
+      container.appendChild(p);
+    }
+  }
+
+  // --- DEPTH CARD TILT (new 3D system) ---
+  function initDepthCardTilt() {
+    document.querySelectorAll('.depth-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const rotateX = ((y - cy) / cy) * -10;
+        const rotateY = ((x - cx) / cx) * 10;
+        card.style.transform = 'translateY(-16px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+        card.style.boxShadow = (20 + rotateY * 1.5) + 'px ' + (20 + rotateX * -1.5) + 'px 0px 0px ' + (getComputedStyle(document.documentElement).getPropertyValue('--ch-stroke') || '#000');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.boxShadow = '';
+      });
+    });
+  }
+  window.initDepthCardTilt = initDepthCardTilt;
+
   // --- INIT ---
   let _initialized = false;
   function init() {
@@ -543,8 +711,11 @@
       initScrollProgress();
       initCursorTrail();
       initNoiseOverlay();
+      initShaderBackground();
+      initFloatingParticles();
     }
     initCardTilt();
+    initDepthCardTilt();
     _initialized = true;
   }
 

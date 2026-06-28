@@ -124,6 +124,7 @@
     }
   </script>
   <style>
+    :root { --premium-bezier: cubic-bezier(0.23, 1, 0.32, 1); }
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     .neo-shadow { box-shadow: 4px 4px 0px 0px var(--ch-stroke); }
     .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--ch-stroke); }
@@ -150,6 +151,8 @@
   </style>
 </head>
 <body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
+  <div id="bg-canvas-container"><canvas id="shader-canvas" class="w-full h-full"></canvas></div>
+  <div id="particle-container" class="fixed inset-0 pointer-events-none z-[-1]"></div>
   <a href="#empleos" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:border-4 focus:border-primary">Saltar al contenido principal</a>
   <noscript><div class="bg-error text-on-error text-center py-4 font-label-bold uppercase text-sm">JavaScript es necesario para usar CHAMBA. Por favor habilítalo en tu navegador.</div></noscript>
   <div class="scroll-progress" id="scroll-progress"></div>
@@ -208,7 +211,7 @@
             BETA 1.0 — AHORA EN HONDURAS
           </div>
           <h1 class="hero-stagger font-display-xl text-headline-lg-mobile md:text-display-xl uppercase mb-lg text-on-background leading-tight">
-            ENCUENTRA TU <br/><span class="text-on-primary bg-primary px-sm inline-block transform rotate-1 px-md">PRÓXIMO</span><br/>
+            ENCUENTRA TU <br/>            <span class="text-on-primary bg-primary px-sm inline-block transform rotate-1 px-md float-highlight-1">PRÓXIMO</span><br/>
             <span class="inline-block bg-inverse-surface text-inverse-primary px-4 mt-4 transform -rotate-1"><span data-scramble>RETO</span></span>
           </h1>
           <p class="hero-stagger font-body-lg text-body-lg text-on-surface-variant mb-xl max-w-lg leading-relaxed">

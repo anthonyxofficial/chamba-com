@@ -198,7 +198,7 @@ function renderEmpleos(empleos) {
     const accentColor = accentColors[color];
 
     return `
-      <div class="card-stagger brutalist-card bg-surface border-4 border-primary p-lg neo-shadow-hover transition-all group flex flex-col h-full" style="--card-accent: ${accentColor};">
+      <div class="card-stagger depth-card bg-surface border-4 border-primary p-lg neo-shadow-hover transition-all group flex flex-col h-full" style="--card-accent: ${accentColor};">
         <div class="flex justify-between items-start mb-xl">
           <div class="w-16 h-16 border-4 overflow-hidden flex items-center justify-center" style="border-color: var(--card-accent); background: var(--card-accent);">
             <span class="material-symbols-outlined text-on-primary text-[32px]">${ICONS[e.categoria] || 'work'}</span>
