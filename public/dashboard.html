@@ -126,7 +126,7 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary page-transition">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
   <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:border-4 focus:border-primary">Saltar al contenido principal</a>
   <noscript><div class="bg-error text-on-error text-center py-4 font-label-bold uppercase text-sm">JavaScript es necesario para usar CHAMBA. Por favor habilítalo en tu navegador.</div></noscript>
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
@@ -143,7 +143,7 @@
           <span class="material-symbols-outlined text-[24px]">light_mode</span>
         </button>
         <span class="font-label-bold text-label-sm text-secondary" id="user-name"></span>
-        <button onclick="logout()" class="active-scale bg-surface border-2 border-primary text-primary px-6 py-2 font-label-bold uppercase text-sm neo-shadow transition-all hover:-translate-y-0.5">SALIR</button>
+        <button onclick="logout()" class="active-scale bg-surface border-2 border-primary text-primary px-6 py-2.5 min-h-[44px] font-label-bold uppercase text-sm neo-shadow transition-all hover:-translate-y-0.5">SALIR</button>
         <button onclick="openMobileMenu()" class="md:hidden p-2" style="color: var(--ch-primary);" aria-label="Menu">
           <span class="material-symbols-outlined text-[28px]">menu</span>
         </button>
@@ -208,7 +208,7 @@
               <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Nombre de la empresa</label>
               <input type="text" id="empresa" required class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary"/>
             </div>
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Categoría</label>
                 <select id="categoria" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none appearance-none cursor-pointer" required>

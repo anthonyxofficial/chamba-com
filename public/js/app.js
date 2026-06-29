@@ -323,7 +323,7 @@ async function abrirEmpleo(id) {
                 <p class="text-secondary font-label-bold uppercase tracking-wider mt-xs text-sm">${escapeHtml(empleo.empresa)}</p>
               </div>
             </div>
-            <button onclick="cerrarModal()" class="w-10 h-10 border-4 border-primary flex items-center justify-center hover:bg-surface-variant transition-colors text-primary">
+            <button onclick="cerrarModal()" class="w-11 h-11 border-4 border-primary flex items-center justify-center hover:bg-surface-variant transition-colors text-primary">
               <span class="material-symbols-outlined">close</span>
             </button>
           </div>

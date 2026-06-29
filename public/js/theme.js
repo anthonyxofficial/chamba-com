@@ -186,6 +186,15 @@
     if (menu) menu.classList.add('hidden');
   }
 
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const menu = document.getElementById('mobile-menu');
+      if (menu && !menu.classList.contains('hidden')) {
+        closeMobileMenu();
+      }
+    }
+  });
+
   applyTheme(getPreferredTheme());
 
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {

@@ -125,7 +125,7 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary page-transition">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
   <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:border-4 focus:border-primary">Saltar al contenido principal</a>
   <noscript><div class="bg-error text-on-error text-center py-4 font-label-bold uppercase text-sm">JavaScript es necesario para usar CHAMBA. Por favor habilítalo en tu navegador.</div></noscript>
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
@@ -163,7 +163,7 @@
 
   <main class="flex-1 flex items-center justify-center py-20 px-6">
     <div data-reveal="scale" class="text-center">
-      <h1 class="font-display-xl text-[200px] font-black leading-none text-stroke">404</h1>
+      <h1 class="font-display-xl text-[120px] sm:text-[160px] md:text-[200px] font-black leading-none text-stroke">404</h1>
       <h2 class="font-headline-lg text-headline-lg uppercase mt-4 text-primary">Página no<br/>Encontrada</h2>
       <p class="text-secondary mt-6 mb-10 font-body-lg max-w-md mx-auto">Lo sentimos, la página que buscas no existe o ha sido movida.</p>
       <a href="/" class="active-scale bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm inline-flex items-center gap-3 border-2 border-primary neo-shadow transition-all hover:-translate-y-0.5 hover:shadow-none">

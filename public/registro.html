@@ -128,7 +128,7 @@
     .mobile-menu-open { overflow: hidden; }
   </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary page-transition">
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
   <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:border-4 focus:border-primary">Saltar al contenido principal</a>
   <noscript><div class="bg-error text-on-error text-center py-4 font-label-bold uppercase text-sm">JavaScript es necesario para usar CHAMBA. Por favor habilítalo en tu navegador.</div></noscript>
   <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
@@ -165,7 +165,7 @@
   </div>
 
   <main class="flex-1 flex items-center justify-center py-20 px-6">
-    <div data-reveal="up" class="bg-surface border-4 border-primary neo-shadow-lg p-12 w-full max-w-md">
+    <div data-reveal="up" class="bg-surface border-4 border-primary neo-shadow-lg p-8 md:p-12 w-full max-w-md">
       <div class="text-center mb-10">
         <h1 class="font-display-xl text-headline-md uppercase text-primary">Crear<br/>Cuenta</h1>
       </div>
