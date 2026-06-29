@@ -243,7 +243,7 @@
             <span class="material-symbols-outlined text-[64px] text-secondary">favorite_border</span>
             <h3 class="font-headline-md text-xl mt-4 text-primary">No tienes empleos guardados</h3>
             <p class="text-secondary mt-2 mb-6 font-label-bold uppercase text-sm">Haz click en el corazón de cualquier empleo para guardarlo</p>
-            <a href="/buscar.html" class="bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm border-2 border-primary neo-shadow inline-block transition-all hover:-translate-y-0.5">VER EMPLEOS</a>
+            <a href="/buscar.html" class="active-scale bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm border-2 border-primary neo-shadow inline-block transition-all hover:-translate-y-0.5">VER EMPLEOS</a>
           </div>`;
         return;
       }
@@ -277,7 +277,7 @@
               <h4 class="font-headline-md text-xl uppercase text-primary group-hover:underline decoration-2 mb-2">${escapeHtml(e.titulo)}</h4>
               <p class="font-label-bold text-label-sm uppercase tracking-wider text-secondary mb-3">${escapeHtml(e.empresa)} • ${escapeHtml(fecha)}</p>
             </div>
-            <a href="/?empleo=${parseInt(e.id) || 0}" class="bg-primary text-on-primary px-4 py-2 font-label-bold uppercase text-xs border-2 border-primary neo-shadow text-center transition-all hover:-translate-y-0.5">VER EMPLEO</a>
+            <a href="/?empleo=${parseInt(e.id) || 0}" class="active-scale bg-primary text-on-primary px-4 py-2 font-label-bold uppercase text-xs border-2 border-primary neo-shadow text-center transition-all hover:-translate-y-0.5">VER EMPLEO</a>
           </div>`;
       }).join('');
     }

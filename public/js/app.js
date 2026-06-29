@@ -105,7 +105,7 @@ function shareJob(empleo) {
             <span class="material-symbols-outlined">facebook</span> Facebook
           </a>
         </div>
-        <button onclick="this.closest('.fixed').remove()" class="w-full mt-lg bg-primary text-on-primary px-lg py-md font-label-bold uppercase text-sm border-4 border-primary neo-shadow-active">CERRAR</button>
+        <button onclick="this.closest('.fixed').remove()" class="active-scale w-full mt-lg bg-primary text-on-primary px-lg py-md font-label-bold uppercase text-sm border-4 border-primary neo-shadow-active">CERRAR</button>
       </div>`;
     document.body.appendChild(modal);
   }
@@ -268,7 +268,7 @@ async function abrirEmpleo(id) {
         <div class="bg-surface border-4 border-primary neo-shadow-lg max-w-md w-full text-center p-12" onclick="event.stopPropagation()">
           <span class="material-symbols-outlined text-[80px] text-error">error</span>
           <h2 class="font-headline-md text-xl mt-lg uppercase text-primary">Error al cargar empleo</h2>
-          <button onclick="cerrarModal()" class="mt-lg bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
+          <button onclick="cerrarModal()" class="active-scale mt-lg bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
         </div>
       </div>`;
     return;
@@ -303,7 +303,7 @@ async function abrirEmpleo(id) {
           <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Carta de presentación</label>
           <textarea name="carta" rows="4" class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_var(--ch-stroke)] outline-none resize-none" placeholder="Cuéntanos por qué eres el candidato ideal..."></textarea>
         </div>
-        <button type="submit" class="w-full bg-primary text-on-primary px-xl py-lg font-label-bold uppercase tracking-widest text-sm border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">ENVIAR POSTULACIÓN</button>
+        <button type="submit" class="active-scale w-full bg-primary text-on-primary px-xl py-lg font-label-bold uppercase tracking-widest text-sm border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">ENVIAR POSTULACIÓN</button>
       </form>`;
 
   const shareData = JSON.stringify({id: empleo.id, titulo: empleo.titulo, empresa: empleo.empresa, departamento: empleo.departamento});
@@ -385,7 +385,7 @@ async function abrirEmpleo(id) {
             <span class="material-symbols-outlined text-[80px] text-job-green">check_circle</span>
             <h2 class="font-headline-md text-3xl mt-lg uppercase text-primary">¡Postulación enviada!</h2>
             <p class="text-secondary mt-md mb-xl font-label-bold uppercase text-sm">Tu aplicación ha sido enviada exitosamente</p>
-            <button onclick="cerrarModal()" class="bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
+            <button onclick="cerrarModal()" class="active-scale bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
           </div>
         </div>`;
     });
