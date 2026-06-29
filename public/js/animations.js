@@ -191,6 +191,20 @@
       .skeleton { animation: none; background-position: 0 0; }
       .glitch::before, .glitch::after { animation: none; display: none; }
       .neo-cursor-dot, .neo-cursor-ring { display: none !important; }
+      #bg-canvas-container { display: none !important; }
+      .floating-particle { display: none !important; }
+    }
+
+    /* BACK TO TOP BUTTON */
+    #back-to-top {
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #back-to-top.visible {
+      opacity: 1; pointer-events: auto;
+    }
+    #back-to-top:hover {
+      transform: translateY(-4px);
     }
   `;
   document.head.appendChild(STYLE);
@@ -566,6 +580,14 @@
     const container = document.getElementById('bg-canvas-container');
     const canvas = document.getElementById('shader-canvas');
     if (!container || !canvas) return;
+
+    if (REDUCED) {
+      container.style.display = 'none';
+      document.body.style.backgroundImage = 'radial-gradient(var(--ch-stroke, #000) 1px, transparent 0)';
+      document.body.style.backgroundSize = '24px 24px';
+      return;
+    }
+
     const gl = canvas.getContext('webgl');
     if (!gl) return;
 
@@ -689,6 +711,29 @@
   }
   window.initDepthCardTilt = initDepthCardTilt;
 
+  // --- BACK TO TOP BUTTON ---
+  function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (window.scrollY > 500) {
+            btn.classList.add('visible');
+          } else {
+            btn.classList.remove('visible');
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // --- INIT ---
   let _initialized = false;
   function init() {
@@ -713,6 +758,7 @@
       initNoiseOverlay();
       initShaderBackground();
       initFloatingParticles();
+      initBackToTop();
     }
     initCardTilt();
     initDepthCardTilt();

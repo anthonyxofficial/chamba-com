@@ -372,6 +372,30 @@
     </section>
     <div id="modal-empleo"></div>
 
+    <!-- Stats Section -->
+    <section class="py-20 bg-surface-variant border-y-4 border-primary">
+      <div class="max-w-container-max mx-auto px-gutter">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-xl text-center">
+          <div data-reveal="up">
+            <p class="font-display-xl text-headline-md uppercase text-primary" data-count="1200" data-suffix="+">0</p>
+            <p class="font-label-bold text-label-bold uppercase text-secondary mt-sm">Empleos Publicados</p>
+          </div>
+          <div data-reveal="up">
+            <p class="font-display-xl text-headline-md uppercase text-primary" data-count="500" data-suffix="+">0</p>
+            <p class="font-label-bold text-label-bold uppercase text-secondary mt-sm">Empresas Activas</p>
+          </div>
+          <div data-reveal="up">
+            <p class="font-display-xl text-headline-md uppercase text-primary" data-count="8500" data-suffix="+">0</p>
+            <p class="font-label-bold text-label-bold uppercase text-secondary mt-sm">Candidatos</p>
+          </div>
+          <div data-reveal="up">
+            <p class="font-display-xl text-headline-md uppercase text-primary" data-count="18">0</p>
+            <p class="font-label-bold text-label-bold uppercase text-secondary mt-sm">Departamentos</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Recruitment Section -->
     <section class="py-40 bg-background relative border-y-4 border-primary overflow-hidden">
       <div class="absolute inset-0 pattern-grid opacity-10 pointer-events-none"></div>
@@ -489,5 +513,8 @@
       button.addEventListener('mouseleave', () => { button.style.boxShadow = ''; button.style.transform = ''; });
     });
   </script>
+  <button id="back-to-top" class="fixed bottom-xl right-xl z-50 bg-primary text-on-primary w-14 h-14 border-4 border-primary neo-shadow flex items-center justify-center" aria-label="Volver arriba">
+    <span class="material-symbols-outlined">arrow_upward</span>
+  </button>
 </body>
 </html>
