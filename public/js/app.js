@@ -80,7 +80,7 @@ function isFavorite(id) {
 
 function shareJob(empleo) {
   const text = `¡Mira este empleo en Chamba.com! ${empleo.titulo} - ${empleo.empresa} en ${empleo.departamento}`;
-  const url = window.location.href;
+  const url = `${window.location.origin}${window.location.pathname}?empleo=${empleo.id}`;
 
   if (navigator.share) {
     navigator.share({ title: empleo.titulo, text, url });
@@ -138,8 +138,25 @@ function hideLoading() {
 
 function getSalaryForJob(empleo) {
   if (empleo.salario) return empleo.salario;
-  const salaries = ['L15k - L18k', 'L12k - L15k', 'L14k - L16k', 'L16k - L20k', 'L18k - L25k', 'L20k - L30k', 'L22k - L28k', 'L25k - L35k'];
-  return salaries[empleo.id % salaries.length];
+  return null;
+}
+
+async function cargarStats() {
+  try {
+    const res = await fetch('/api/health');
+    if (!res.ok) return;
+    const data = await res.json();
+    const counts = data.counts || {};
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    if (counts.empleos !== undefined) set('stat-empleos-total', counts.empleos);
+    if (counts.users !== undefined) {
+      set('stat-usuarios-total', counts.users);
+      set('badge-comunidad', `${counts.users}+`);
+    }
+    if (counts.postulaciones !== undefined) set('stat-postulaciones-total', counts.postulaciones);
+  } catch (err) {
+    console.error('Error cargando stats:', err);
+  }
 }
 
 function getColorForJob(empleo) {
@@ -217,7 +234,7 @@ function renderEmpleos(empleos) {
           </div>
           <div class="flex items-center gap-md">
             <span class="material-symbols-outlined text-xl bg-surface p-1 border-2 text-primary" style="border-color: var(--card-accent); color: var(--card-accent);">payments</span>
-            <span class="font-label-bold text-label-sm uppercase text-on-background">${escapeHtml(salary)}</span>
+            <span class="font-label-bold text-label-sm uppercase text-on-background">${salary ? escapeHtml(salary) : 'A convenir'}</span>
           </div>
         </div>
         <div class="flex gap-sm mt-lg">
@@ -340,7 +357,7 @@ async function abrirEmpleo(id) {
             </div>
             <div class="flex items-center gap-md">
               <span class="material-symbols-outlined text-secondary">payments</span>
-              <span class="font-label-bold text-sm text-primary">${escapeHtml(salary)}</span>
+              <span class="font-label-bold text-sm text-primary">${salary ? escapeHtml(salary) : 'A convenir'}</span>
             </div>
           </div>
           <div class="mb-lg">
@@ -368,15 +385,42 @@ async function abrirEmpleo(id) {
       const data = Object.fromEntries(formData);
       data.empleo_id = parseInt(data.empleo_id);
 
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'ENVIANDO...'; }
+
+      if (!getToken()) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      let res;
       try {
-        const res = await fetch('/api/postulaciones', {
+        res = await fetch('/api/postulaciones', {
           method: 'POST',
           headers: authHeaders(),
           body: JSON.stringify(data)
         });
-        if (!res.ok) throw new Error('Error al enviar postulación');
       } catch (err) {
         console.error(err);
+        showPostulacionFormError(postularForm, 'No se pudo conectar con el servidor. Revisa tu conexión.');
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'ENVIAR POSTULACIÓN'; }
+        return;
+      }
+
+      if (res.status === 401) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      if (!res.ok) {
+        let msg = 'Error al enviar postulación. Inténtalo de nuevo.';
+        try {
+          const errBody = await res.json();
+          if (errBody && errBody.error) msg = errBody.error;
+        } catch {}
+        showPostulacionFormError(postularForm, msg);
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'ENVIAR POSTULACIÓN'; }
+        return;
       }
 
       document.getElementById('modal-empleo').innerHTML = `
@@ -390,6 +434,15 @@ async function abrirEmpleo(id) {
         </div>`;
     });
   }
+}
+
+function showPostulacionFormError(form, msg) {
+  form.querySelector('.postulacion-error')?.remove();
+  const div = document.createElement('div');
+  div.className = 'postulacion-error bg-error/10 border-4 border-error p-md font-label-bold uppercase text-xs text-error';
+  div.setAttribute('role', 'alert');
+  div.textContent = msg;
+  form.prepend(div);
 }
 
 function cerrarModal(e) {
@@ -416,6 +469,7 @@ function filtrarCategoria(categoria) {
 document.addEventListener('DOMContentLoaded', () => {
   cargarEmpleos(1);
   cargarCategorias();
+  cargarStats();
 
   const urlParams = new URLSearchParams(window.location.search);
   const empleoId = urlParams.get('empleo');

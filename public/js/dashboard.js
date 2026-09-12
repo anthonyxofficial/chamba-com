@@ -47,9 +47,10 @@ function mostrarSeccion(seccion) {
 }
 
 async function cargarMisEmpleos() {
-  const res = await fetch(`${API_URL}?limit=100`, { headers: authHeaders() });
+  const res = await fetch(`${API_URL}/mios`, { headers: authHeaders() });
+  if (res.status === 401) { window.location.href = '/login.html'; return; }
   const data = await res.json();
-  const empleos = (data.empleos || data).filter(e => e.empresa === user.nombre);
+  const empleos = data.empleos || [];
 
   document.getElementById('stat-empleos').textContent = empleos.length;
   document.getElementById('stat-activos').textContent = empleos.filter(e => !e.expirado).length;
@@ -79,10 +80,10 @@ async function cargarMisEmpleos() {
 }
 
 async function cargarPostulaciones() {
-  const resEmpleos = await fetch(`${API_URL}?limit=100`, { headers: authHeaders() });
+  const resEmpleos = await fetch(`${API_URL}/mios`, { headers: authHeaders() });
+  if (resEmpleos.status === 401) { window.location.href = '/login.html'; return; }
   const dataEmpleos = await resEmpleos.json();
-  const misEmpleos = (dataEmpleos.empleos || dataEmpleos).filter(e => e.empresa === user.nombre);
-  const misEmpleoIds = misEmpleos.map(e => e.id);
+  const misEmpleoIds = (dataEmpleos.empleos || []).map(e => e.id);
 
   const res = await fetch(POSTULACIONES_URL, { headers: authHeaders() });
   const allPostulaciones = await res.json();
@@ -134,14 +135,22 @@ document.getElementById('nuevoEmpleoForm').addEventListener('submit', async (e) 
     categoria: document.getElementById('categoria').value,
     departamento: document.getElementById('departamentos').value,
     descripcion: document.getElementById('descripcion').value,
+    salario: document.getElementById('salario')?.value || '',
     fecha_limite: document.getElementById('fecha_limite').value
   };
 
-  await fetch(API_URL, {
+  const res = await fetch(API_URL, {
     method: 'POST',
     headers: authHeaders(),
     body: JSON.stringify(data)
   });
+
+  if (res.status === 401) { window.location.href = '/login.html'; return; }
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    alert(err.error || 'Error al publicar el empleo');
+    return;
+  }
 
   e.target.reset();
   document.getElementById('empresa').value = user.nombre;

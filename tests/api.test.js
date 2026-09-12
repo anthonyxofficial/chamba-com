@@ -296,6 +296,108 @@ describe('Postulaciones', () => {
   });
 });
 
+describe('Mis empleos (empresa_id)', () => {
+  it('GET /api/empleos/mios - sin auth falla', async () => {
+    const res = await request('GET', '/api/empleos/mios');
+    assert.equal(res.status, 401);
+  });
+
+  it('GET /api/empleos/mios - aspirante no puede ver', async () => {
+    const res = await request('GET', '/api/empleos/mios', {
+      headers: authHeaders(aspiranteToken)
+    });
+    assert.equal(res.status, 403);
+  });
+
+  it('GET /api/empleos/mios - empresa ve solo sus empleos', async () => {
+    const res = await request('GET', '/api/empleos/mios', {
+      headers: authHeaders(empresaToken)
+    });
+    assert.equal(res.status, 200);
+    assert.ok(Array.isArray(res.body.empleos));
+    assert.ok(res.body.empleos.length >= 2);
+    assert.ok(res.body.empleos.every(e => e.empresa_id === 1));
+  });
+});
+
+describe('Validaciones nuevas', () => {
+  it('POST /api/empleos - fecha_limite inválida falla', async () => {
+    const res = await request('POST', '/api/empleos', {
+      body: {
+        titulo: 'Test fecha',
+        empresa: 'Test',
+        categoria: 'Ventas y Comercial',
+        departamento: 'Cortés',
+        fecha_limite: 'no-una-fecha'
+      },
+      headers: authHeaders(empresaToken)
+    });
+    assert.equal(res.status, 400);
+  });
+
+  it('POST /api/empleos - fecha_limite pasada falla', async () => {
+    const res = await request('POST', '/api/empleos', {
+      body: {
+        titulo: 'Test fecha pasada',
+        empresa: 'Test',
+        categoria: 'Ventas y Comercial',
+        departamento: 'Cortés',
+        fecha_limite: '2020-01-01'
+      },
+      headers: authHeaders(empresaToken)
+    });
+    assert.equal(res.status, 400);
+  });
+
+  it('POST /api/postulaciones - empleo inexistente falla', async () => {
+    const res = await request('POST', '/api/postulaciones', {
+      body: { empleo_id: 9999, nombre: 'X', email: 'x@x.com' },
+      headers: authHeaders(aspiranteToken)
+    });
+    assert.equal(res.status, 404);
+  });
+
+  it('POST /api/postulaciones - duplicada falla', async () => {
+    const list = await request('GET', '/api/empleos/mios', {
+      headers: authHeaders(empresaToken)
+    });
+    const targetId = list.body.empleos[0].id;
+    await request('POST', '/api/postulaciones', {
+      body: { empleo_id: targetId, nombre: 'Juan Test', email: 'juan@test.hn' },
+      headers: authHeaders(aspiranteToken)
+    });
+    const res = await request('POST', '/api/postulaciones', {
+      body: { empleo_id: targetId, nombre: 'Juan Test', email: 'juan@test.hn' },
+      headers: authHeaders(aspiranteToken)
+    });
+    assert.equal(res.status, 409);
+  });
+
+  it('POST /api/postulaciones - empleo expirado falla', async () => {
+    const created = await request('POST', '/api/empleos', {
+      body: {
+        titulo: 'Empleo por expirar',
+        empresa: 'Test',
+        categoria: 'Ventas y Comercial',
+        departamento: 'Cortés',
+        fecha_limite: '2026-12-31'
+      },
+      headers: authHeaders(empresaToken)
+    });
+    assert.equal(created.status, 201);
+    const updated = await request('PUT', `/api/empleos/${created.body.id}`, {
+      body: { fecha_limite: '2020-01-01' },
+      headers: authHeaders(empresaToken)
+    });
+    assert.equal(updated.status, 200);
+    const res = await request('POST', '/api/postulaciones', {
+      body: { empleo_id: created.body.id, nombre: 'Ana', email: 'ana@test.hn' },
+      headers: authHeaders(aspiranteToken)
+    });
+    assert.equal(res.status, 400);
+  });
+});
+
 describe('Contacto', () => {
   it('POST /api/contacto - enviar mensaje', async () => {
     const res = await request('POST', '/api/contacto', {

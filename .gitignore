@@ -2,3 +2,9 @@ node_modules/
 .env
 .DS_Store
 *.log
+# Datos con PII: no versionar usuarios, postulaciones ni mensajes
+data/users.json
+data/postulaciones.json
+data/contacto.json
+# Artefacto accidental de Windows
+nul

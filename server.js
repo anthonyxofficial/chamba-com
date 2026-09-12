@@ -10,7 +10,15 @@ const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
+let JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  if (process.env.NODE_ENV === 'production') {
+    console.error('FATAL: JWT_SECRET no está configurado. Define la variable de entorno JWT_SECRET.');
+    process.exit(1);
+  }
+  console.warn('ADVERTENCIA: JWT_SECRET no configurado, usando secreto temporal (solo desarrollo).');
+  JWT_SECRET = crypto.randomBytes(32).toString('hex');
+}
 const DATA_FILE = path.join(__dirname, 'data', 'empleos.json');
 const USERS_FILE = path.join(__dirname, 'data', 'users.json');
 const POSTULACIONES_FILE = path.join(__dirname, 'data', 'postulaciones.json');
@@ -22,9 +30,18 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false
 }));
 
-// CORS restringido
+// CORS restringido (dominios propios + deploys + env ALLOWED_ORIGINS)
+const ALLOWED_ORIGINS = ['https://chamba.com', 'http://localhost:3000'];
+if (process.env.ALLOWED_ORIGINS) {
+  ALLOWED_ORIGINS.push(...process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim()).filter(Boolean));
+}
 app.use(cors({
-  origin: ['https://chamba.com', 'http://localhost:3000'],
+  origin: (origin, cb) => {
+    if (!origin) return cb(null, true);
+    if (ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
+    if (/\.onrender\.com$/.test(origin) || /\.netlify\.app$/.test(origin)) return cb(null, true);
+    return cb(new Error('Origen no permitido por CORS'));
+  },
   credentials: true
 }));
 
@@ -50,7 +67,7 @@ const postLimiter = rateLimit({
 
 const empleosWriteLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 5,
+  max: 20,
   message: { error: 'Demasiadas solicitudes. Espera un minuto.' },
   standardHeaders: true,
   legacyHeaders: false
@@ -177,6 +194,11 @@ app.get('/api/empleos', optionalAuth, (req, res) => {
   });
 });
 
+app.get('/api/empleos/mios', authMiddleware, employerOnly, (req, res) => {
+  const empleos = readJSON(DATA_FILE).filter(e => e.empresa_id === req.user.id);
+  res.json({ empleos: empleos.map(addExpirationStatus), total: empleos.length });
+});
+
 app.get('/api/empleos/:id', optionalAuth, (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
@@ -187,10 +209,21 @@ app.get('/api/empleos/:id', optionalAuth, (req, res) => {
 });
 
 app.post('/api/empleos', authMiddleware, employerOnly, empleosWriteLimiter, (req, res) => {
-  const { titulo, empresa, categoria, departamento, descripcion, fecha_limite } = req.body;
+  const { titulo, empresa, categoria, departamento, descripcion, fecha_limite, salario } = req.body;
 
   if (!titulo || !empresa || !categoria || !departamento || !fecha_limite) {
     return res.status(400).json({ error: 'Faltan campos requeridos' });
+  }
+
+  const limite = new Date(fecha_limite);
+  if (isNaN(limite.getTime())) {
+    return res.status(400).json({ error: 'fecha_limite inválida (usa YYYY-MM-DD)' });
+  }
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  limite.setHours(0, 0, 0, 0);
+  if (limite < hoy) {
+    return res.status(400).json({ error: 'fecha_limite debe ser hoy o una fecha futura' });
   }
 
   const empleos = readJSON(DATA_FILE);
@@ -201,6 +234,7 @@ app.post('/api/empleos', authMiddleware, employerOnly, empleosWriteLimiter, (req
     categoria: truncate(sanitize(categoria), 100),
     departamento: truncate(sanitize(departamento), 100),
     descripcion: truncate(sanitize(descripcion || ''), 2000),
+    salario: truncate(sanitize(salario || ''), 50),
     fecha_limite,
     empresa_id: req.user.id,
     createdAt: new Date().toISOString()
@@ -217,15 +251,22 @@ app.put('/api/empleos/:id', authMiddleware, employerOnly, empleosWriteLimiter, (
   const index = empleos.findIndex(e => e.id === id);
   if (index === -1) return res.status(404).json({ error: 'Empleo no encontrado' });
 
-  if (empleos[index].empresa_id && empleos[index].empresa_id !== req.user.id) {
+  if (!empleos[index].empresa_id) {
+    return res.status(403).json({ error: 'Este empleo no se puede editar' });
+  }
+  if (empleos[index].empresa_id !== req.user.id) {
     return res.status(403).json({ error: 'No tienes permiso para editar este empleo' });
   }
 
-  const allowed = ['titulo', 'empresa', 'categoria', 'departamento', 'descripcion', 'fecha_limite'];
+  if (req.body.fecha_limite !== undefined && isNaN(new Date(req.body.fecha_limite).getTime())) {
+    return res.status(400).json({ error: 'fecha_limite inválida (usa YYYY-MM-DD)' });
+  }
+
+  const allowed = ['titulo', 'empresa', 'categoria', 'departamento', 'descripcion', 'fecha_limite', 'salario'];
   const updates = {};
   for (const key of allowed) {
     if (req.body[key] !== undefined) {
-      const maxLen = key === 'descripcion' ? 2000 : key === 'titulo' ? 200 : 100;
+      const maxLen = key === 'descripcion' ? 2000 : key === 'titulo' ? 200 : key === 'salario' ? 50 : 100;
       updates[key] = truncate(sanitize(req.body[key]), maxLen);
     }
   }
@@ -242,7 +283,10 @@ app.delete('/api/empleos/:id', authMiddleware, employerOnly, empleosWriteLimiter
   const empleo = empleos.find(e => e.id === id);
   if (!empleo) return res.status(404).json({ error: 'Empleo no encontrado' });
 
-  if (empleo.empresa_id && empleo.empresa_id !== req.user.id) {
+  if (!empleo.empresa_id) {
+    return res.status(403).json({ error: 'Este empleo no se puede eliminar' });
+  }
+  if (empleo.empresa_id !== req.user.id) {
     return res.status(403).json({ error: 'No tienes permiso para eliminar este empleo' });
   }
 
@@ -336,10 +380,26 @@ app.post('/api/postulaciones', authMiddleware, postLimiter, (req, res) => {
     return res.status(400).json({ error: 'Email inválido' });
   }
 
+  const empleoId = parseInt(empleo_id);
+  if (isNaN(empleoId)) {
+    return res.status(400).json({ error: 'empleo_id inválido' });
+  }
+
+  const empleo = readJSON(DATA_FILE).find(e => e.id === empleoId);
+  if (!empleo) {
+    return res.status(404).json({ error: 'Empleo no encontrado' });
+  }
+  if (isExpired(empleo.fecha_limite)) {
+    return res.status(400).json({ error: 'El plazo de postulación para este empleo ya cerró' });
+  }
+
   const postulaciones = readJSON(POSTULACIONES_FILE);
+  if (postulaciones.find(p => p.empleo_id === empleoId && p.aspirante_id === req.user.id)) {
+    return res.status(409).json({ error: 'Ya te postulaste a este empleo' });
+  }
   const newPost = {
     id: generateId(postulaciones),
-    empleo_id: parseInt(empleo_id),
+    empleo_id: empleoId,
     nombre: truncate(sanitize(nombre), 100),
     email,
     telefono: truncate(req.body.telefono || '', 20),

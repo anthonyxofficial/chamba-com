@@ -25,23 +25,25 @@ Netlify te dará una URL como: `https://tu-sitio-random.netlify.app`
 
 ```
 chamba/
-├── netlify/
-│   └── functions/        ← API serverless
-│       ├── empleos.js
-│       ├── auth.js
-│       └── postulaciones.js
-├── public/               ← Archivos estáticos
+├── server.js               ← API backend (único backend, corre en Render)
+├── public/                 ← Archivos estáticos
 │   ├── index.html
 │   ├── css/
 │   ├── js/
 │   └── ...
-├── data/                 ← Base de datos JSON
-├── netlify.toml          ← Configuración
+├── data/                   ← Base de datos JSON
+├── netlify.toml            ← Configuración (solo estático)
 └── package.json
 ```
 
 ## Notas importantes
 
+- El backend oficial es `server.js` en Render (ver `RENDER.md`).
+  Las antiguas `netlify/functions` fueron eliminadas porque no tenían
+  autenticación (passwords en texto plano, CRUD sin JWT) y exponían
+  datos de postulantes.
+- Si sirves el frontend en Netlify, la API debe apuntar a tu URL de
+  Render y esa URL debe estar en `ALLOWED_ORIGINS` del backend.
 - Los datos se guardan en `data/empleos.json`
 - En Netlify, los datos NO se persisten entre deploys
 - Para producción, usar una base de datos real (MongoDB, PostgreSQL)
