@@ -8,7 +8,7 @@
     "descripcion": "Buscamos desarrollador con experiencia en Node.js y React. Trabajo híbrido en San Pedro Sula.",
     "salario": "L18k - L25k",
     "color": "pink",
-    "fecha_limite": "2026-07-15",
+    "fecha_limite": "2026-11-30",
     "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
@@ -20,7 +20,7 @@
     "descripcion": "Se requiere ejecutivo con experiencia en ventas corporativas. Zona: Tegucigalpa.",
     "salario": "L12k - L18k",
     "color": "green",
-    "fecha_limite": "2026-06-30",
+    "fecha_limite": "2026-12-15",
     "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
@@ -32,7 +32,7 @@
     "descripcion": "Profesional en contabilidad con mínimo 3 años de experiencia en banca.",
     "salario": "L15k - L22k",
     "color": "blue",
-    "fecha_limite": "2026-07-20",
+    "fecha_limite": "2026-11-15",
     "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
@@ -44,7 +44,7 @@
     "descripcion": "Ingeniero para mantenimiento de infraestructura de redes y servidores.",
     "salario": "L20k - L28k",
     "color": "pink",
-    "fecha_limite": "2026-07-10",
+    "fecha_limite": "2026-12-31",
     "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
@@ -56,7 +56,7 @@
     "descripcion": "Se necesitan agentes bilingües (español/inglés). Turnos flexibles.",
     "salario": "L8k - L12k",
     "color": "green",
-    "fecha_limite": "2026-06-25",
+    "fecha_limite": "2026-10-31",
     "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
@@ -68,7 +68,7 @@
     "descripcion": "Profesional de RRHH con experiencia en gestión de talento y nómina.",
     "salario": "L22k - L30k",
     "color": "blue",
-    "fecha_limite": "2026-07-25",
+    "fecha_limite": "2026-12-20",
     "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
@@ -80,7 +80,7 @@
     "descripcion": "Gestión de redes sociales y contenido digital para marca corporativa.",
     "salario": "L10k - L16k",
     "color": "pink",
-    "fecha_limite": "2026-07-05",
+    "fecha_limite": "2026-11-20",
     "createdAt": "2026-06-15T00:00:00.000Z"
   },
   {
@@ -92,7 +92,7 @@
     "descripcion": "Coordinación de envíos y control de inventario en zona franca.",
     "salario": "L9k - L14k",
     "color": "green",
-    "fecha_limite": "2026-06-28",
+    "fecha_limite": "2026-12-10",
     "createdAt": "2026-06-15T00:00:00.000Z"
   }
 ]
