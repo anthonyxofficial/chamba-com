@@ -9,7 +9,7 @@
   <meta property="og:description" content="Portal de empleos en Honduras. Conectamos talento emergente con empresas que innovan."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://chamba-com.onrender.com"/>
-  <meta property="og:image" content="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&h=630&fit=crop"/>
+  <meta property="og:image" content="https://chamba-com.onrender.com/img/og-default.png"/>
   <meta name="theme-color" content="#000000"/>
   <link rel="canonical" href="https://chamba-com.onrender.com"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
@@ -53,6 +53,34 @@
     }
     @media (prefers-reduced-motion: reduce) { .scroll-progress { transition: none; } }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "CHAMBA",
+        "url": "https://chamba-com.onrender.com/",
+        "logo": "https://chamba-com.onrender.com/favicon.svg",
+        "description": "Portal de empleos en Honduras. Conectamos talento emergente con empresas que innovan.",
+        "areaServed": { "@type": "Country", "name": "Honduras" }
+      },
+      {
+        "@type": "WebSite",
+        "name": "CHAMBA",
+        "url": "https://chamba-com.onrender.com/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://chamba-com.onrender.com/buscar.html?busqueda={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
   <div id="bg-canvas-container"><canvas id="shader-canvas" class="w-full h-full"></canvas></div>
