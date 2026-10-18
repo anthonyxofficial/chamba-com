@@ -80,7 +80,7 @@ function isFavorite(id) {
 
 function shareJob(empleo) {
   const text = `¡Mira este empleo en Chamba.com! ${empleo.titulo} - ${empleo.empresa} en ${empleo.departamento}`;
-  const url = `${window.location.origin}${window.location.pathname}?empleo=${empleo.id}`;
+  const url = `${window.location.origin}/empleo/${empleo.id}`;
 
   if (navigator.share) {
     navigator.share({ title: empleo.titulo, text, url });
@@ -226,7 +226,7 @@ function renderEmpleos(empleos) {
             <span class="text-on-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary" style="background: var(--card-accent);">${TAGS[e.categoria] || 'EMPLEO'}</span>
           </div>
         </div>
-        <h3 class="font-display-xl text-3xl uppercase mb-sm leading-tight group-hover:translate-x-1 transition-transform text-on-background cursor-pointer" onclick="abrirEmpleo(${parseInt(e.id) || 0})">${escapeHtml(e.titulo)}</h3>
+        <h3 class="font-display-xl text-3xl uppercase mb-sm leading-tight group-hover:translate-x-1 transition-transform text-on-background cursor-pointer"><a href="/empleo/${parseInt(e.id) || 0}" onclick="abrirEmpleo(${parseInt(e.id) || 0}); return false;">${escapeHtml(e.titulo)}</a></h3>
         <p class="font-label-bold text-label-bold uppercase text-on-surface-variant mb-xl">${escapeHtml(e.empresa)}</p>
         <div class="mt-auto pt-lg border-t-2 border-primary/20 space-y-md">
           <div class="flex items-center gap-md">

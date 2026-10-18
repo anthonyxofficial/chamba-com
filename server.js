@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const crypto = require('crypto');
+const fs = require('fs');
 
 const store = require('./db');
 
@@ -116,6 +117,55 @@ function sanitize(str) {
 function truncate(str, max) {
   if (typeof str !== 'string') return '';
   return str.length > max ? str.slice(0, max) : str;
+}
+
+function escapeForHtml(str) {
+  return String(str == null ? '' : str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function placeholderVal(val) {
+  const str = typeof val === 'string' ? val : JSON.stringify(val);
+  return str.replace(/</g, '\\u003c');
+}
+
+const CATEGORIA_TAGS = {
+  'Informática y Programación': 'TECNOLOGÍA',
+  'Ventas y Comercial': 'VENTAS',
+  'Finanzas y Contabilidad': 'FINANZAS',
+  'Ingeniería y Técnico': 'INGENIERÍA',
+  'Servicio al Cliente': 'SERVICIO',
+  'Administración de Empresas': 'ADMIN',
+  'Recursos Humanos': 'RRHH',
+  'Marketing y Comunicación': 'MARKETING',
+  'Logística, Almacén y Compras': 'LOGÍSTICA'
+};
+
+const CATEGORIA_ICONS = {
+  'Informática y Programación': 'terminal',
+  'Ventas y Comercial': 'shopping_bag',
+  'Finanzas y Contabilidad': 'calculate',
+  'Ingeniería y Técnico': 'engineering',
+  'Servicio al Cliente': 'support_agent',
+  'Administración de Empresas': 'corporate_fare',
+  'Recursos Humanos': 'people',
+  'Marketing y Comunicación': 'campaign',
+  'Logística, Almacén y Compras': 'local_shipping'
+};
+
+function formatDateEs(dateStr) {
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return dateStr;
+  const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+  return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
+}
+
+function injectPlaceholder(html, token, value) {
+  return html.split(token).join(value == null ? '' : value);
 }
 
 // --- Auth Middleware ---
@@ -456,6 +506,102 @@ app.get('/api/health', async (req, res) => {
       contactos: contactos.length
     }
   });
+});
+
+// --- Página de detalle de empleo (server-renderizada para SEO) ---
+app.get('/empleo/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const empleo = isNaN(id) ? null : (await store.getAll('empleos')).find(e => e.id === id);
+    if (!empleo) {
+      return res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+    }
+
+    const expirado = isExpired(empleo.fecha_limite);
+    const canonical = `https://chamba-com.onrender.com/empleo/${empleo.id}`;
+    const pageTitle = `${empleo.titulo} – ${empleo.empresa} (${empleo.departamento}) | CHAMBA`;
+    const metaDesc = truncate(empleo.descripcion || '', 158).trim()
+      || `Postula como ${empleo.titulo} en ${empleo.empresa} (${empleo.departamento}) y encuentra más empleos en Honduras en CHAMBA.`;
+
+    const limite = new Date(empleo.fecha_limite);
+    const jobPosting = {
+      '@context': 'https://schema.org',
+      '@type': 'JobPosting',
+      'title': empleo.titulo,
+      'description': empleo.descripcion || '',
+      datePosted: empleo.createdAt,
+      hiringOrganization: {
+        '@type': 'Organization',
+        name: empleo.empresa,
+        sameAs: 'https://chamba-com.onrender.com/'
+      },
+      jobLocation: {
+        '@type': 'Place',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: empleo.departamento,
+          addressCountry: 'HN'
+        }
+      },
+      directApply: true
+    };
+    if (!isNaN(limite.getTime())) {
+      jobPosting.validThrough = new Date(empleo.fecha_limite + 'T23:59:59Z').toISOString();
+    }
+
+    const tagLabel = CATEGORIA_TAGS[empleo.categoria] || (empleo.categoria || '').toUpperCase() || 'EMPLEO';
+    const icono = CATEGORIA_ICONS[empleo.categoria] || 'work';
+
+    const shareObj = { id: empleo.id, titulo: empleo.titulo, empresa: empleo.empresa, departamento: empleo.departamento };
+    const shareJson = escapeForHtml(JSON.stringify(shareObj));
+
+    const ctaHtml = expirado
+      ? `<span class="bg-error/10 border-4 border-error px-xl py-lg font-label-bold uppercase text-sm text-error inline-flex items-center gap-md">
+           <span class="material-symbols-outlined">event_busy</span> PLAZO DE POSTULACIÓN CERRADO
+         </span>
+         <a href="/buscar.html" class="active-scale bg-primary text-on-primary px-xl py-lg font-label-bold uppercase text-sm border-4 border-primary neo-shadow neo-shadow-active inline-flex items-center">VER MÁS EMPLEOS</a>`
+      : `<button onclick="abrirEmpleo(${empleo.id})" class="active-scale bg-primary text-on-primary px-xl py-lg font-label-bold uppercase text-sm border-4 border-primary neo-shadow neo-shadow-active inline-flex items-center">
+           <span class="material-symbols-outlined">send</span> POSTULARME
+         </button>
+         <button onclick="toggleFavorite(${empleo.id})" data-fav-id="${empleo.id}" class="bg-surface border-4 border-primary px-lg py-lg font-label-bold uppercase text-sm inline-flex items-center gap-md neo-shadow neo-shadow-active text-primary">
+           <span class="material-symbols-outlined" data-fav-icon="${empleo.id}">favorite_border</span> GUARDAR
+         </button>`;
+
+    const estadoHtml = expirado
+      ? `<span class="bg-error text-white font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary font-bold">CERRADO</span>`
+      : `<span class="bg-job-green text-white font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary font-bold">ABIERTO</span>`;
+
+    const descHtml = (empleo.descripcion || '').trim()
+      ? empleo.descripcion.trim().split(/\r?\n+/).filter(Boolean)
+          .map(p => `<p class="text-secondary leading-relaxed mb-md">${escapeForHtml(p)}</p>`).join('')
+      : '<p class="text-secondary leading-relaxed">Sin descripción disponible.</p>';
+
+    let html = await fs.promises.readFile(path.join(__dirname, 'public', 'empleo.html'), 'utf8');
+
+    html = injectPlaceholder(html, '{{TAG}}', escapeForHtml(tagLabel));
+    html = injectPlaceholder(html, '{{ICONO}}', icono);
+    html = injectPlaceholder(html, '{{ESTADO_HTML}}', estadoHtml);
+    html = injectPlaceholder(html, '{{TITULO}}', escapeForHtml(empleo.titulo));
+    html = injectPlaceholder(html, '{{EMPRESA}}', escapeForHtml(empleo.empresa));
+    html = injectPlaceholder(html, '{{DEPARTAMENTO}}', escapeForHtml(empleo.departamento));
+    html = injectPlaceholder(html, '{{SALARIO}}', escapeForHtml(empleo.salario || 'A convenir'));
+    html = injectPlaceholder(html, '{{FECHA}}', escapeForHtml(formatDateEs(empleo.fecha_limite)));
+    html = injectPlaceholder(html, '{{DESCRIPCION_HTML}}', descHtml);
+    html = injectPlaceholder(html, '{{CTA_HTML}}', ctaHtml);
+    html = injectPlaceholder(html, '{{SHARE_JSON}}', shareJson);
+    html = injectPlaceholder(html, '{{ID}}', String(empleo.id));
+
+    html = injectPlaceholder(html, '{{PAGE_TITLE}}', escapeForHtml(pageTitle));
+    html = injectPlaceholder(html, '{{META_DESC}}', escapeForHtml(metaDesc));
+    html = injectPlaceholder(html, '{{OG_DESC}}', escapeForHtml(truncate(metaDesc, 160)));
+    html = injectPlaceholder(html, '{{CANONICAL}}', canonical);
+    html = injectPlaceholder(html, '{{JSON_LD}}', placeholderVal(jobPosting));
+
+    res.send(html);
+  } catch (err) {
+    console.error('Error renderizando /empleo/:id', err);
+    res.status(500).send('Error interno del servidor');
+  }
 });
 
 // 404 handler (todas las rutas no coincidentes, cualquier método)

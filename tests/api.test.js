@@ -444,3 +444,29 @@ describe('Static files & 404', () => {
     assert.equal(res.status, 404);
   });
 });
+
+describe('Página de detalle de empleo (SEO)', () => {
+  it('GET /empleo/:id - página server-renderizada con metas y JobPosting', async () => {
+    const res = await request('GET', `/empleo/${empleoId}`);
+    assert.equal(res.status, 200);
+    assert.ok(res.headers['content-type'].includes('text/html'));
+    assert.ok(res.body.includes('Desarrollador Senior Full Stack'));
+    assert.ok(res.body.includes('application/ld+json'));
+    assert.ok(res.body.includes('"JobPosting"'));
+    assert.ok(res.body.includes('"@type":"JobPosting"') || res.body.includes('"@type": "JobPosting"'));
+    assert.ok(res.body.includes(`rel="canonical" href="https://chamba-com.onrender.com/empleo/${empleoId}"`));
+    assert.ok(res.body.includes('"validThrough"'));
+    assert.ok(res.body.includes('"hiringOrganization"'));
+    assert.ok(res.body.includes('Tech Honduras'));
+  });
+
+  it('GET /empleo/99999 - no existe devuelve 404', async () => {
+    const res = await request('GET', '/empleo/99999');
+    assert.equal(res.status, 404);
+  });
+
+  it('GET /empleo/abc - ID inválido devuelve 404', async () => {
+    const res = await request('GET', '/empleo/abc');
+    assert.equal(res.status, 404);
+  });
+});

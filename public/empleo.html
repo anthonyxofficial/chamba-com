@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.classList.add(t);
+    })();
+  </script>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>{{PAGE_TITLE}}</title>
+  <meta name="description" content="{{META_DESC}}"/>
+  <link rel="canonical" href="{{CANONICAL}}"/>
+  <meta property="og:title" content="{{PAGE_TITLE}}"/>
+  <meta property="og:description" content="{{OG_DESC}}"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="{{CANONICAL}}"/>
+  <meta property="og:image" content="https://chamba-com.onrender.com/img/og-default.png"/>
+  <meta name="theme-color" content="#000000"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <script type="application/ld+json">{{JSON_LD}}</script>
+  <link rel="stylesheet" href="/css/tailwind-build.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px var(--ch-stroke); }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--ch-stroke); }
+    .neo-shadow-hover:hover { box-shadow: 12px 12px 0px 0px var(--ch-stroke); transform: translate(-4px, -4px); }
+    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px var(--ch-stroke); transform: translate(4px, 4px); }
+    .pattern-grid { background-image: radial-gradient(var(--ch-pattern) 1px, transparent 0); background-size: 24px 24px; }
+    .brutalist-img { filter: grayscale(100%) contrast(120%) brightness(0.8); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .brutalist-card:hover .brutalist-img { filter: grayscale(0%) contrast(100%) brightness(1); }
+    .text-stroke { -webkit-text-stroke: 1px var(--ch-stroke); color: transparent; }
+    .glow-neon { box-shadow: 0 0 15px var(--ch-shadow); }
+    @keyframes subtle-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+    .float-animation { animation: subtle-float 4s ease-in-out infinite; }
+    #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
+    #theme-toggle:hover { transform: rotate(15deg); }
+    .mobile-menu-open { overflow: hidden; }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:border-4 focus:border-primary">Saltar al contenido principal</a>
+  <noscript><div class="bg-error text-on-error text-center py-4 font-label-bold uppercase text-sm">JavaScript es necesario para usar CHAMBA. Por favor habilítalo en tu navegador.</div></noscript>
+  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
+    <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
+      <div class="flex items-center gap-10">
+        <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary glitch" data-text="CHAMBA" href="/">CHAMBA</a>
+        <div class="hidden md:flex gap-8">
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all hover:-translate-y-0.5" href="/">Inicio</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-primary border-b-4 border-primary pb-1" href="/buscar.html">Explorar</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all hover:-translate-y-0.5" href="/favoritos.html">Guardados</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-surface-variant rounded-full transition-colors" aria-label="Cambiar tema">
+          <span class="material-symbols-outlined text-[24px]">light_mode</span>
+        </button>
+        <a href="/login.html" class="active-scale hidden md:block font-label-bold text-label-bold uppercase text-primary hover:underline decoration-4 underline-offset-4 transition-colors">Iniciar Sesión</a>
+        <a href="/publicar.html" class="active-scale bg-primary text-on-primary font-label-bold text-label-bold uppercase px-6 py-3 border-2 border-primary neo-shadow neo-shadow-active">Publicar Empleo</a>
+        <button onclick="openMobileMenu()" class="md:hidden p-2" style="color: var(--ch-primary);" aria-label="Menu">
+          <span class="material-symbols-outlined text-[28px]">menu</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden fixed inset-0 z-[100] flex flex-col p-gutter" style="background: var(--ch-background); color: var(--ch-on-background);">
+    <div class="flex justify-between items-center mb-xl">
+      <a class="font-display-xl text-4xl uppercase tracking-tighter glitch" data-text="CHAMBA" style="color: var(--ch-primary);" href="/">CHAMBA</a>
+      <button onclick="closeMobileMenu()" class="p-2" style="color: var(--ch-primary);" aria-label="Cerrar menu">
+        <span class="material-symbols-outlined text-[32px]">close</span>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-lg">
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/buscar.html" onclick="closeMobileMenu()">Buscar Empleos</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/buscar.html" onclick="closeMobileMenu()">Explorar</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/publicar.html" onclick="closeMobileMenu()">Empresas</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/favoritos.html" onclick="closeMobileMenu()">Guardados</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/login.html" onclick="closeMobileMenu()">Iniciar Sesión</a>
+      <a class="font-headline-md text-headline-md uppercase" style="color: var(--ch-primary);" href="/registro.html" onclick="closeMobileMenu()">Crear Cuenta</a>
+    </nav>
+  </div>
+
+  <main id="main-content" class="py-12 px-6 flex-1">
+    <div class="max-w-[900px] mx-auto">
+      <a href="/buscar.html" class="inline-flex items-center gap-2 font-label-bold uppercase text-sm text-secondary hover:text-primary transition-colors mb-8">
+        <span class="material-symbols-outlined">arrow_back</span> VOLVER A EMPLEOS
+      </a>
+
+      <div data-reveal="up" class="bg-surface border-4 border-primary neo-shadow-lg p-8 md:p-12">
+        <div class="flex items-start justify-between gap-md mb-xl">
+          <span class="text-on-primary font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary bg-primary">{{TAG}}</span>
+          {{ESTADO_HTML}}
+        </div>
+
+        <div class="flex items-start gap-lg mb-xl">
+          <div class="w-16 h-16 border-4 border-primary bg-surface-variant overflow-hidden flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-primary text-[32px]">{{ICONO}}</span>
+          </div>
+          <div>
+            <h1 class="font-display-xl text-4xl md:text-5xl uppercase leading-tight text-primary">{{TITULO}}</h1>
+            <p class="font-label-bold text-label-bold uppercase text-on-surface-variant mt-sm tracking-wider">{{EMPRESA}}</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-md border-4 border-primary bg-surface-variant p-lg mb-xl">
+          <div class="flex items-center gap-md">
+            <span class="material-symbols-outlined text-secondary">location_on</span>
+            <span class="font-label-bold text-sm text-primary">{{DEPARTAMENTO}}, Honduras</span>
+          </div>
+          <div class="flex items-center gap-md">
+            <span class="material-symbols-outlined text-secondary">payments</span>
+            <span class="font-label-bold text-sm text-primary">{{SALARIO}}</span>
+          </div>
+          <div class="flex items-center gap-md">
+            <span class="material-symbols-outlined text-secondary">calendar_today</span>
+            <span class="font-label-bold text-sm text-primary">Cierra: {{FECHA}}</span>
+          </div>
+        </div>
+
+        <div class="mb-xl">
+          <h2 class="font-label-bold uppercase text-sm mb-md text-primary border-b-4 border-primary pb-md inline-block">Descripción del puesto</h2>
+          <div class="space-y-md">{{DESCRIPCION_HTML}}</div>
+        </div>
+
+        <div class="flex flex-wrap gap-md pt-lg border-t-2 border-primary/20">
+          {{CTA_HTML}}
+          <button data-share='{{SHARE_JSON}}' onclick="shareJob(JSON.parse(this.dataset.share))" class="bg-surface border-4 border-primary px-xl py-lg font-label-bold uppercase text-sm inline-flex items-center gap-md neo-shadow neo-shadow-active text-primary hover:-translate-y-0.5 transition-all">
+            <span class="material-symbols-outlined">share</span> COMPARTIR
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="modal-empleo"></div>
+
+  <footer class="bg-inverse-surface text-inverse-primary w-full border-t-4 border-primary mt-20">
+    <div class="max-w-[1200px] mx-auto px-6 py-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="font-label-bold text-label-sm uppercase opacity-50">© 2026 CHAMBA. TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="font-label-bold text-label-sm uppercase tracking-widest opacity-50">CONSTRUIDA PARA LOS VALIENTES</p>
+    </div>
+  </footer>
+
+  <script src="js/theme.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/animations.js" defer></script>
+</body>
+</html>
