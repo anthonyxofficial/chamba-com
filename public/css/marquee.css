@@ -23,6 +23,28 @@
   opacity: 1;
 }
 
+/* Chips de categorias en el marquee */
+#marquee-track a.tag-search {
+  display: inline-block;
+  border: 2px solid var(--ch-primary);
+  background: var(--ch-surface);
+  color: var(--ch-on-background);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  padding: 10px 14px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#marquee-track a.tag-search:hover {
+  background: var(--ch-primary);
+  color: var(--ch-on-primary);
+}
+
 .marquee-wrapper:hover #marquee-track {
   animation-play-state: paused;
 }

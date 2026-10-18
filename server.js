@@ -24,9 +24,24 @@ const USERS_FILE = path.join(__dirname, 'data', 'users.json');
 const POSTULACIONES_FILE = path.join(__dirname, 'data', 'postulaciones.json');
 const CONTACTO_FILE = path.join(__dirname, 'data', 'contacto.json');
 
-// Security headers
+// Security headers (CSP estricta: sin CDN, sin unsafe-eval)
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: {
+    useDefaults: false,
+    directives: {
+      "default-src": ["'self'"],
+      // Se conserva 'unsafe-inline' porque el sitio usa onclick en HTML y <style> por página.
+      // Queda PROHIBIDO cargar scripts desde dominios externos.
+      "script-src": ["'self'", "'unsafe-inline'"],
+      "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      "font-src": ["'self'", "data:", "https://fonts.gstatic.com"],
+      "img-src": ["'self'", "data:", "https://images.unsplash.com"],
+      "connect-src": ["'self'", "https://chamba-com.onrender.com", "http://localhost:3000"],
+      "object-src": ["'none'"],
+      "base-uri": ["'self'"],
+      "frame-ancestors": ["'self'"]
+    }
+  },
   crossOriginEmbedderPolicy: false
 }));
 
@@ -475,8 +490,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 404 handler
-app.get('*', (req, res) => {
+// 404 handler (todas las rutas no coincidentes, cualquier método)
+app.use((req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'Ruta no encontrada' });
+  }
   res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 

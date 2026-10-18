@@ -113,6 +113,7 @@ function shareJob(empleo) {
 
 function showLoading() {
   const grid = document.getElementById('empleos-list');
+  if (!grid) return;
   const skel = `
     <div class="border-4 border-primary p-lg neo-shadow">
       <div class="flex justify-between items-start mb-xl">
@@ -368,7 +369,7 @@ async function abrirEmpleo(id) {
             <button data-share='${shareData.replace(/'/g, "&#39;")}' onclick="shareJob(JSON.parse(this.dataset.share))" class="bg-surface border-4 border-primary px-lg py-md font-label-bold uppercase text-sm flex items-center gap-md neo-shadow transition-all hover:-translate-y-0.5 text-primary">
               <span class="material-symbols-outlined">share</span> Compartir
             </button>
-            <button onclick="toggleFavorite(${parseInt(empleo.id) || 0})" class="bg-surface border-4 border-primary px-lg py-md font-label-bold uppercase text-sm flex items-center gap-md neo-shadow transition-all hover:-translate-y-0.5 text-primary">
+            <button onclick="toggleFavorite(${parseInt(empleo.id) || 0})" data-fav-id="${parseInt(empleo.id) || 0}" class="bg-surface border-4 border-primary px-lg py-md font-label-bold uppercase text-sm flex items-center gap-md neo-shadow transition-all hover:-translate-y-0.5 text-primary">
               <span class="material-symbols-outlined">${isFavorite(empleo.id) ? 'favorite' : 'favorite_border'}</span> Guardar
             </button>
           </div>
@@ -467,9 +468,9 @@ function filtrarCategoria(categoria) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  cargarEmpleos(1);
-  cargarCategorias();
-  cargarStats();
+  if (document.getElementById('empleos-list')) cargarEmpleos(1);
+  if (document.getElementById('categorias-grid')) cargarCategorias();
+  if (document.querySelector('#stat-empleos-total, #stat-usuarios-total, #stat-postulaciones-total, #badge-comunidad')) cargarStats();
 
   const urlParams = new URLSearchParams(window.location.search);
   const empleoId = urlParams.get('empleo');

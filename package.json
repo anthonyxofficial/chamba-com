@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "node --test tests/api.test.js"
+    "test": "node --test tests/api.test.js",
+    "build:css": "tailwindcss -i public/css/tailwind-input.css -o public/css/tailwind-build.css --minify"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -26,5 +27,8 @@
     "chamba"
   ],
   "author": "Chamba.com",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
 }

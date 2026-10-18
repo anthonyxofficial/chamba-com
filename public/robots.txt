@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /dashboard.html
 
-Sitemap: https://chamba.com/sitemap.xml
+Sitemap: https://chamba-com.onrender.com/sitemap.xml
