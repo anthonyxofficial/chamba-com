@@ -121,7 +121,9 @@
 
         localStorage.setItem('user', JSON.stringify({ ...result.user, token: result.token }));
 
-        if (result.tipo === 'empresa') {
+        const tipoUsuario = result.user?.tipo || '';
+
+        if (tipoUsuario === 'empresa') {
           window.location.href = '/dashboard.html';
         } else {
           window.location.href = '/';
