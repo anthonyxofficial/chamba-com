@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const crypto = require('crypto');
+
+const store = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,10 +20,6 @@ if (!JWT_SECRET) {
   console.warn('ADVERTENCIA: JWT_SECRET no configurado, usando secreto temporal (solo desarrollo).');
   JWT_SECRET = crypto.randomBytes(32).toString('hex');
 }
-const DATA_FILE = path.join(__dirname, 'data', 'empleos.json');
-const USERS_FILE = path.join(__dirname, 'data', 'users.json');
-const POSTULACIONES_FILE = path.join(__dirname, 'data', 'postulaciones.json');
-const CONTACTO_FILE = path.join(__dirname, 'data', 'contacto.json');
 
 // Security headers (CSP estricta: sin CDN, sin unsafe-eval)
 app.use(helmet({
@@ -89,22 +86,6 @@ const empleosWriteLimiter = rateLimit({
 });
 
 // --- Helpers ---
-function readJSON(file) {
-  try {
-    if (!fs.existsSync(file)) return [];
-    return JSON.parse(fs.readFileSync(file, 'utf8'));
-  } catch (e) {
-    console.error(`Error reading file:`, e.message);
-    return [];
-  }
-}
-
-function writeJSON(file, data) {
-  const tmp = file + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf8');
-  fs.renameSync(tmp, file);
-}
-
 function validateEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
@@ -135,10 +116,6 @@ function sanitize(str) {
 function truncate(str, max) {
   if (typeof str !== 'string') return '';
   return str.length > max ? str.slice(0, max) : str;
-}
-
-function generateId(items) {
-  return items.length > 0 ? Math.max(...items.map(i => i.id || 0)) + 1 : 1;
 }
 
 // --- Auth Middleware ---
@@ -176,9 +153,10 @@ function employerOnly(req, res, next) {
 }
 
 // --- Empleos ---
-app.get('/api/empleos', optionalAuth, (req, res) => {
-  let empleos = readJSON(DATA_FILE);
+app.get('/api/empleos', optionalAuth, async (req, res) => {
+  const todos = await store.getAll('empleos');
   const { busqueda, categoria, departamentos, page = 1, limit = 10, solo_abiertos } = req.query;
+  let empleos = todos;
 
   if (solo_abiertos === 'true') {
     empleos = empleos.filter(e => !isExpired(e.fecha_limite));
@@ -209,21 +187,20 @@ app.get('/api/empleos', optionalAuth, (req, res) => {
   });
 });
 
-app.get('/api/empleos/mios', authMiddleware, employerOnly, (req, res) => {
-  const empleos = readJSON(DATA_FILE).filter(e => e.empresa_id === req.user.id);
+app.get('/api/empleos/mios', authMiddleware, employerOnly, async (req, res) => {
+  const empleos = (await store.getAll('empleos')).filter(e => e.empresa_id === req.user.id);
   res.json({ empleos: empleos.map(addExpirationStatus), total: empleos.length });
 });
 
-app.get('/api/empleos/:id', optionalAuth, (req, res) => {
+app.get('/api/empleos/:id', optionalAuth, async (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
-  const empleos = readJSON(DATA_FILE);
-  const empleo = empleos.find(e => e.id === id);
+  const empleo = (await store.getAll('empleos')).find(e => e.id === id);
   if (!empleo) return res.status(404).json({ error: 'Empleo no encontrado' });
   res.json(addExpirationStatus(empleo));
 });
 
-app.post('/api/empleos', authMiddleware, employerOnly, empleosWriteLimiter, (req, res) => {
+app.post('/api/empleos', authMiddleware, employerOnly, empleosWriteLimiter, async (req, res) => {
   const { titulo, empresa, categoria, departamento, descripcion, fecha_limite, salario } = req.body;
 
   if (!titulo || !empresa || !categoria || !departamento || !fecha_limite) {
@@ -241,9 +218,8 @@ app.post('/api/empleos', authMiddleware, employerOnly, empleosWriteLimiter, (req
     return res.status(400).json({ error: 'fecha_limite debe ser hoy o una fecha futura' });
   }
 
-  const empleos = readJSON(DATA_FILE);
   const nuevoEmpleo = {
-    id: generateId(empleos),
+    id: await store.nextId('empleos'),
     titulo: truncate(sanitize(titulo), 200),
     empresa: truncate(sanitize(empresa), 100),
     categoria: truncate(sanitize(categoria), 100),
@@ -254,22 +230,20 @@ app.post('/api/empleos', authMiddleware, employerOnly, empleosWriteLimiter, (req
     empresa_id: req.user.id,
     createdAt: new Date().toISOString()
   };
-  empleos.push(nuevoEmpleo);
-  writeJSON(DATA_FILE, empleos);
+  await store.insert('empleos', nuevoEmpleo);
   res.status(201).json(nuevoEmpleo);
 });
 
-app.put('/api/empleos/:id', authMiddleware, employerOnly, empleosWriteLimiter, (req, res) => {
+app.put('/api/empleos/:id', authMiddleware, employerOnly, empleosWriteLimiter, async (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
-  const empleos = readJSON(DATA_FILE);
-  const index = empleos.findIndex(e => e.id === id);
-  if (index === -1) return res.status(404).json({ error: 'Empleo no encontrado' });
+  const empleo = (await store.getAll('empleos')).find(e => e.id === id);
+  if (!empleo) return res.status(404).json({ error: 'Empleo no encontrado' });
 
-  if (!empleos[index].empresa_id) {
+  if (!empleo.empresa_id) {
     return res.status(403).json({ error: 'Este empleo no se puede editar' });
   }
-  if (empleos[index].empresa_id !== req.user.id) {
+  if (empleo.empresa_id !== req.user.id) {
     return res.status(403).json({ error: 'No tienes permiso para editar este empleo' });
   }
 
@@ -286,16 +260,14 @@ app.put('/api/empleos/:id', authMiddleware, employerOnly, empleosWriteLimiter, (
     }
   }
 
-  empleos[index] = { ...empleos[index], ...updates };
-  writeJSON(DATA_FILE, empleos);
-  res.json(empleos[index]);
+  const actualizado = await store.update('empleos', id, updates);
+  res.json(actualizado);
 });
 
-app.delete('/api/empleos/:id', authMiddleware, employerOnly, empleosWriteLimiter, (req, res) => {
+app.delete('/api/empleos/:id', authMiddleware, employerOnly, empleosWriteLimiter, async (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
-  let empleos = readJSON(DATA_FILE);
-  const empleo = empleos.find(e => e.id === id);
+  const empleo = (await store.getAll('empleos')).find(e => e.id === id);
   if (!empleo) return res.status(404).json({ error: 'Empleo no encontrado' });
 
   if (!empleo.empresa_id) {
@@ -305,8 +277,7 @@ app.delete('/api/empleos/:id', authMiddleware, employerOnly, empleosWriteLimiter
     return res.status(403).json({ error: 'No tienes permiso para eliminar este empleo' });
   }
 
-  empleos = empleos.filter(e => e.id !== id);
-  writeJSON(DATA_FILE, empleos);
+  await store.remove('empleos', id);
   res.json({ success: true });
 });
 
@@ -334,22 +305,21 @@ app.post('/api/auth/register', authLimiter, async (req, res) => {
     return res.status(400).json({ error: 'Tipo de cuenta inválido' });
   }
 
-  const users = readJSON(USERS_FILE);
+  const users = await store.getAll('users');
   if (users.find(u => u.email === email)) {
     return res.status(400).json({ error: 'El email ya está registrado' });
   }
 
   const hashedPassword = await bcrypt.hash(password, 12);
   const newUser = {
-    id: generateId(users),
+    id: await store.nextId('users'),
     email,
     password: hashedPassword,
     nombre: truncate(sanitize(nombre), 100),
     tipo,
     createdAt: new Date().toISOString()
   };
-  users.push(newUser);
-  writeJSON(USERS_FILE, users);
+  await store.insert('users', newUser);
 
   const token = jwt.sign(
     { id: newUser.id, email: newUser.email, nombre: newUser.nombre, tipo: newUser.tipo },
@@ -367,8 +337,7 @@ app.post('/api/auth/login', authLimiter, async (req, res) => {
     return res.status(400).json({ error: 'Email y contraseña son requeridos' });
   }
 
-  const users = readJSON(USERS_FILE);
-  const user = users.find(u => u.email === email);
+  const user = (await store.getAll('users')).find(u => u.email === email);
   if (!user) return res.status(401).json({ error: 'Credenciales inválidas' });
 
   const validPassword = await bcrypt.compare(password, user.password);
@@ -384,7 +353,7 @@ app.post('/api/auth/login', authLimiter, async (req, res) => {
 });
 
 // --- Postulaciones ---
-app.post('/api/postulaciones', authMiddleware, postLimiter, (req, res) => {
+app.post('/api/postulaciones', authMiddleware, postLimiter, async (req, res) => {
   const { empleo_id, nombre, email, carta } = req.body;
 
   if (!empleo_id || !nombre || !email) {
@@ -400,7 +369,7 @@ app.post('/api/postulaciones', authMiddleware, postLimiter, (req, res) => {
     return res.status(400).json({ error: 'empleo_id inválido' });
   }
 
-  const empleo = readJSON(DATA_FILE).find(e => e.id === empleoId);
+  const empleo = (await store.getAll('empleos')).find(e => e.id === empleoId);
   if (!empleo) {
     return res.status(404).json({ error: 'Empleo no encontrado' });
   }
@@ -408,12 +377,12 @@ app.post('/api/postulaciones', authMiddleware, postLimiter, (req, res) => {
     return res.status(400).json({ error: 'El plazo de postulación para este empleo ya cerró' });
   }
 
-  const postulaciones = readJSON(POSTULACIONES_FILE);
+  const postulaciones = await store.getAll('postulaciones');
   if (postulaciones.find(p => p.empleo_id === empleoId && p.aspirante_id === req.user.id)) {
     return res.status(409).json({ error: 'Ya te postulaste a este empleo' });
   }
   const newPost = {
-    id: generateId(postulaciones),
+    id: await store.nextId('postulaciones'),
     empleo_id: empleoId,
     nombre: truncate(sanitize(nombre), 100),
     email,
@@ -422,17 +391,16 @@ app.post('/api/postulaciones', authMiddleware, postLimiter, (req, res) => {
     aspirante_id: req.user.id,
     createdAt: new Date().toISOString()
   };
-  postulaciones.push(newPost);
-  writeJSON(POSTULACIONES_FILE, postulaciones);
+  await store.insert('postulaciones', newPost);
   res.status(201).json(newPost);
 });
 
-app.get('/api/postulaciones', authMiddleware, employerOnly, (req, res) => {
-  const postulaciones = readJSON(POSTULACIONES_FILE);
-  const empleos = readJSON(DATA_FILE);
+app.get('/api/postulaciones', authMiddleware, employerOnly, async (req, res) => {
+  const postulaciones = await store.getAll('postulaciones');
+  const empleos = await store.getAll('empleos');
   const { empleo_id } = req.query;
 
-  let myEmpleoIds = empleos
+  const myEmpleoIds = empleos
     .filter(e => e.empresa_id === req.user.id)
     .map(e => e.id);
 
@@ -450,7 +418,7 @@ app.get('/api/postulaciones', authMiddleware, employerOnly, (req, res) => {
 });
 
 // --- Contacto ---
-app.post('/api/contacto', postLimiter, (req, res) => {
+app.post('/api/contacto', postLimiter, async (req, res) => {
   const { nombre, email, asunto, mensaje } = req.body;
   if (!nombre || !email || !asunto || !mensaje) {
     return res.status(400).json({ error: 'Todos los campos son requeridos' });
@@ -458,29 +426,29 @@ app.post('/api/contacto', postLimiter, (req, res) => {
   if (!validateEmail(email)) {
     return res.status(400).json({ error: 'Email inválido' });
   }
-  const contactos = readJSON(CONTACTO_FILE);
-  contactos.push({
-    id: generateId(contactos),
+  const contacto = {
+    id: await store.nextId('contacto'),
     nombre: truncate(sanitize(nombre), 100),
     email,
     asunto: truncate(sanitize(asunto), 200),
     mensaje: truncate(sanitize(mensaje), 2000),
     createdAt: new Date().toISOString()
-  });
-  writeJSON(CONTACTO_FILE, contactos);
+  };
+  await store.insert('contacto', contacto);
   res.status(201).json({ success: true });
 });
 
 // --- Health Check ---
-app.get('/api/health', (req, res) => {
-  const empleos = readJSON(DATA_FILE);
-  const users = readJSON(USERS_FILE);
-  const postulaciones = readJSON(POSTULACIONES_FILE);
-  const contactos = readJSON(CONTACTO_FILE);
+app.get('/api/health', async (req, res) => {
+  const empleos = await store.getAll('empleos');
+  const users = await store.getAll('users');
+  const postulaciones = await store.getAll('postulaciones');
+  const contactos = await store.getAll('contacto');
   res.json({
     status: 'ok',
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
+    storage: store.getMode(),
     counts: {
       empleos: empleos.length,
       users: users.length,
@@ -499,9 +467,16 @@ app.use((req, res) => {
 });
 
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`Chamba.com corriendo en http://localhost:${PORT}`);
-  });
+  store.init()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`Chamba.com corriendo en http://localhost:${PORT} (storage: ${store.getMode()})`);
+      });
+    })
+    .catch((e) => {
+      console.error('FATAL: No se pudo inicializar el almacenamiento de datos:', e.message);
+      process.exit(1);
+    });
 }
 
 module.exports = app;
