@@ -21,6 +21,7 @@ function authHeaders() {
 
 const API_URL = '/api/empleos';
 const user = JSON.parse(localStorage.getItem('user') || 'null');
+let editandoId = null;
 
 if (!user || user.tipo !== 'empresa') {
   window.location.href = '/login.html';
@@ -72,6 +73,7 @@ async function cargarMisEmpleos() {
         <p class="text-secondary font-label-sm mt-1">${escapeHtml(e.departamento)} • ${formatDate(e.fecha_limite)}</p>
       </div>
       <div class="flex gap-3">
+        <button onclick="editarEmpleo(${e.id})" class="bg-surface text-primary px-4 py-2 font-label-bold uppercase text-xs border-2 border-primary hover:bg-primary hover:text-on-primary transition-colors">EDITAR</button>
         <button onclick="eliminarEmpleo(${e.id})" class="bg-surface text-error px-4 py-2 font-label-bold uppercase text-xs border-2 border-error hover:bg-error hover:text-white transition-colors">ELIMINAR</button>
       </div>
     </div>
@@ -82,6 +84,33 @@ async function eliminarEmpleo(id) {
   if (!confirm('¿Eliminar este empleo?')) return;
   await fetch(`${API_URL}/${id}`, { method: 'DELETE', headers: authHeaders() });
   cargarMisEmpleos();
+}
+
+async function editarEmpleo(id) {
+  const res = await fetch(`${API_URL}/${id}`);
+  if (!res.ok) { alert('No se pudo cargar el empleo'); return; }
+  const e = await res.json();
+
+  editandoId = id;
+  document.getElementById('titulo').value = e.titulo || '';
+  document.getElementById('empresa').value = e.empresa || '';
+  document.getElementById('categoria').value = e.categoria || '';
+  document.getElementById('departamentos').value = e.departamento || '';
+  document.getElementById('descripcion').value = e.descripcion || '';
+  document.getElementById('salario').value = e.salario || '';
+  document.getElementById('email_postulacion').value = e.email_postulacion || '';
+  document.getElementById('fecha_limite').value = e.fecha_limite || '';
+
+  document.getElementById('form-titulo').textContent = 'Editar empleo';
+  document.getElementById('btn-publicar').textContent = 'GUARDAR CAMBIOS';
+  mostrarSeccion('publicar');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetModoNuevo() {
+  editandoId = null;
+  document.getElementById('form-titulo').textContent = 'Nuevo empleo';
+  document.getElementById('btn-publicar').textContent = 'PUBLICAR EMPLEO';
 }
 
 function formatDate(dateStr) {
@@ -103,8 +132,11 @@ document.getElementById('nuevoEmpleoForm').addEventListener('submit', async (e) 
     fecha_limite: document.getElementById('fecha_limite').value
   };
 
-  const res = await fetch(API_URL, {
-    method: 'POST',
+  const method = editandoId ? 'PUT' : 'POST';
+  const url = editandoId ? `${API_URL}/${editandoId}` : API_URL;
+
+  const res = await fetch(url, {
+    method,
     headers: authHeaders(),
     body: JSON.stringify(data)
   });
@@ -112,11 +144,12 @@ document.getElementById('nuevoEmpleoForm').addEventListener('submit', async (e) 
   if (res.status === 401) { window.location.href = '/login.html'; return; }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    alert(err.error || 'Error al publicar el empleo');
+    alert(err.error || (editandoId ? 'Error al guardar los cambios' : 'Error al publicar el empleo'));
     return;
   }
 
   e.target.reset();
+  resetModoNuevo();
   document.getElementById('empresa').value = user.nombre;
   mostrarSeccion('mis-empleos');
   cargarMisEmpleos();
