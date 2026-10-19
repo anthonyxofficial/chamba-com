@@ -78,14 +78,6 @@ const postLimiter = rateLimit({
   legacyHeaders: false
 });
 
-const postulacionDeleteLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 10,
-  message: { error: 'Demasiadas solicitudes. Espera un minuto.' },
-  standardHeaders: true,
-  legacyHeaders: false
-});
-
 const empleosWriteLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 20,
@@ -259,10 +251,14 @@ app.get('/api/empleos/:id', optionalAuth, async (req, res) => {
 });
 
 app.post('/api/empleos', authMiddleware, employerOnly, empleosWriteLimiter, async (req, res) => {
-  const { titulo, empresa, categoria, departamento, descripcion, fecha_limite, salario } = req.body;
+  const { titulo, empresa, categoria, departamento, descripcion, fecha_limite, salario, email_postulacion } = req.body;
 
   if (!titulo || !empresa || !categoria || !departamento || !fecha_limite) {
     return res.status(400).json({ error: 'Faltan campos requeridos' });
+  }
+
+  if (!email_postulacion || !validateEmail(String(email_postulacion).trim())) {
+    return res.status(400).json({ error: 'Email de postulación requerido y válido' });
   }
 
   const limite = new Date(fecha_limite);
@@ -284,6 +280,7 @@ app.post('/api/empleos', authMiddleware, employerOnly, empleosWriteLimiter, asyn
     departamento: truncate(sanitize(departamento), 100),
     descripcion: truncate(sanitize(descripcion || ''), 2000),
     salario: truncate(sanitize(salario || ''), 50),
+    email_postulacion: truncate(String(email_postulacion).trim().toLowerCase(), 100),
     fecha_limite,
     empresa_id: req.user.id,
     createdAt: new Date().toISOString()
@@ -309,12 +306,18 @@ app.put('/api/empleos/:id', authMiddleware, employerOnly, empleosWriteLimiter, a
     return res.status(400).json({ error: 'fecha_limite inválida (usa YYYY-MM-DD)' });
   }
 
-  const allowed = ['titulo', 'empresa', 'categoria', 'departamento', 'descripcion', 'fecha_limite', 'salario'];
+  if (req.body.email_postulacion !== undefined && !validateEmail(String(req.body.email_postulacion).trim())) {
+    return res.status(400).json({ error: 'Email de postulación inválido' });
+  }
+
+  const allowed = ['titulo', 'empresa', 'categoria', 'departamento', 'descripcion', 'fecha_limite', 'salario', 'email_postulacion'];
   const updates = {};
   for (const key of allowed) {
     if (req.body[key] !== undefined) {
       const maxLen = key === 'descripcion' ? 2000 : key === 'titulo' ? 200 : key === 'salario' ? 50 : 100;
-      updates[key] = truncate(sanitize(req.body[key]), maxLen);
+      updates[key] = key === 'email_postulacion'
+        ? truncate(String(req.body.email_postulacion).trim().toLowerCase(), maxLen)
+        : truncate(sanitize(req.body[key]), maxLen);
     }
   }
 
@@ -359,8 +362,8 @@ app.post('/api/auth/register', authLimiter, async (req, res) => {
     return res.status(400).json({ error: 'La contraseña debe contener al menos 1 mayúscula y 1 número' });
   }
 
-  if (!['aspirante', 'empresa'].includes(tipo)) {
-    return res.status(400).json({ error: 'Tipo de cuenta inválido' });
+  if (tipo !== 'empresa') {
+    return res.status(400).json({ error: 'Solo se pueden registrar empresas. Si eres aspirante, aplica directo por email a las vacantes.' });
   }
 
   const users = await store.getAll('users');
@@ -408,109 +411,6 @@ app.post('/api/auth/login', authLimiter, async (req, res) => {
   );
 
   res.json({ token, user: { id: user.id, email: user.email, nombre: user.nombre, tipo: user.tipo } });
-});
-
-// --- Postulaciones ---
-app.post('/api/postulaciones', authMiddleware, postLimiter, async (req, res) => {
-  const { empleo_id, nombre, email, carta } = req.body;
-
-  if (!empleo_id || !nombre || !email) {
-    return res.status(400).json({ error: 'empleo_id, nombre y email son requeridos' });
-  }
-
-  if (!validateEmail(email)) {
-    return res.status(400).json({ error: 'Email inválido' });
-  }
-
-  const empleoId = parseInt(empleo_id);
-  if (isNaN(empleoId)) {
-    return res.status(400).json({ error: 'empleo_id inválido' });
-  }
-
-  const empleo = (await store.getAll('empleos')).find(e => e.id === empleoId);
-  if (!empleo) {
-    return res.status(404).json({ error: 'Empleo no encontrado' });
-  }
-  if (isExpired(empleo.fecha_limite)) {
-    return res.status(400).json({ error: 'El plazo de postulación para este empleo ya cerró' });
-  }
-
-  const postulaciones = await store.getAll('postulaciones');
-  if (postulaciones.find(p => p.empleo_id === empleoId && p.aspirante_id === req.user.id)) {
-    return res.status(409).json({ error: 'Ya te postulaste a este empleo' });
-  }
-  const newPost = {
-    id: await store.nextId('postulaciones'),
-    empleo_id: empleoId,
-    nombre: truncate(sanitize(nombre), 100),
-    email,
-    telefono: truncate(req.body.telefono || '', 20),
-    carta: truncate(sanitize(carta || ''), 2000),
-    aspirante_id: req.user.id,
-    createdAt: new Date().toISOString()
-  };
-  await store.insert('postulaciones', newPost);
-  res.status(201).json(newPost);
-});
-
-app.get('/api/postulaciones', authMiddleware, employerOnly, async (req, res) => {
-  const postulaciones = await store.getAll('postulaciones');
-  const empleos = await store.getAll('empleos');
-  const { empleo_id } = req.query;
-
-  const myEmpleoIds = empleos
-    .filter(e => e.empresa_id === req.user.id)
-    .map(e => e.id);
-
-  let filtered = postulaciones.filter(p => myEmpleoIds.includes(p.empleo_id));
-
-  if (empleo_id) {
-    const eid = parseInt(empleo_id);
-    if (!myEmpleoIds.includes(eid)) {
-      return res.status(403).json({ error: 'No tienes permiso para ver estas postulaciones' });
-    }
-    filtered = filtered.filter(p => p.empleo_id === eid);
-  }
-
-  res.json(filtered);
-});
-
-app.get('/api/postulaciones/mias', authMiddleware, async (req, res) => {
-  const postulaciones = (await store.getAll('postulaciones')).filter(p => p.aspirante_id === req.user.id);
-  const empleos = await store.getAll('empleos');
-  const resultado = postulaciones
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    .map(p => {
-      const empleo = empleos.find(e => e.id === p.empleo_id);
-      return {
-        id: p.id,
-        empleo_id: p.empleo_id,
-        createdAt: p.createdAt,
-        carta: p.carta || '',
-        empleo: empleo ? {
-          id: empleo.id,
-          titulo: empleo.titulo,
-          empresa: empleo.empresa,
-          departamento: empleo.departamento,
-          salario: empleo.salario || '',
-          fecha_limite: empleo.fecha_limite,
-          expirado: isExpired(empleo.fecha_limite)
-        } : null
-      };
-    });
-  res.json({ postulaciones: resultado, total: resultado.length });
-});
-
-app.delete('/api/postulaciones/:id', authMiddleware, postulacionDeleteLimiter, async (req, res) => {
-  const id = parseInt(req.params.id);
-  if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
-  const post = (await store.getAll('postulaciones')).find(p => p.id === id);
-  if (!post) return res.status(404).json({ error: 'Postulación no encontrada' });
-  if (post.aspirante_id !== req.user.id) {
-    return res.status(403).json({ error: 'No tienes permiso para cancelar esta postulación' });
-  }
-  await store.remove('postulaciones', id);
-  res.json({ success: true });
 });
 
 // --- Contacto ---
@@ -601,17 +501,26 @@ app.get('/empleo/:id', async (req, res) => {
     const shareObj = { id: empleo.id, titulo: empleo.titulo, empresa: empleo.empresa, departamento: empleo.departamento };
     const shareJson = escapeForHtml(JSON.stringify(shareObj));
 
+    const emailPost = escapeForHtml(String(empleo.email_postulacion || '').trim());
+    const asunto = encodeURIComponent('Postulación: ' + empleo.titulo);
+    const favBtn = `<button onclick="toggleFavorite(${empleo.id})" data-fav-id="${empleo.id}" class="bg-surface border-4 border-primary px-lg py-lg font-label-bold uppercase text-sm inline-flex items-center gap-md neo-shadow neo-shadow-active text-primary">
+           <span class="material-symbols-outlined" data-fav-icon="${empleo.id}">favorite_border</span> GUARDAR
+         </button>`;
+
     const ctaHtml = expirado
       ? `<span class="bg-error/10 border-4 border-error px-xl py-lg font-label-bold uppercase text-sm text-error inline-flex items-center gap-md">
            <span class="material-symbols-outlined">event_busy</span> PLAZO DE POSTULACIÓN CERRADO
          </span>
          <a href="/buscar.html" class="active-scale bg-primary text-on-primary px-xl py-lg font-label-bold uppercase text-sm border-4 border-primary neo-shadow neo-shadow-active inline-flex items-center">VER MÁS EMPLEOS</a>`
-      : `<button onclick="abrirEmpleo(${empleo.id})" class="active-scale bg-primary text-on-primary px-xl py-lg font-label-bold uppercase text-sm border-4 border-primary neo-shadow neo-shadow-active inline-flex items-center">
-           <span class="material-symbols-outlined">send</span> POSTULARME
-         </button>
-         <button onclick="toggleFavorite(${empleo.id})" data-fav-id="${empleo.id}" class="bg-surface border-4 border-primary px-lg py-lg font-label-bold uppercase text-sm inline-flex items-center gap-md neo-shadow neo-shadow-active text-primary">
-           <span class="material-symbols-outlined" data-fav-icon="${empleo.id}">favorite_border</span> GUARDAR
-         </button>`;
+      : emailPost
+        ? `<a href="mailto:${emailPost}?subject=${asunto}" class="active-scale bg-primary text-on-primary px-xl py-lg font-label-bold uppercase text-sm border-4 border-primary neo-shadow neo-shadow-active inline-flex items-center">
+             <span class="material-symbols-outlined">mail</span> APLICAR POR EMAIL
+           </a>
+           ${favBtn}`
+        : `<span class="bg-surface-variant border-4 border-primary px-xl py-lg font-label-bold uppercase text-sm text-secondary inline-flex items-center gap-md">
+             <span class="material-symbols-outlined">info</span> SIN EMAIL DE CONTACTO
+           </span>
+           ${favBtn}`;
 
     const estadoHtml = expirado
       ? `<span class="bg-error text-white font-label-sm text-label-sm uppercase px-sm py-xs border-2 border-primary font-bold">CERRADO</span>`

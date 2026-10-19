@@ -154,7 +154,6 @@ async function cargarStats() {
       set('stat-usuarios-total', counts.users);
       set('badge-comunidad', `${counts.users}+`);
     }
-    if (counts.postulaciones !== undefined) set('stat-postulaciones-total', counts.postulaciones);
   } catch (err) {
     console.error('Error cargando stats:', err);
   }
@@ -295,34 +294,25 @@ async function abrirEmpleo(id) {
   const fecha = formatDate(empleo.fecha_limite);
   const expirado = empleo.expirado;
 
-  const formHTML = expirado
+  const emailPost = (empleo.email_postulacion || '').trim();
+  const asunto = encodeURIComponent('Postulación: ' + empleo.titulo);
+  const applyHTML = expirado
     ? `<div class="bg-error/10 border-4 border-error p-lg text-center">
         <span class="material-symbols-outlined text-[48px] text-error">event_busy</span>
-        <h3 class="font-headline-md text-xl mt-4 uppercase text-error">Plazo de postulación cerrado</h3>
+        <h3 class="font-headline-md text-xl mt-md uppercase text-error">Plazo de postulación cerrado</h3>
         <p class="text-secondary mt-2 font-label-bold uppercase text-sm">La fecha límite para aplicar ya pasó.</p>
       </div>`
-    : `<form id="postularForm" class="space-y-lg">
-        <input type="hidden" value="${parseInt(empleo.id) || 0}" name="empleo_id"/>
-        <div class="grid grid-cols-2 gap-md">
-          <div>
-            <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Nombre completo</label>
-            <input type="text" name="nombre" required class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_var(--ch-stroke)] outline-none"/>
-          </div>
-          <div>
-            <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Email</label>
-            <input type="email" name="email" required class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_var(--ch-stroke)] outline-none"/>
-          </div>
-        </div>
-        <div>
-          <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Teléfono</label>
-          <input type="tel" name="telefono" class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_var(--ch-stroke)] outline-none"/>
-        </div>
-        <div>
-          <label class="font-label-bold text-xs uppercase block mb-sm text-primary">Carta de presentación</label>
-          <textarea name="carta" rows="4" class="w-full px-md py-md border-4 border-primary bg-surface text-primary font-body-md focus:shadow-[4px_4px_0px_0px_var(--ch-stroke)] outline-none resize-none" placeholder="Cuéntanos por qué eres el candidato ideal..."></textarea>
-        </div>
-        <button type="submit" class="active-scale w-full bg-primary text-on-primary px-xl py-lg font-label-bold uppercase tracking-widest text-sm border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">ENVIAR POSTULACIÓN</button>
-      </form>`;
+    : emailPost
+      ? `<div class="bg-surface-variant border-4 border-primary p-lg text-center">
+          <p class="font-label-bold uppercase text-sm text-primary">Envía tu hoja de vida al email de la empresa:</p>
+          <a href="mailto:${escapeHtml(emailPost)}?subject=${asunto}" class="active-scale mt-4 inline-block bg-primary text-on-primary px-xl py-lg font-label-bold uppercase tracking-widest text-sm border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">APLICAR POR EMAIL</a>
+          <p class="text-secondary mt-4 font-label-bold uppercase text-xs break-all">${escapeHtml(emailPost)}</p>
+        </div>`
+      : `<div class="bg-surface-variant border-4 border-primary p-lg text-center">
+          <span class="material-symbols-outlined text-[48px] text-secondary">info</span>
+          <h3 class="font-headline-md text-xl mt-md uppercase text-primary">Contacto no disponible</h3>
+          <p class="text-secondary mt-2 font-label-bold uppercase text-sm">Esta vacante no tiene email de contacto.</p>
+        </div>`;
 
   const shareData = JSON.stringify({id: empleo.id, titulo: empleo.titulo, empresa: empleo.empresa, departamento: empleo.departamento});
 
@@ -373,80 +363,10 @@ async function abrirEmpleo(id) {
               <span class="material-symbols-outlined">${isFavorite(empleo.id) ? 'favorite' : 'favorite_border'}</span> Guardar
             </button>
           </div>
-          ${formHTML}
+          ${applyHTML}
         </div>
       </div>
     </div>`;
-
-  const postularForm = document.getElementById('postularForm');
-  if (postularForm) {
-    postularForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData);
-      data.empleo_id = parseInt(data.empleo_id);
-
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'ENVIANDO...'; }
-
-      if (!getToken()) {
-        window.location.href = '/login.html';
-        return;
-      }
-
-      let res;
-      try {
-        res = await fetch('/api/postulaciones', {
-          method: 'POST',
-          headers: authHeaders(),
-          body: JSON.stringify(data)
-        });
-      } catch (err) {
-        console.error(err);
-        showPostulacionFormError(postularForm, 'No se pudo conectar con el servidor. Revisa tu conexión.');
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'ENVIAR POSTULACIÓN'; }
-        return;
-      }
-
-      if (res.status === 401) {
-        window.location.href = '/login.html';
-        return;
-      }
-
-      if (!res.ok) {
-        let msg = 'Error al enviar postulación. Inténtalo de nuevo.';
-        try {
-          const errBody = await res.json();
-          if (errBody && errBody.error) msg = errBody.error;
-        } catch {}
-        showPostulacionFormError(postularForm, msg);
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'ENVIAR POSTULACIÓN'; }
-        return;
-      }
-
-      document.getElementById('modal-empleo').innerHTML = `
-        <div class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4" onclick="cerrarModal(event)">
-          <div class="bg-surface border-4 border-primary neo-shadow-lg max-w-md w-full text-center p-12" onclick="event.stopPropagation()">
-            <span class="material-symbols-outlined text-[80px] text-job-green">check_circle</span>
-            <h2 class="font-headline-md text-3xl mt-lg uppercase text-primary">¡Postulación enviada!</h2>
-            <p class="text-secondary mt-md mb-xl font-label-bold uppercase text-sm">Tu aplicación ha sido enviada exitosamente</p>
-            <div class="flex flex-col gap-md">
-              <a href="/postulaciones.html" onclick="cerrarModal()" class="bg-surface text-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">VER MIS POSTULACIONES</a>
-              <button onclick="cerrarModal()" class="active-scale bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
-            </div>
-          </div>
-        </div>`;
-    });
-  }
-}
-
-function showPostulacionFormError(form, msg) {
-  form.querySelector('.postulacion-error')?.remove();
-  const div = document.createElement('div');
-  div.className = 'postulacion-error bg-error/10 border-4 border-error p-md font-label-bold uppercase text-xs text-error';
-  div.setAttribute('role', 'alert');
-  div.textContent = msg;
-  form.prepend(div);
 }
 
 function cerrarModal(e) {
@@ -473,7 +393,7 @@ function filtrarCategoria(categoria) {
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('empleos-list')) cargarEmpleos(1);
   if (document.getElementById('categorias-grid')) cargarCategorias();
-  if (document.querySelector('#stat-empleos-total, #stat-usuarios-total, #stat-postulaciones-total, #badge-comunidad')) cargarStats();
+  if (document.querySelector('#stat-empleos-total, #stat-usuarios-total, #badge-comunidad')) cargarStats();
 
   const urlParams = new URLSearchParams(window.location.search);
   const empleoId = urlParams.get('empleo');

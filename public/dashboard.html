@@ -78,14 +78,10 @@
 
   <main class="flex-1 py-12 px-6">
     <div class="max-w-[1200px] mx-auto">
-      <div data-reveal="up" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div data-reveal="up" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
         <div class="bg-surface border-4 border-primary neo-shadow p-8 text-center">
           <p class="font-display-xl text-4xl text-primary" id="stat-empleos">0</p>
           <p class="font-label-bold uppercase text-sm text-secondary mt-2">Empleos publicados</p>
-        </div>
-        <div class="bg-surface border-4 border-primary neo-shadow p-8 text-center">
-          <p class="font-display-xl text-4xl text-primary" id="stat-postulaciones">0</p>
-          <p class="font-label-bold uppercase text-sm text-secondary mt-2">Postulaciones recibidas</p>
         </div>
         <div class="bg-surface border-4 border-primary neo-shadow p-8 text-center">
           <p class="font-display-xl text-4xl text-primary" id="stat-activos">0</p>
@@ -96,7 +92,6 @@
       <div class="flex gap-8 border-b-4 border-primary mb-10">
         <button onclick="mostrarSeccion('mis-empleos')" class="pb-4 font-label-bold uppercase text-sm tab-active text-primary" id="tab-mis-empleos">Mis Empleos</button>
         <button onclick="mostrarSeccion('publicar')" class="pb-4 font-label-bold uppercase text-sm text-secondary hover:text-primary transition-colors" id="tab-publicar">Publicar Nuevo</button>
-        <button onclick="mostrarSeccion('postulaciones')" class="pb-4 font-label-bold uppercase text-sm text-secondary hover:text-primary transition-colors" id="tab-postulaciones">Postulaciones</button>
       </div>
 
       <section id="seccion-mis-empleos">
@@ -165,16 +160,17 @@
               <input type="text" id="salario" maxlength="50" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary" placeholder="Ej: L15k - L20k"/>
             </div>
             <div>
+              <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Email para recibir postulaciones</label>
+              <input type="email" id="email_postulacion" maxlength="100" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary" placeholder="Ej: reclutamiento@empresa.com" required/>
+              <p class="text-secondary font-label-bold uppercase text-xs mt-2">Los aspirantes verán este email en la vacante y te escribirán desde su correo.</p>
+            </div>
+            <div>
               <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Fecha límite</label>
               <input type="date" id="fecha_limite" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors" required/>
             </div>
             <button type="submit" class="active-scale w-full bg-primary text-on-primary px-10 py-4 font-label-bold uppercase tracking-widest text-sm border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5 hover:shadow-none">PUBLICAR EMPLEO</button>
           </form>
         </div>
-      </section>
-
-      <section id="seccion-postulaciones" class="hidden">
-        <div id="postulaciones-list" class="space-y-4"></div>
       </section>
     </div>
   </main>

@@ -152,6 +152,11 @@
             <input type="text" id="salario" maxlength="50" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary" placeholder="Ej: L15k - L20k"/>
           </div>
           <div>
+            <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Email para recibir postulaciones</label>
+            <input type="email" id="email_postulacion" maxlength="100" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary" placeholder="Ej: reclutamiento@tuempresa.com" required/>
+            <p class="text-secondary font-label-bold uppercase text-xs mt-2">Los aspirantes verán este email en la vacante y te escribirán desde su correo.</p>
+          </div>
+          <div>
             <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Fecha límite de postulación</label>
             <input type="date" id="fecha_limite" class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors" required/>
           </div>
@@ -201,6 +206,7 @@
         departamento: document.getElementById('departamentos').value,
         descripcion: document.getElementById('descripcion').value,
         salario: document.getElementById('salario').value,
+        email_postulacion: document.getElementById('email_postulacion').value,
         fecha_limite: document.getElementById('fecha_limite').value
       };
       const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${storedUser.token}` };

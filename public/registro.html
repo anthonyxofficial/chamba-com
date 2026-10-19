@@ -27,9 +27,6 @@
     .glow-neon { box-shadow: 0 0 15px var(--ch-shadow); }
     @keyframes subtle-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
     .float-animation { animation: subtle-float 4s ease-in-out infinite; }
-    .tipo-btn { border: 4px solid var(--ch-outline); padding: 20px; cursor: pointer; transition: all 0.2s; text-align: center; }
-    .tipo-btn.active { background: var(--ch-surface); color: var(--ch-primary); border-color: var(--ch-primary); }
-    .tipo-btn:not(.active):hover { background: var(--ch-surface-variant); }
     #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
     #theme-toggle:hover { transform: rotate(15deg); }
     .mobile-menu-open { overflow: hidden; }
@@ -77,21 +74,15 @@
         <h1 class="font-display-xl text-headline-md uppercase text-primary">Crear<br/>Cuenta</h1>
       </div>
 
-      <div class="grid grid-cols-2 gap-4 mb-8">
-        <div class="tipo-btn active" onclick="seleccionarTipo('aspirante')">
-          <span class="material-symbols-outlined text-[32px] text-primary">person</span>
-          <p class="font-label-bold uppercase mt-2 text-sm text-primary">Aspirante</p>
-        </div>
-        <div class="tipo-btn" onclick="seleccionarTipo('empresa')">
-          <span class="material-symbols-outlined text-[32px] text-primary">business</span>
-          <p class="font-label-bold uppercase mt-2 text-sm text-primary">Empresa</p>
-        </div>
+      <div class="text-center mb-8">
+        <span class="material-symbols-outlined text-[48px] text-primary">business</span>
+        <p class="font-label-bold uppercase mt-2 text-sm text-secondary">Registro para empresas</p>
       </div>
 
       <form id="registroForm" class="space-y-6">
-        <input type="hidden" id="tipo" value="aspirante"/>
+        <input type="hidden" id="tipo" value="empresa"/>
         <div>
-          <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Nombre completo</label>
+          <label class="font-label-bold text-xs uppercase block mb-2 text-primary">Nombre de la empresa</label>
           <input type="text" id="nombre" required class="w-full px-4 py-3 border-4 border-primary bg-surface-variant text-primary font-body-md focus:border-primary outline-none transition-colors placeholder-secondary"/>
         </div>
         <div>
@@ -113,12 +104,6 @@
   </main>
 
   <script>
-    function seleccionarTipo(tipo) {
-      document.getElementById('tipo').value = tipo;
-      document.querySelectorAll('.tipo-btn').forEach(btn => btn.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-    }
-
     document.getElementById('registroForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const errorDiv = document.getElementById('error-msg');
@@ -163,7 +148,7 @@
         }
 
         localStorage.setItem('user', JSON.stringify({ ...result.user, token: result.token }));
-        window.location.href = data.tipo === 'empresa' ? '/dashboard.html' : '/postulaciones.html';
+        window.location.href = '/dashboard.html';
       } catch (err) {
         errorDiv.textContent = 'Error de conexión';
         errorDiv.classList.remove('hidden');

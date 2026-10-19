@@ -2,6 +2,7 @@ const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcryptjs');
 const { start, stop, request, authHeaders } = require('./setup');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
@@ -39,6 +40,15 @@ before(async () => {
   fs.writeFileSync(USERS_FILE, '[]', 'utf8');
   fs.writeFileSync(POSTULACIONES_FILE, '[]', 'utf8');
   fs.writeFileSync(CONTACTO_FILE, '[]', 'utf8');
+  const hashed = bcrypt.hashSync('Test1234', 12);
+  fs.writeFileSync(USERS_FILE, JSON.stringify([{
+    id: 1,
+    email: 'test-user@chamba.hn',
+    password: hashed,
+    nombre: 'Juan Legacy',
+    tipo: 'aspirante',
+    createdAt: new Date().toISOString()
+  }], null, 2), 'utf8');
   await start();
 });
 
@@ -69,7 +79,7 @@ describe('Auth', () => {
   const aspirante = {
     email: 'test-user@chamba.hn',
     password: 'Test1234',
-    nombre: 'Juan Test',
+    nombre: 'Juan Legacy',
     tipo: 'aspirante'
   };
 
@@ -81,11 +91,20 @@ describe('Auth', () => {
     empresaToken = res.body.token;
   });
 
-  it('POST /api/auth/register - aspirante', async () => {
-    const res = await request('POST', '/api/auth/register', { body: aspirante });
-    assert.equal(res.status, 201);
-    assert.ok(res.body.token);
-    aspiranteToken = res.body.token;
+  it('POST /api/auth/register - aspirante rechazado', async () => {
+    const res = await request('POST', '/api/auth/register', {
+      body: { email: 'nuevo-aspirante@chamba.hn', password: 'Test1234', nombre: 'Nuevo Aspirante', tipo: 'aspirante' }
+    });
+    assert.equal(res.status, 400);
+    assert.ok(res.body.error);
+  });
+
+  it('POST /api/auth/register - tipo inválido rechazado', async () => {
+    const res = await request('POST', '/api/auth/register', {
+      body: { email: 'raro@chamba.hn', password: 'Test1234', nombre: 'Raro', tipo: 'otro' }
+    });
+    assert.equal(res.status, 400);
+    assert.ok(res.body.error);
   });
 
   it('POST /api/auth/register - duplicate email fails', async () => {
@@ -109,6 +128,16 @@ describe('Auth', () => {
     assert.ok(res.body.token);
   });
 
+  it('POST /api/auth/login - aspirante legacy sigue entrando', async () => {
+    const res = await request('POST', '/api/auth/login', {
+      body: { email: aspirante.email, password: aspirante.password }
+    });
+    assert.equal(res.status, 200);
+    assert.ok(res.body.token);
+    assert.equal(res.body.user.tipo, 'aspirante');
+    aspiranteToken = res.body.token;
+  });
+
   it('POST /api/auth/login - wrong password fails', async () => {
     const res = await request('POST', '/api/auth/login', {
       body: { email: empresa.email, password: 'Wrong123' }
@@ -129,6 +158,7 @@ describe('Empleos CRUD', () => {
     categoria: 'Tecnología',
     departamento: 'Francisco Morazán',
     descripcion: 'Buscamos desarrollador con experiencia en Node.js',
+    email_postulacion: 'reclutamiento@techhonduras.com',
     fecha_limite: '2026-12-31'
   };
 
@@ -140,7 +170,8 @@ describe('Empleos CRUD', () => {
     assert.equal(res.status, 201);
     assert.ok(res.body.id);
     assert.equal(res.body.titulo, nuevoEmpleo.titulo);
-    assert.equal(res.body.empresa_id, 1);
+    assert.equal(res.body.empresa_id, 2);
+    assert.equal(res.body.email_postulacion, 'reclutamiento@techhonduras.com');
     empleoId = res.body.id;
   });
 
@@ -163,6 +194,30 @@ describe('Empleos CRUD', () => {
       headers: authHeaders(empresaToken)
     });
     assert.equal(res.status, 400);
+  });
+
+  it('POST /api/empleos - sin email_postulacion falla', async () => {
+    const res = await request('POST', '/api/empleos', {
+      body: {
+        titulo: 'Sin email',
+        empresa: 'Test',
+        categoria: 'Tecnología',
+        departamento: 'Cortés',
+        fecha_limite: '2026-12-31'
+      },
+      headers: authHeaders(empresaToken)
+    });
+    assert.equal(res.status, 400);
+    assert.ok(res.body.error.includes('Email'));
+  });
+
+  it('POST /api/empleos - email_postulacion inválido falla', async () => {
+    const res = await request('POST', '/api/empleos', {
+      body: { ...nuevoEmpleo, email_postulacion: 'no-es-email' },
+      headers: authHeaders(empresaToken)
+    });
+    assert.equal(res.status, 400);
+    assert.ok(res.body.error.includes('Email'));
   });
 
   it('GET /api/empleos - listar empleos', async () => {
@@ -209,6 +264,24 @@ describe('Empleos CRUD', () => {
     assert.equal(res.body.titulo, 'Desarrollador Senior Full Stack');
   });
 
+  it('PUT /api/empleos/:id - cambiar email_postulacion', async () => {
+    const res = await request('PUT', `/api/empleos/${empleoId}`, {
+      body: { email_postulacion: 'jobs@techhonduras.com' },
+      headers: authHeaders(empresaToken)
+    });
+    assert.equal(res.status, 200);
+    assert.equal(res.body.email_postulacion, 'jobs@techhonduras.com');
+  });
+
+  it('PUT /api/empleos/:id - email_postulacion inválido falla', async () => {
+    const res = await request('PUT', `/api/empleos/${empleoId}`, {
+      body: { email_postulacion: '@novalido' },
+      headers: authHeaders(empresaToken)
+    });
+    assert.equal(res.status, 400);
+    assert.ok(res.body.error.includes('Email'));
+  });
+
   it('PUT /api/empleos/:id - aspirante no puede editar', async () => {
     const res = await request('PUT', `/api/empleos/${empleoId}`, {
       body: { titulo: 'Hack' },
@@ -222,77 +295,6 @@ describe('Empleos CRUD', () => {
       headers: authHeaders(empresaToken)
     });
     assert.equal(res.status, 404);
-  });
-});
-
-describe('Postulaciones', () => {
-  let postulacionEmpleoId;
-
-  before(async () => {
-    const res = await request('POST', '/api/empleos', {
-      body: {
-        titulo: 'Diseñador UX',
-        empresa: 'Design Co',
-        categoria: 'Diseño',
-        departamento: 'Cortés',
-        fecha_limite: '2026-12-31'
-      },
-      headers: authHeaders(empresaToken)
-    });
-    postulacionEmpleoId = res.body.id;
-  });
-
-  it('POST /api/postulaciones - postularse', async () => {
-    const res = await request('POST', '/api/postulaciones', {
-      body: {
-        empleo_id: postulacionEmpleoId,
-        nombre: 'María López',
-        email: 'maria@test.hn',
-        carta: 'Tengo experiencia en diseño UX'
-      },
-      headers: authHeaders(aspiranteToken)
-    });
-    assert.equal(res.status, 201);
-    assert.ok(res.body.id);
-  });
-
-  it('POST /api/postulaciones - sin auth falla', async () => {
-    const res = await request('POST', '/api/postulaciones', {
-      body: { empleo_id: postulacionEmpleoId, nombre: 'X', email: 'x@x.com' }
-    });
-    assert.equal(res.status, 401);
-  });
-
-  it('POST /api/postulaciones - email inválido', async () => {
-    const res = await request('POST', '/api/postulaciones', {
-      body: { empleo_id: postulacionEmpleoId, nombre: 'X', email: 'no-email' },
-      headers: authHeaders(aspiranteToken)
-    });
-    assert.equal(res.status, 400);
-  });
-
-  it('GET /api/postulaciones - empresa ve postulaciones de sus empleos', async () => {
-    const res = await request('GET', '/api/postulaciones', {
-      headers: authHeaders(empresaToken)
-    });
-    assert.equal(res.status, 200);
-    assert.ok(Array.isArray(res.body));
-    assert.ok(res.body.length >= 1);
-  });
-
-  it('GET /api/postulaciones - filtrar por empleo_id', async () => {
-    const res = await request('GET', `/api/postulaciones?empleo_id=${postulacionEmpleoId}`, {
-      headers: authHeaders(empresaToken)
-    });
-    assert.equal(res.status, 200);
-    assert.ok(res.body.length >= 1);
-  });
-
-  it('GET /api/postulaciones - aspirante no puede ver', async () => {
-    const res = await request('GET', '/api/postulaciones', {
-      headers: authHeaders(aspiranteToken)
-    });
-    assert.equal(res.status, 403);
   });
 });
 
@@ -315,8 +317,8 @@ describe('Mis empleos (empresa_id)', () => {
     });
     assert.equal(res.status, 200);
     assert.ok(Array.isArray(res.body.empleos));
-    assert.ok(res.body.empleos.length >= 2);
-    assert.ok(res.body.empleos.every(e => e.empresa_id === 1));
+    assert.ok(res.body.empleos.length >= 1);
+    assert.ok(res.body.empleos.every(e => e.empresa_id === 2));
   });
 });
 
@@ -328,6 +330,7 @@ describe('Validaciones nuevas', () => {
         empresa: 'Test',
         categoria: 'Ventas y Comercial',
         departamento: 'Cortés',
+        email_postulacion: 'rrhh@test.hn',
         fecha_limite: 'no-una-fecha'
       },
       headers: authHeaders(empresaToken)
@@ -342,6 +345,7 @@ describe('Validaciones nuevas', () => {
         empresa: 'Test',
         categoria: 'Ventas y Comercial',
         departamento: 'Cortés',
+        email_postulacion: 'rrhh@test.hn',
         fecha_limite: '2020-01-01'
       },
       headers: authHeaders(empresaToken)
@@ -349,37 +353,14 @@ describe('Validaciones nuevas', () => {
     assert.equal(res.status, 400);
   });
 
-  it('POST /api/postulaciones - empleo inexistente falla', async () => {
-    const res = await request('POST', '/api/postulaciones', {
-      body: { empleo_id: 9999, nombre: 'X', email: 'x@x.com' },
-      headers: authHeaders(aspiranteToken)
-    });
-    assert.equal(res.status, 404);
-  });
-
-  it('POST /api/postulaciones - duplicada falla', async () => {
-    const list = await request('GET', '/api/empleos/mios', {
-      headers: authHeaders(empresaToken)
-    });
-    const targetId = list.body.empleos[0].id;
-    await request('POST', '/api/postulaciones', {
-      body: { empleo_id: targetId, nombre: 'Juan Test', email: 'juan@test.hn' },
-      headers: authHeaders(aspiranteToken)
-    });
-    const res = await request('POST', '/api/postulaciones', {
-      body: { empleo_id: targetId, nombre: 'Juan Test', email: 'juan@test.hn' },
-      headers: authHeaders(aspiranteToken)
-    });
-    assert.equal(res.status, 409);
-  });
-
-  it('POST /api/postulaciones - empleo expirado falla', async () => {
+  it('PUT - fecha pasada marca expirado', async () => {
     const created = await request('POST', '/api/empleos', {
       body: {
         titulo: 'Empleo por expirar',
         empresa: 'Test',
         categoria: 'Ventas y Comercial',
         departamento: 'Cortés',
+        email_postulacion: 'rrhh@test.hn',
         fecha_limite: '2026-12-31'
       },
       headers: authHeaders(empresaToken)
@@ -390,11 +371,9 @@ describe('Validaciones nuevas', () => {
       headers: authHeaders(empresaToken)
     });
     assert.equal(updated.status, 200);
-    const res = await request('POST', '/api/postulaciones', {
-      body: { empleo_id: created.body.id, nombre: 'Ana', email: 'ana@test.hn' },
-      headers: authHeaders(aspiranteToken)
-    });
-    assert.equal(res.status, 400);
+    const ver = await request('GET', `/api/empleos/${created.body.id}`);
+    assert.equal(ver.body.expirado, true);
+    assert.equal(ver.body.estado, 'Cerrado');
   });
 });
 
@@ -439,6 +418,11 @@ describe('Static files & 404', () => {
     assert.equal(res.status, 200);
   });
 
+  it('GET /postulaciones.html ya no existe', async () => {
+    const res = await request('GET', '/postulaciones.html');
+    assert.equal(res.status, 404);
+  });
+
   it('GET /no-existe returns 404 page', async () => {
     const res = await request('GET', '/no-existe');
     assert.equal(res.status, 404);
@@ -446,7 +430,7 @@ describe('Static files & 404', () => {
 });
 
 describe('Página de detalle de empleo (SEO)', () => {
-  it('GET /empleo/:id - página server-renderizada con metas y JobPosting', async () => {
+  it('GET /empleo/:id - página server-renderizada con metas, JobPosting y CTA mailto', async () => {
     const res = await request('GET', `/empleo/${empleoId}`);
     assert.equal(res.status, 200);
     assert.ok(res.headers['content-type'].includes('text/html'));
@@ -458,9 +442,11 @@ describe('Página de detalle de empleo (SEO)', () => {
     assert.ok(res.body.includes('"validThrough"'));
     assert.ok(res.body.includes('"hiringOrganization"'));
     assert.ok(res.body.includes('Tech Honduras'));
+    assert.ok(res.body.includes('mailto:jobs@techhonduras.com'));
+    assert.ok(res.body.includes('APLICAR POR EMAIL'));
   });
 
-  it('GET /empleo/99999 - no existe devuelve 404', async () => {
+  it('GET /empleo/:id - no existe devuelve 404', async () => {
     const res = await request('GET', '/empleo/99999');
     assert.equal(res.status, 404);
   });
@@ -468,53 +454,5 @@ describe('Página de detalle de empleo (SEO)', () => {
   it('GET /empleo/abc - ID inválido devuelve 404', async () => {
     const res = await request('GET', '/empleo/abc');
     assert.equal(res.status, 404);
-  });
-});
-
-describe('Postulaciones del aspirante (mias + cancelar)', () => {
-  let miPostulacionId;
-
-  it('GET /api/postulaciones/mias - sin token falla', async () => {
-    const res = await request('GET', '/api/postulaciones/mias');
-    assert.equal(res.status, 401);
-  });
-
-  it('GET /api/postulaciones/mias - aspirante ve sus postulaciones con datos del empleo', async () => {
-    const res = await request('GET', '/api/postulaciones/mias', {
-      headers: authHeaders(aspiranteToken)
-    });
-    assert.equal(res.status, 200);
-    assert.ok(Array.isArray(res.body.postulaciones));
-    assert.ok(res.body.postulaciones.length >= 1);
-    const mia = res.body.postulaciones.find(p => p.carta === 'Tengo experiencia en diseño UX');
-    assert.ok(mia, 'la postulación creada con carta debe aparecer');
-    assert.ok(mia.empleo, 'la postulación debe incluir datos del empleo');
-    assert.ok(typeof mia.empleo.titulo === 'string' && mia.empleo.titulo.length > 0);
-    assert.ok(typeof mia.empleo.empresa === 'string' && mia.empleo.empresa.length > 0);
-    assert.ok(mia.empleo.expirado === false || mia.empleo.expirado === true);
-    miPostulacionId = mia.id;
-  });
-
-  it('DELETE /api/postulaciones/:id - otro usuario no puede cancelar', async () => {
-    const reg = await request('POST', '/api/auth/register', {
-      body: { email: 'otro-user@chamba.hn', password: 'Test1234', nombre: 'Otro', tipo: 'aspirante' }
-    });
-    assert.equal(reg.status, 201);
-    const res = await request('DELETE', `/api/postulaciones/${miPostulacionId}`, {
-      headers: authHeaders(reg.body.token)
-    });
-    assert.equal(res.status, 403);
-  });
-
-  it('DELETE /api/postulaciones/:id - cancelar propia', async () => {
-    const res = await request('DELETE', `/api/postulaciones/${miPostulacionId}`, {
-      headers: authHeaders(aspiranteToken)
-    });
-    assert.equal(res.status, 200);
-    assert.equal(res.body.success, true);
-    const mias = await request('GET', '/api/postulaciones/mias', {
-      headers: authHeaders(aspiranteToken)
-    });
-    assert.ok(!mias.body.postulaciones.some(p => p.id === miPostulacionId));
   });
 });
