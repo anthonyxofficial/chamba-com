@@ -78,6 +78,14 @@ const postLimiter = rateLimit({
   legacyHeaders: false
 });
 
+const postulacionDeleteLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  message: { error: 'Demasiadas solicitudes. Espera un minuto.' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
 const empleosWriteLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 20,
@@ -465,6 +473,44 @@ app.get('/api/postulaciones', authMiddleware, employerOnly, async (req, res) => 
   }
 
   res.json(filtered);
+});
+
+app.get('/api/postulaciones/mias', authMiddleware, async (req, res) => {
+  const postulaciones = (await store.getAll('postulaciones')).filter(p => p.aspirante_id === req.user.id);
+  const empleos = await store.getAll('empleos');
+  const resultado = postulaciones
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .map(p => {
+      const empleo = empleos.find(e => e.id === p.empleo_id);
+      return {
+        id: p.id,
+        empleo_id: p.empleo_id,
+        createdAt: p.createdAt,
+        carta: p.carta || '',
+        empleo: empleo ? {
+          id: empleo.id,
+          titulo: empleo.titulo,
+          empresa: empleo.empresa,
+          departamento: empleo.departamento,
+          salario: empleo.salario || '',
+          fecha_limite: empleo.fecha_limite,
+          expirado: isExpired(empleo.fecha_limite)
+        } : null
+      };
+    });
+  res.json({ postulaciones: resultado, total: resultado.length });
+});
+
+app.delete('/api/postulaciones/:id', authMiddleware, postulacionDeleteLimiter, async (req, res) => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
+  const post = (await store.getAll('postulaciones')).find(p => p.id === id);
+  if (!post) return res.status(404).json({ error: 'Postulación no encontrada' });
+  if (post.aspirante_id !== req.user.id) {
+    return res.status(403).json({ error: 'No tienes permiso para cancelar esta postulación' });
+  }
+  await store.remove('postulaciones', id);
+  res.json({ success: true });
 });
 
 // --- Contacto ---

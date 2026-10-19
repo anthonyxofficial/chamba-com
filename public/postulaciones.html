@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.classList.add(t);
+    })();
+  </script>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Mis Postulaciones - CHAMBA</title>
+  <meta name="robots" content="noindex,follow"/>
+  <link rel="stylesheet" href="/css/tailwind-build.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .neo-shadow { box-shadow: 4px 4px 0px 0px var(--ch-stroke); }
+    .neo-shadow-lg { box-shadow: 8px 8px 0px 0px var(--ch-stroke); }
+    .neo-shadow-hover:hover { box-shadow: 12px 12px 0px 0px var(--ch-stroke); transform: translate(-4px, -4px); }
+    .neo-shadow-active:active { box-shadow: 0px 0px 0px 0px var(--ch-stroke); transform: translate(4px, 4px); }
+    .pattern-grid { background-image: radial-gradient(var(--ch-pattern) 1px, transparent 0); background-size: 24px 24px; }
+    .text-stroke { -webkit-text-stroke: 1px var(--ch-stroke); color: transparent; }
+    #theme-toggle { cursor: pointer; transition: transform 0.3s ease; }
+    #theme-toggle:hover { transform: rotate(15deg); }
+    .mobile-menu-open { overflow: hidden; }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-on-primary page-transition">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:border-4 focus:border-primary">Saltar al contenido principal</a>
+  <noscript><div class="bg-error text-on-error text-center py-4 font-label-bold uppercase text-sm">JavaScript es necesario para usar CHAMBA. Por favor habilítalo en tu navegador.</div></noscript>
+  <header class="w-full sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b-4 border-primary">
+    <nav class="max-w-[1200px] mx-auto px-6 h-20 flex justify-between items-center">
+      <div class="flex items-center gap-10">
+        <a class="font-display-xl text-4xl uppercase tracking-tighter text-primary glitch" data-text="CHAMBA" href="/">CHAMBA</a>
+        <div class="hidden md:flex gap-8">
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all" href="/">Inicio</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-primary border-b-4 border-primary pb-1" href="/postulaciones.html">Postulaciones</a>
+          <a class="font-label-bold text-label-bold uppercase tracking-wider text-secondary hover:text-primary transition-all hover:-translate-y-0.5" href="/favoritos.html">Guardados</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" onclick="toggleTheme()" class="p-2 text-primary hover:bg-surface-variant rounded-full transition-colors" aria-label="Cambiar tema">
+          <span class="material-symbols-outlined text-[24px]">light_mode</span>
+        </button>
+        <a href="/buscar.html" class="hidden md:block font-label-bold text-label-bold uppercase text-primary hover:underline decoration-4 underline-offset-4 transition-colors">Buscar Empleos</a>
+        <button onclick="openMobileMenu()" class="md:hidden p-2" style="color: var(--ch-primary);" aria-label="Menu">
+          <span class="material-symbols-outlined text-[28px]">menu</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden fixed inset-0 z-[100] flex flex-col p-gutter" style="background: var(--ch-background); color: var(--ch-on-background);">
+    <div class="flex justify-between items-center mb-xl">
+      <a class="font-display-xl text-4xl uppercase tracking-tighter glitch" data-text="CHAMBA" style="color: var(--ch-primary);" href="/">CHAMBA</a>
+      <button onclick="closeMobileMenu()" class="p-2" style="color: var(--ch-primary);" aria-label="Cerrar menu">
+        <span class="material-symbols-outlined text-[32px]">close</span>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-lg">
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/buscar.html" onclick="closeMobileMenu()">Buscar Empleos</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/postulaciones.html" onclick="closeMobileMenu()">Mis Postulaciones</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/favoritos.html" onclick="closeMobileMenu()">Guardados</a>
+      <a class="font-headline-md text-headline-md uppercase border-b-2 pb-md" style="color: var(--ch-primary); border-color: var(--ch-outline);" href="/publicar.html" onclick="closeMobileMenu()">Empresas</a>
+      <button class="font-headline-md text-headline-md uppercase border-b-2 pb-md text-left" style="color: var(--ch-primary); border-color: var(--ch-outline);" onclick="salir(); closeMobileMenu()">Salir</button>
+    </nav>
+  </div>
+
+  <main id="main-content" class="flex-1 py-12 px-6">
+    <div data-reveal="up" class="max-w-[1200px] mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+        <div>
+          <h1 class="font-display-xl text-headline-md md:text-headline-lg uppercase leading-none text-primary">Mis<br/><span class="text-stroke">POSTULACIONES</span></h1>
+          <p class="text-secondary mt-4 font-label-bold uppercase text-sm" id="post-count"></p>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="hidden sm:block font-label-bold uppercase text-sm text-primary" id="user-name"></span>
+          <button onclick="salir()" class="bg-surface border-4 border-primary px-lg py-md font-label-bold uppercase text-sm neo-shadow neo-shadow-active text-primary flex items-center gap-2">
+            <span class="material-symbols-outlined">logout</span> SALIR
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mb-10 max-w-md">
+        <div class="bg-surface border-4 border-primary neo-shadow p-lg text-center">
+          <p class="font-display-xl text-4xl text-primary" id="stat-total">0</p>
+          <p class="font-label-bold uppercase text-xs text-secondary mt-1">Postulaciones</p>
+        </div>
+        <div class="bg-surface border-4 border-primary neo-shadow p-lg text-center">
+          <p class="font-display-xl text-4xl text-primary" id="stat-vigentes">0</p>
+          <p class="font-label-bold uppercase text-xs text-secondary mt-1">Vigentes</p>
+        </div>
+      </div>
+
+      <div id="postulaciones-list" class="space-y-lg"></div>
+    </div>
+  </main>
+
+  <footer class="bg-inverse-surface text-inverse-primary w-full border-t-4 border-primary mt-20">
+    <div class="max-w-[1200px] mx-auto px-6 py-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="font-label-bold text-label-sm uppercase opacity-50">© 2026 CHAMBA. TODOS LOS DERECHOS RESERVADOS.</p>
+      <p class="font-label-bold text-label-sm uppercase tracking-widest opacity-50">CONSTRUIDA PARA LOS VALIENTES</p>
+    </div>
+  </footer>
+
+  <script src="js/theme.js" defer></script>
+  <script src="js/animations.js" defer></script>
+  <script>
+    function escapeHtml(str) {
+      if (str == null) return '';
+      const div = document.createElement('div');
+      div.textContent = String(str);
+      return div.innerHTML;
+    }
+
+    function getToken() {
+      try {
+        const u = JSON.parse(localStorage.getItem('user') || 'null');
+        return u && u.token ? u.token : null;
+      } catch { return null; }
+    }
+
+    function authHeaders() {
+      const token = getToken();
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+      return headers;
+    }
+
+    const panelUser = JSON.parse(localStorage.getItem('user') || 'null');
+    if (!panelUser || !panelUser.token) {
+      window.location.href = '/login.html';
+    } else if (panelUser.tipo === 'empresa') {
+      window.location.href = '/dashboard.html';
+    }
+    document.getElementById('user-name').textContent = panelUser?.nombre || '';
+
+    function salir() {
+      localStorage.removeItem('user');
+      window.location.href = '/';
+    }
+
+    function formatDateEs(dateStr) {
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return dateStr;
+      const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
+    }
+
+    async function cancelarPostulacion(id) {
+      if (!confirm('¿Cancelar esta postulación? Esta acción no se puede deshacer.')) return;
+      const res = await fetch(`/api/postulaciones/${parseInt(id) || 0}`, {
+        method: 'DELETE',
+        headers: authHeaders()
+      });
+      if (res.status === 401) { window.location.href = '/login.html'; return; }
+      if (!res.ok) {
+        alert('No se pudo cancelar la postulación. Inténtalo de nuevo.');
+        return;
+      }
+      cargarPostulaciones();
+    }
+
+    async function cargarPostulaciones() {
+      const list = document.getElementById('postulaciones-list');
+      let res;
+      try {
+        res = await fetch('/api/postulaciones/mias', { headers: authHeaders() });
+      } catch {
+        list.innerHTML = '<div class="text-center py-20 border-4 border-dashed border-primary"><p class="text-secondary font-label-bold uppercase text-sm">Error al cargar postulaciones</p></div>';
+        return;
+      }
+      if (res.status === 401) { window.location.href = '/login.html'; return; }
+      const data = await res.json();
+      const posts = data.postulaciones || [];
+
+      const vigentes = posts.filter(p => p.empleo && !p.empleo.expirado).length;
+      document.getElementById('stat-total').textContent = posts.length;
+      document.getElementById('stat-vigentes').textContent = vigentes;
+      document.getElementById('post-count').textContent = posts.length === 1 ? '1 postulación enviada' : `${posts.length} postulaciones enviadas`;
+
+      if (posts.length === 0) {
+        list.innerHTML = `
+          <div class="text-center py-20 border-4 border-dashed border-primary">
+            <span class="material-symbols-outlined text-[64px] text-secondary">send</span>
+            <h3 class="font-headline-md text-xl mt-4 text-primary">No tienes postulaciones</h3>
+            <p class="text-secondary mt-2 mb-6 font-label-bold uppercase text-sm">Cuando te postules a un empleo, aparecerá aquí</p>
+            <a href="/buscar.html" class="active-scale bg-primary text-on-primary px-8 py-3 font-label-bold uppercase text-sm border-2 border-primary neo-shadow inline-block transition-all hover:-translate-y-0.5">VER EMPLEOS</a>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = posts.map(p => {
+        const e = p.empleo;
+        if (!e) {
+          return `
+            <div class="bg-surface border-4 border-primary neo-shadow p-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span class="bg-error text-white font-bold px-2 py-0.5 text-[10px] uppercase tracking-tighter border border-primary">CERRADA</span>
+                  <h4 class="font-headline-md text-xl uppercase text-primary mt-2">Empleo ya no disponible</h4>
+                  <p class="font-label-bold text-label-sm uppercase tracking-wider text-secondary mt-1">Postulada el ${escapeHtml(formatDateEs(p.createdAt))}</p>
+                </div>
+                <button onclick="cancelarPostulacion(${parseInt(p.id) || 0})" class="bg-surface text-error px-4 py-2 font-label-bold uppercase text-xs border-4 border-error hover:bg-error hover:text-white transition-colors neo-shadow-active">CANCELAR</button>
+              </div>
+            </div>`;
+        }
+        const vigente = !e.expirado;
+        const badge = vigente
+          ? `<span class="bg-job-green text-white font-bold px-2 py-0.5 text-[10px] uppercase tracking-tighter border border-primary">VIGENTE</span>`
+          : `<span class="bg-error text-white font-bold px-2 py-0.5 text-[10px] uppercase tracking-tighter border border-primary">CERRADA</span>`;
+        return `
+          <div class="bg-surface border-4 border-primary neo-shadow p-6">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                  ${badge}
+                  <span class="bg-surface-variant text-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-tighter border border-primary">Postulada el ${escapeHtml(formatDateEs(p.createdAt))}</span>
+                </div>
+                <h4 class="font-headline-md text-xl uppercase text-primary">${escapeHtml(e.titulo)}</h4>
+                <p class="font-label-bold text-label-sm uppercase tracking-wider text-secondary mb-2">${escapeHtml(e.empresa)} • ${escapeHtml(e.departamento)}</p>
+                ${p.carta ? `<p class="mt-3 text-secondary text-sm italic">"${escapeHtml(p.carta)}"</p>` : ''}
+              </div>
+              <div class="flex flex-col gap-3 sm:min-w-[160px]">
+                <a href="/empleo/${parseInt(e.id) || 0}" class="active-scale bg-primary text-on-primary px-4 py-2 font-label-bold uppercase text-xs border-2 border-primary neo-shadow text-center transition-all hover:-translate-y-0.5">VER EMPLEO</a>
+                <button onclick="cancelarPostulacion(${parseInt(p.id) || 0})" class="bg-surface text-error px-4 py-2 font-label-bold uppercase text-xs border-4 border-error hover:bg-error hover:text-white transition-colors neo-shadow-active">CANCELAR</button>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarPostulaciones);
+  </script>
+</body>
+</html>

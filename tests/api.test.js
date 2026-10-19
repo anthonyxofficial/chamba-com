@@ -470,3 +470,51 @@ describe('Página de detalle de empleo (SEO)', () => {
     assert.equal(res.status, 404);
   });
 });
+
+describe('Postulaciones del aspirante (mias + cancelar)', () => {
+  let miPostulacionId;
+
+  it('GET /api/postulaciones/mias - sin token falla', async () => {
+    const res = await request('GET', '/api/postulaciones/mias');
+    assert.equal(res.status, 401);
+  });
+
+  it('GET /api/postulaciones/mias - aspirante ve sus postulaciones con datos del empleo', async () => {
+    const res = await request('GET', '/api/postulaciones/mias', {
+      headers: authHeaders(aspiranteToken)
+    });
+    assert.equal(res.status, 200);
+    assert.ok(Array.isArray(res.body.postulaciones));
+    assert.ok(res.body.postulaciones.length >= 1);
+    const mia = res.body.postulaciones.find(p => p.carta === 'Tengo experiencia en diseño UX');
+    assert.ok(mia, 'la postulación creada con carta debe aparecer');
+    assert.ok(mia.empleo, 'la postulación debe incluir datos del empleo');
+    assert.ok(typeof mia.empleo.titulo === 'string' && mia.empleo.titulo.length > 0);
+    assert.ok(typeof mia.empleo.empresa === 'string' && mia.empleo.empresa.length > 0);
+    assert.ok(mia.empleo.expirado === false || mia.empleo.expirado === true);
+    miPostulacionId = mia.id;
+  });
+
+  it('DELETE /api/postulaciones/:id - otro usuario no puede cancelar', async () => {
+    const reg = await request('POST', '/api/auth/register', {
+      body: { email: 'otro-user@chamba.hn', password: 'Test1234', nombre: 'Otro', tipo: 'aspirante' }
+    });
+    assert.equal(reg.status, 201);
+    const res = await request('DELETE', `/api/postulaciones/${miPostulacionId}`, {
+      headers: authHeaders(reg.body.token)
+    });
+    assert.equal(res.status, 403);
+  });
+
+  it('DELETE /api/postulaciones/:id - cancelar propia', async () => {
+    const res = await request('DELETE', `/api/postulaciones/${miPostulacionId}`, {
+      headers: authHeaders(aspiranteToken)
+    });
+    assert.equal(res.status, 200);
+    assert.equal(res.body.success, true);
+    const mias = await request('GET', '/api/postulaciones/mias', {
+      headers: authHeaders(aspiranteToken)
+    });
+    assert.ok(!mias.body.postulaciones.some(p => p.id === miPostulacionId));
+  });
+});

@@ -163,7 +163,7 @@
         }
 
         localStorage.setItem('user', JSON.stringify({ ...result.user, token: result.token }));
-        window.location.href = data.tipo === 'empresa' ? '/dashboard.html' : '/';
+        window.location.href = data.tipo === 'empresa' ? '/dashboard.html' : '/postulaciones.html';
       } catch (err) {
         errorDiv.textContent = 'Error de conexión';
         errorDiv.classList.remove('hidden');

@@ -430,7 +430,10 @@ async function abrirEmpleo(id) {
             <span class="material-symbols-outlined text-[80px] text-job-green">check_circle</span>
             <h2 class="font-headline-md text-3xl mt-lg uppercase text-primary">¡Postulación enviada!</h2>
             <p class="text-secondary mt-md mb-xl font-label-bold uppercase text-sm">Tu aplicación ha sido enviada exitosamente</p>
-            <button onclick="cerrarModal()" class="active-scale bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
+            <div class="flex flex-col gap-md">
+              <a href="/postulaciones.html" onclick="cerrarModal()" class="bg-surface text-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">VER MIS POSTULACIONES</a>
+              <button onclick="cerrarModal()" class="active-scale bg-primary text-on-primary px-xl py-lg font-label-bold uppercase border-4 border-primary neo-shadow transition-all hover:-translate-y-0.5">CERRAR</button>
+            </div>
           </div>
         </div>`;
     });
